@@ -24,8 +24,7 @@
 
 package io;
 
-import org.junit.After;
-import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -35,9 +34,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.Arrays;
-
-import static org.junit.Assert.fail;
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 public class BitOutputStreamTest {
 
@@ -61,9 +58,9 @@ public class BitOutputStreamTest {
     public void writeTest() {
         try {
             File testFile = new File("test.txt");
-            BitOutputStream output = new BitOutputStream(new BufferedOutputStream(new FileOutputStream(testFile)));
+            BitOutputStream output = new BitOutputStream(new BufferedOutputStream(
+                    new FileOutputStream(testFile)));
             int[] numbers = new int[]{1, 0, 1, 0, 1, 0, 1, 0};
-            int numberExpected = 170;
             int numberRead;
             for (int i = 0; i < numbers.length; i++) {
                 output.write(numbers[i]);
@@ -73,7 +70,7 @@ public class BitOutputStreamTest {
             numberRead = input.read();
             input.close();
             testFile.delete();
-            assertEquals(numberExpected, numberRead);
+            assertEquals(170, numberRead);
         } catch (Exception e) {
 
         }
@@ -83,9 +80,9 @@ public class BitOutputStreamTest {
     public void writeIncompleteTest() {
         try {
             File testFile = new File("test.txt");
-            BitOutputStream output = new BitOutputStream(new BufferedOutputStream(new FileOutputStream(testFile)));
+            BitOutputStream output = new BitOutputStream(new BufferedOutputStream(
+                    new FileOutputStream(testFile)));
             int[] numbers = new int[]{1, 0, 1, 0, 1};
-            int numberExpected = 168;
             int numberRead;
             for (int i = 0; i < numbers.length; i++) {
                 output.write(numbers[i]);
@@ -95,7 +92,7 @@ public class BitOutputStreamTest {
             numberRead = input.read();
             input.close();
             testFile.delete();
-            assertEquals(numberExpected, numberRead);
+            assertEquals(168, numberRead);
         } catch (Exception e) {
 
         }
@@ -105,7 +102,8 @@ public class BitOutputStreamTest {
     public void writeIllegalArgumentTest() {
         File testFile = new File("test.txt");
         try {
-            BitOutputStream output = new BitOutputStream(new BufferedOutputStream(new FileOutputStream(testFile)));
+            BitOutputStream output = new BitOutputStream(new BufferedOutputStream(
+                    new FileOutputStream(testFile)));
             output.write(2);
             fail();
         } catch (Exception e) {
@@ -118,7 +116,8 @@ public class BitOutputStreamTest {
     public void writeByteTest() {
         try {
             File testFile = new File("test.txt");
-            BitOutputStream output = new BitOutputStream(new BufferedOutputStream(new FileOutputStream(testFile)));
+            BitOutputStream output = new BitOutputStream(new BufferedOutputStream(
+                    new FileOutputStream(testFile)));
             byte[] numbers = new byte[]{7, 2, 5, 4, 9};
             byte[] numbersRead = new byte[numbers.length];
             for (int i = 0; i < numbers.length; i++) {

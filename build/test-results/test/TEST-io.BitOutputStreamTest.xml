@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="io.BitOutputStreamTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2018-05-09T12:20:54" hostname="muikusti" time="0.009">
+<testsuite name="io.BitOutputStreamTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2018-05-09T12:32:42" hostname="muikusti" time="0.009">
   <properties/>
   <testcase name="writeIllegalArgumentTest" classname="io.BitOutputStreamTest" time="0.003"/>
-  <testcase name="writeTest" classname="io.BitOutputStreamTest" time="0.001"/>
-  <testcase name="writeIncompleteTest" classname="io.BitOutputStreamTest" time="0.001"/>
-  <testcase name="writeByteTest" classname="io.BitOutputStreamTest" time="0.001"/>
+  <testcase name="writeTest" classname="io.BitOutputStreamTest" time="0.0"/>
+  <testcase name="writeIncompleteTest" classname="io.BitOutputStreamTest" time="0.002"/>
+  <testcase name="writeByteTest" classname="io.BitOutputStreamTest" time="0.002"/>
   <testcase name="newBitOutPutStreamTest" classname="io.BitOutputStreamTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
