@@ -22,69 +22,70 @@
  * SOFTWARE.
  */
 
+package io;
+
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.InputStream;
 import java.util.Objects;
 
 /**
- * Utility class for writing data bit by bit using java.io.OutpuStream as a basis.
+ * Utility class for reading data bit by bit using java.io.InputStream as a basis.
  */
-public class BitOutputStream implements AutoCloseable {
+public class BitInputStream implements AutoCloseable {
 
-    private OutputStream output;
-    private int outputBuffer;
+    private InputStream input;
+    private int inputBuffer;
     private int bitsLeft;
 
     /**
-     * Construct bit output stream based on underlying byte output stream.
-     * @param output byte output stream
-     * @throws NullPointerException when null is provided as param.
+     * Construct bit input stream based on underlying byte input stream.
+     * @param input byte input stream
+     * @throws NullPointerException when null is provided as param
      */
-    public BitOutputStream(OutputStream output) {
-        Objects.requireNonNull(output);
-        this.output = output;
-        this.outputBuffer = 0;
-        this.bitsLeft = 8;
+    public BitInputStream(InputStream input) {
+        Objects.requireNonNull(input);
+        this.input = input;
+        inputBuffer = 0;
+        bitsLeft = 0;
     }
-    
+
     /**
-     * Writes single bits as bytes to underlying byte output stream.
-     * @param bit 0 or 1 bit as int value
+     * Read next bit from stream.
+     * @return 0 or 1 as next bit. -1 if end of stream is reached.
      * @throws IOException if an I/O exception occurs.
-     * @throws IllegalArgumentException when trying to write something else than 0 or 1 bit.
      */
-    public void write(int bit) throws IOException {
-        if (bit != 0 && bit != 1) {
-            throw new IllegalArgumentException();
+    public int read() throws IOException {
+        if (inputBuffer == -1) {
+            return -1;
         }
-        outputBuffer = (outputBuffer << 1) | bit;
-        bitsLeft--;
         if (bitsLeft == 0) {
-            output.write(outputBuffer);
-            outputBuffer = 0;
+            inputBuffer = input.read();
+            if (inputBuffer == -1) {
+                return -1;
+            }
             bitsLeft = 8;
         }
+        bitsLeft--;
+        return (inputBuffer >>> bitsLeft) & 1;
     }
 
     /**
-     * Write a byte to output stream.
-     * @param num byte in range [0,255]
+     * Read a byte from stream.
+     * @return byte as integer value in range [0,255]. -1 if end of stream is reached.
      * @throws IOException if an I/O exception occurs.
      */
-    public void writeByte(byte num) throws IOException {
-        output.write(num);
+    public int readByte() throws IOException {
+        return input.read();
     }
 
     /**
-     * Close underlying byte output stream. If there are bits left to write
-     * to reach byte boundary, fill with zeroes.
+     * Close underlying byte stream.
      * @throws IOException if an I/O exception occurs.
      */
     public void close() throws IOException {
-        while (this.bitsLeft != 8) {
-            write(0);
-        }
-        this.output.close();
+        this.inputBuffer = 0;
+        this.bitsLeft = 0;
+        input.close();
     }
 
 }
