@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="8.10">
-<file name="/home/aki/Source/huff-lzw/src/main/java/BitInputStream.java">
+<file name="/home/aki/Source/huff-lzw/src/main/java/io/BitInputStream.java">
 </file>
-<file name="/home/aki/Source/huff-lzw/src/main/java/BitOutputStream.java">
+<file name="/home/aki/Source/huff-lzw/src/main/java/io/BitOutputStream.java">
 </file>
 </checkstyle>
