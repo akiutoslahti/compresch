@@ -45,7 +45,7 @@ public class BitInputStream implements AutoCloseable {
     }
 
     /**
-     * Read next bit from the underlying byte stream.
+     * Read next bit from stream.
      * @return 0 or 1 as next bit. -1 if end of stream is reached.
      * @throws IOException if an I/O exception occurs.
      */
@@ -65,8 +65,8 @@ public class BitInputStream implements AutoCloseable {
     }
 
     /**
-     * Read a byte from input stream.
-     * @return byte value in range [0,255]. -1 if end of stream is reached.
+     * Read a byte from stream.
+     * @return byte as integer value in range [0,255]. -1 if end of stream is reached.
      * @throws IOException if an I/O exception occurs.
      */
     public int readByte() throws IOException {
@@ -78,6 +78,8 @@ public class BitInputStream implements AutoCloseable {
      * @throws IOException if an I/O exception occurs.
      */
     public void close() throws IOException {
+        this.inputBuffer = 0;
+        this.bitsLeft = 0;
         input.close();
     }
 
