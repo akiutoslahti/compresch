@@ -19,8 +19,14 @@ For LZW the basis for the algorithm will be a fixed length hash based dictionary
 **Additional datastructures**
 Dynamic list implementation will propably be also needed.
 
-## Behaviour goals
-Goal is to produce a command line program which can compress and decompress files. For compression the method of compression and single input and output targets are provided by command line parameneters. For decompression single input and output arguments provided by command line parameters. Compressed files are attached with a header which holds information about what compression method was used in compression stage.
+## Behaviour
+Goal is to produce a command line program which can compress and decompress files. Input and output files are provided as command line parameters to program. For encoding also compression method shall be provided.
+
+### Input file
+No distinction will be made for input data type. Input may be plain text or binary.
+
+### Output file
+Compressed files will be attached a short header which informs decoder about what compression method was used in compression, so that decoding can be automated. In case of Huffman code there will be additional canonical codebook after header. Decoded data will follow after that and end of compressed data shall be identified by pseudo-EOF.
 
 ## Time and space complexity goals
 **Huffman coding**
