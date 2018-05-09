@@ -7,28 +7,28 @@ How to implement lossless data compression (efficiently)?
 Study and implementation of two widely known lossless data compression algorithms complemented by performance testing with diverse input data.
 
 ### Algorithms
-Huffman coding and Lempel-Ziv-Welch are both long standing industry standards on lossless data compression algorithms. Huffman coding will be implemented as canonical Huffman coding will be implemented as Canonical Huffman code to allow efficient storage of codebook within compressed file. Main goal is to study these two algorithms and come up with understanding how they work, compete against and complement each other.
+Huffman coding and Lempel-Ziv-Welch are both long standing industry standards on lossless data compression algorithms. Huffman coding will be implemented as Canonical Huffman code to allow efficient storage of codebook within compressed file. Main goal is to study these two algorithms and come up with understanding how they work.
 
 ### Data structures
 **Huffman coding** 
-For Huffman coding a frequency sorted binary tree(also known as Huffman tree) and priority queue are needed.
+For Huffman coding trie and priority queue will be needed.
 
 **Lempel-Ziv-Welch** 
-For LZW the basis for the algorithm will be a fixed length hash based dictionary.
+For LZW either trie or hashmap based dictionary will be needed.
 
 **Additional datastructures**
 Dynamic list implementation will propably be also needed.
 
 ## Behaviour
-Goal is to produce a command line program which can compress and decompress files. Input and output files are provided as command line parameters to program. For encoding also compression method shall be provided.
+Goal is to produce a command line program which can compress and decompress files. Input and output files are provided as command line parameters to program. For encoding also compression method shall be provided as a parameter.
 
 ### Input file
-No distinction will be made for input data type. Input may be plain text or binary.
+No distinction will be made for input data type. Input may be everything between plain text and binary.
 
 ### Output file
 Compressed files will be attached a short header which informs decoder about what compression method was used in compression, so that decoding can be automated. In case of Huffman code there will be additional canonical codebook after header. Decoded data will follow after that and end of compressed data shall be identified by pseudo-EOF.
 
-## Time and space complexity goals
+## Target time and space complexity
 **Huffman coding**
 Time complexity: O(n log n), space complexity: O(n)
 
