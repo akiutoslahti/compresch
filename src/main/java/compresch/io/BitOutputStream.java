@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package io;
+package compresch.io;
 
 import java.io.IOException;
 import java.io.OutputStream;
