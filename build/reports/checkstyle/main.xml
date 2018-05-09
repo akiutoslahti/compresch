@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="8.10">
+<file name="/home/aki/Source/huff-lzw/src/main/java/compresch/huff/HuffmanNode.java">
+</file>
 <file name="/home/aki/Source/huff-lzw/src/main/java/compresch/io/BitInputStream.java">
 </file>
 <file name="/home/aki/Source/huff-lzw/src/main/java/compresch/io/BitOutputStream.java">

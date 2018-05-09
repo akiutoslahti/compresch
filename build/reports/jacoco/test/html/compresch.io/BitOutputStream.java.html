@@ -72,10 +72,14 @@ public class BitOutputStream implements AutoCloseable {
      * Write a byte to output stream.
      * @param num byte in range [0,255]
      * @throws IOException if an I/O exception occurs.
+     * @throws IllegalArgumentException if parameter is not a byte value.
      */
     public void writeByte(byte num) throws IOException {
-<span class="fc" id="L77">        output.write(num);</span>
-<span class="fc" id="L78">    }</span>
+<span class="pc bpc" id="L78" title="2 of 4 branches missed.">        if (num &lt; 0 || num &gt; 255) {</span>
+<span class="nc" id="L79">            throw new IllegalArgumentException();</span>
+        }
+<span class="fc" id="L81">        output.write(num);</span>
+<span class="fc" id="L82">    }</span>
 
     /**
      * Close underlying byte output stream. If there are bits left to write
@@ -83,11 +87,11 @@ public class BitOutputStream implements AutoCloseable {
      * @throws IOException if an I/O exception occurs.
      */
     public void close() throws IOException {
-<span class="fc bfc" id="L86" title="All 2 branches covered.">        while (this.bitsLeft != 8) {</span>
-<span class="fc" id="L87">            write(0);</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        while (this.bitsLeft != 8) {</span>
+<span class="fc" id="L91">            write(0);</span>
         }
-<span class="fc" id="L89">        this.output.close();</span>
-<span class="fc" id="L90">    }</span>
+<span class="fc" id="L93">        this.output.close();</span>
+<span class="fc" id="L94">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

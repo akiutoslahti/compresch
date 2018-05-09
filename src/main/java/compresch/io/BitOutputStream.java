@@ -72,8 +72,12 @@ public class BitOutputStream implements AutoCloseable {
      * Write a byte to output stream.
      * @param num byte in range [0,255]
      * @throws IOException if an I/O exception occurs.
+     * @throws IllegalArgumentException if parameter is not a byte value.
      */
     public void writeByte(byte num) throws IOException {
+        if (num < 0 || num > 255) {
+            throw new IllegalArgumentException();
+        }
         output.write(num);
     }
 
