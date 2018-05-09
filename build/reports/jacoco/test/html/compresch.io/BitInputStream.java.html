@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BitInputStream.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">huff-lzw</a> &gt; <a href="index.source.html" class="el_package">io</a> &gt; <span class="el_source">BitInputStream.java</span></div><h1>BitInputStream.java</h1><pre class="source lang-java linenums">/*
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BitInputStream.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">huff-lzw</a> &gt; <a href="index.source.html" class="el_package">compresch.io</a> &gt; <span class="el_source">BitInputStream.java</span></div><h1>BitInputStream.java</h1><pre class="source lang-java linenums">/*
  * MIT License
  *
  * Copyright (c) 2018 Aki Utoslahti
@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package io;
+package compresch.io;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,12 +42,12 @@ public class BitInputStream implements AutoCloseable {
      * @param input byte input stream
      * @throws NullPointerException when null is provided as param
      */
-<span class="nc" id="L45">    public BitInputStream(InputStream input) {</span>
-<span class="nc" id="L46">        Objects.requireNonNull(input);</span>
-<span class="nc" id="L47">        this.input = input;</span>
-<span class="nc" id="L48">        inputBuffer = 0;</span>
-<span class="nc" id="L49">        bitsLeft = 0;</span>
-<span class="nc" id="L50">    }</span>
+<span class="fc" id="L45">    public BitInputStream(InputStream input) {</span>
+<span class="fc" id="L46">        Objects.requireNonNull(input);</span>
+<span class="fc" id="L47">        this.input = input;</span>
+<span class="fc" id="L48">        inputBuffer = 0;</span>
+<span class="fc" id="L49">        bitsLeft = 0;</span>
+<span class="fc" id="L50">    }</span>
 
     /**
      * Read next bit from stream.
@@ -55,18 +55,18 @@ public class BitInputStream implements AutoCloseable {
      * @throws IOException if an I/O exception occurs.
      */
     public int read() throws IOException {
-<span class="nc bnc" id="L58" title="All 2 branches missed.">        if (inputBuffer == -1) {</span>
-<span class="nc" id="L59">            return -1;</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (inputBuffer == -1) {</span>
+<span class="fc" id="L59">            return -1;</span>
         }
-<span class="nc bnc" id="L61" title="All 2 branches missed.">        if (bitsLeft == 0) {</span>
-<span class="nc" id="L62">            inputBuffer = input.read();</span>
-<span class="nc bnc" id="L63" title="All 2 branches missed.">            if (inputBuffer == -1) {</span>
-<span class="nc" id="L64">                return -1;</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (bitsLeft == 0) {</span>
+<span class="fc" id="L62">            inputBuffer = input.read();</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">            if (inputBuffer == -1) {</span>
+<span class="fc" id="L64">                return -1;</span>
             }
-<span class="nc" id="L66">            bitsLeft = 8;</span>
+<span class="fc" id="L66">            bitsLeft = 8;</span>
         }
-<span class="nc" id="L68">        bitsLeft--;</span>
-<span class="nc" id="L69">        return (inputBuffer &gt;&gt;&gt; bitsLeft) &amp; 1;</span>
+<span class="fc" id="L68">        bitsLeft--;</span>
+<span class="fc" id="L69">        return (inputBuffer &gt;&gt;&gt; bitsLeft) &amp; 1;</span>
     }
 
     /**
@@ -75,7 +75,7 @@ public class BitInputStream implements AutoCloseable {
      * @throws IOException if an I/O exception occurs.
      */
     public int readByte() throws IOException {
-<span class="nc" id="L78">        return input.read();</span>
+<span class="fc" id="L78">        return input.read();</span>
     }
 
     /**
@@ -83,10 +83,10 @@ public class BitInputStream implements AutoCloseable {
      * @throws IOException if an I/O exception occurs.
      */
     public void close() throws IOException {
-<span class="nc" id="L86">        this.inputBuffer = 0;</span>
-<span class="nc" id="L87">        this.bitsLeft = 0;</span>
-<span class="nc" id="L88">        input.close();</span>
-<span class="nc" id="L89">    }</span>
+<span class="fc" id="L86">        this.inputBuffer = 0;</span>
+<span class="fc" id="L87">        this.bitsLeft = 0;</span>
+<span class="fc" id="L88">        input.close();</span>
+<span class="fc" id="L89">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

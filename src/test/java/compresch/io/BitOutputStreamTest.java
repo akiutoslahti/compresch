@@ -33,7 +33,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.Arrays;
 import org.junit.Test;
 
 public class BitOutputStreamTest {
@@ -118,7 +117,7 @@ public class BitOutputStreamTest {
             File testFile = new File("test.txt");
             BitOutputStream output = new BitOutputStream(new BufferedOutputStream(
                     new FileOutputStream(testFile)));
-            byte[] numbers = new byte[]{7, 2, 5, 4, 9};
+            byte[] numbers = new byte[]{46, 127, 99, 12, 6};
             byte[] numbersRead = new byte[numbers.length];
             for (int i = 0; i < numbers.length; i++) {
                 output.writeByte((numbers[i]));
@@ -130,7 +129,7 @@ public class BitOutputStreamTest {
             }
             input.close();
             testFile.delete();
-            assertEquals(Arrays.toString(numbers), Arrays.toString(numbersRead));
+            assertArrayEquals(numbers, numbersRead);
         } catch (Exception e) {
 
         }
