@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="compresch.io.BitInputStreamTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2018-05-09T20:44:14" hostname="aeykysti" time="0.007">
+<testsuite name="compresch.io.BitInputStreamTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2018-05-09T21:23:33" hostname="aeykysti" time="0.005">
   <properties/>
-  <testcase name="newBitInputStreamTest" classname="compresch.io.BitInputStreamTest" time="0.003"/>
+  <testcase name="newBitInputStreamTest" classname="compresch.io.BitInputStreamTest" time="0.002"/>
   <testcase name="readTest" classname="compresch.io.BitInputStreamTest" time="0.001"/>
-  <testcase name="readByteTest" classname="compresch.io.BitInputStreamTest" time="0.002"/>
-  <testcase name="readEndOfFileTest" classname="compresch.io.BitInputStreamTest" time="0.001"/>
+  <testcase name="readByteTest" classname="compresch.io.BitInputStreamTest" time="0.001"/>
+  <testcase name="readEndOfFileTest" classname="compresch.io.BitInputStreamTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
