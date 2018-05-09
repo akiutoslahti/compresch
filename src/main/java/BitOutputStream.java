@@ -26,6 +26,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Objects;
 
+/**
+ * Utility class for writing data bit by bit using java.io.OutpuStream as a basis.
+ */
 public class BitOutputStream implements AutoCloseable {
 
     private OutputStream output;

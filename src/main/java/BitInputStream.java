@@ -26,6 +26,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
+/**
+ * Utility class for reading data bit by bit using java.io.InputStream as a basis.
+ */
 public class BitInputStream implements AutoCloseable {
 
     private InputStream input;
