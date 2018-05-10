@@ -9,3 +9,4 @@ This repository is for course **Laboratory work: Data structures and algorithms*
 [Project specification](docs/01-SPECIFICATION.md)
 
 ## Weekly reports
+* [Week 1](docs/WEEK1.md)

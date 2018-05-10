@@ -24,9 +24,9 @@
 
 package compresch.huff;
 
-import org.junit.Test;
-
 import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 public class HuffmanNodeTest {
 
@@ -35,12 +35,12 @@ public class HuffmanNodeTest {
         try {
             new HuffmanNode(257, 11);
             fail();
-        } catch(Exception e) {
+        } catch (Exception e) {
         }
         try {
             new HuffmanNode(-1, 11);
             fail();
-        } catch(Exception e) {
+        } catch (Exception e) {
         }
         HuffmanNode node1 = new HuffmanNode(128, 10);
         assertNotNull(node1);
