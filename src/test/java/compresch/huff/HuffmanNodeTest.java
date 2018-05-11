@@ -31,7 +31,7 @@ import org.junit.Test;
 public class HuffmanNodeTest {
 
     @Test
-    public void newHuffmanNodeTest1() {
+    public void constructHuffmanNodeTest1() {
         try {
             new HuffmanNode(257, 11);
             fail();

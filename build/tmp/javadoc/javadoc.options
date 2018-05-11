@@ -3,6 +3,10 @@
 -doctitle 'huff-lzw API'
 -quiet 
 -windowtitle 'huff-lzw API'
+'/home/aki/Source/huff-lzw/src/main/java/compresch/huff/HuffmanTree.java'
 '/home/aki/Source/huff-lzw/src/main/java/compresch/huff/HuffmanNode.java'
+'/home/aki/Source/huff-lzw/src/main/java/compresch/huff/HuffmanFrequencyTable.java'
+'/home/aki/Source/huff-lzw/src/main/java/compresch/huff/HuffmanCodeBook.java'
+'/home/aki/Source/huff-lzw/src/main/java/compresch/huff/HuffmanCanonicalCode.java'
 '/home/aki/Source/huff-lzw/src/main/java/compresch/io/BitInputStream.java'
 '/home/aki/Source/huff-lzw/src/main/java/compresch/io/BitOutputStream.java'

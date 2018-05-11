@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HuffmanCanonicalCode.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">huff-lzw</a> &gt; <a href="index.source.html" class="el_package">compresch.huff</a> &gt; <span class="el_source">HuffmanCanonicalCode.java</span></div><h1>HuffmanCanonicalCode.java</h1><pre class="source lang-java linenums">/*
+ * MIT License
+ *
+ * Copyright (c) 2018 Aki Utoslahti
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+package compresch.huff;
+
+import java.util.ArrayList;
+import java.util.List;
+
+<span class="fc" id="L30">public class HuffmanCanonicalCode {</span>
+
+    private HuffmanNode canonRoot;
+
+    /**
+     * Build a canonical Huffman tree from the lengths of initial codewords.
+     * @param codeLengths array of Huffman codeword lengths.
+     */
+    public void buildCanonCode(int[] codeLengths) {
+<span class="fc" id="L39">        List&lt;HuffmanNode&gt; nodes = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        for (int i = max(codeLengths); i &gt;= 0; i--) {</span>
+<span class="fc" id="L41">            List&lt;HuffmanNode&gt; newNodes = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">            if (i &gt; 0) {</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">                for (int j = 0; j &lt; codeLengths.length; j++) {</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">                    if (codeLengths[j] == i) {</span>
+<span class="fc" id="L45">                        newNodes.add(new HuffmanNode(j));</span>
+                    }
+                }
+            }
+<span class="fc bfc" id="L49" title="All 2 branches covered.">            for (int j = 0; j &lt; nodes.size(); j += 2) {</span>
+<span class="fc" id="L50">                newNodes.add(new HuffmanNode(nodes.get(j), nodes.get(j + 1)));</span>
+            }
+<span class="fc" id="L52">            nodes = newNodes;</span>
+        }
+<span class="fc" id="L54">        this.canonRoot = nodes.get(0);</span>
+<span class="fc" id="L55">    }</span>
+
+    /**
+     * Returns root of canonical code tree.
+     * @return root node of canonical Huffman tree.
+     */
+    public HuffmanNode getCanonRoot() {
+<span class="fc" id="L62">        return this.canonRoot;</span>
+    }
+
+    /**
+     * Find maximum length from array of codeword lengths.
+     * @param codeLengths array of Huffman codeword lengths.
+     * @return length of the longest codeword.
+     */
+    private int max(int[] codeLengths) {
+<span class="fc" id="L71">        int max = 0;</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        for (int i = 0; i &lt; codeLengths.length; i++) {</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">            if (codeLengths[i] &gt; max) {</span>
+<span class="fc" id="L74">                max = codeLengths[i];</span>
+            }
+        }
+<span class="fc" id="L77">        return max;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

@@ -59,11 +59,11 @@ public class BitInputStreamTest {
 
     @After
     public void tearDown() {
-        this.testFile.delete();
+        assertTrue(this.testFile.delete());
     }
 
     @Test
-    public void newBitInputStreamTest() {
+    public void constructBitInputStreamTest() {
         try {
             new BitInputStream(null);
             fail();

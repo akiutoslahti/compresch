@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HuffmanTree.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">huff-lzw</a> &gt; <a href="index.source.html" class="el_package">compresch.huff</a> &gt; <span class="el_source">HuffmanTree.java</span></div><h1>HuffmanTree.java</h1><pre class="source lang-java linenums">/*
+ * MIT License
+ *
+ * Copyright (c) 2018 Aki Utoslahti
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+package compresch.huff;
+
+import java.util.PriorityQueue;
+
+public class HuffmanTree {
+
+    private PriorityQueue&lt;HuffmanNode&gt; auxHeap;
+    private HuffmanNode root;
+    private int[] codeLengths;
+
+    /**
+     * Construct new empty Huffman tree.
+     */
+<span class="fc" id="L38">    public HuffmanTree() {</span>
+<span class="fc" id="L39">        this.auxHeap = new PriorityQueue&lt;&gt;();</span>
+<span class="fc" id="L40">        this.root = null;</span>
+<span class="fc" id="L41">        this.codeLengths = new int[257];</span>
+<span class="fc" id="L42">    }</span>
+
+    /**
+     * Construct a Huffman tree from frequency table.
+     * @param freqTbl Input file byte frequencies.
+     */
+    public void buildHuffmanTree(HuffmanFrequencyTable freqTbl) {
+<span class="fc" id="L49">        initAuxHeap(freqTbl);</span>
+<span class="fc" id="L50">        assembleHuffmanTree();</span>
+<span class="fc" id="L51">        populateCodeLengths();</span>
+<span class="fc" id="L52">        HuffmanCanonicalCode canonCode = new HuffmanCanonicalCode();</span>
+<span class="fc" id="L53">        canonCode.buildCanonCode(this.codeLengths);</span>
+<span class="fc" id="L54">        this.root = canonCode.getCanonRoot();</span>
+<span class="fc" id="L55">    }</span>
+
+    /**
+     * Construct a Huffman tree from codeword lengths.
+     * @param codeLengths array of Huffman codeword lengths.
+     */
+    public void buildHuffmanTree(int[] codeLengths) {
+<span class="nc" id="L62">        HuffmanCanonicalCode canonCode = new HuffmanCanonicalCode();</span>
+<span class="nc" id="L63">        canonCode.buildCanonCode(codeLengths);</span>
+<span class="nc" id="L64">        this.root = canonCode.getCanonRoot();</span>
+<span class="nc" id="L65">    }</span>
+
+    /**
+     * Get root node of Huffman tree.
+     * @return root node of Huffman tree.
+     */
+    public HuffmanNode getRoot() {
+<span class="fc" id="L72">        return this.root;</span>
+    }
+
+    /**
+     * Add leaf nodes to auxiliary heap for construction of Huffman tree.
+     * @param freqTbl Input file byte frequencies.
+     */
+    private void initAuxHeap(HuffmanFrequencyTable freqTbl) {
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        for (int i = 0; i &lt; 257; i++) {</span>
+<span class="fc" id="L81">            int frequency = freqTbl.getFrequency(i);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">            if (frequency &gt; 0) {</span>
+<span class="fc" id="L83">                this.auxHeap.add(new HuffmanNode(i, frequency));</span>
+            }
+        }
+<span class="fc" id="L86">    }</span>
+
+    /**
+     * Assemble Huffman tree from least needed leaves up to the root.
+     */
+    private void assembleHuffmanTree() {
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        while (this.auxHeap.size() &gt; 1) {</span>
+<span class="fc" id="L93">            HuffmanNode left = auxHeap.poll();</span>
+<span class="fc" id="L94">            HuffmanNode right = auxHeap.poll();</span>
+<span class="fc" id="L95">            auxHeap.add(new HuffmanNode(left, right));</span>
+<span class="fc" id="L96">        }</span>
+<span class="fc" id="L97">        this.root = auxHeap.poll();</span>
+<span class="fc" id="L98">    }</span>
+
+    private void populateCodeLengths() {
+<span class="fc" id="L101">        dfsTraversal(this.root, 0);</span>
+<span class="fc" id="L102">    }</span>
+
+    private void dfsTraversal(HuffmanNode node, int depth) {
+<span class="fc bfc" id="L105" title="All 2 branches covered.">        if (node.isLeaf()) {</span>
+<span class="fc" id="L106">            codeLengths[node.getSymbol()] = depth;</span>
+<span class="fc" id="L107">            return;</span>
+        }
+<span class="fc" id="L109">        dfsTraversal(node.getLeft(), depth + 1);</span>
+<span class="fc" id="L110">        dfsTraversal(node.getRight(), depth + 1);</span>
+<span class="fc" id="L111">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>

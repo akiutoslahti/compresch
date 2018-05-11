@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="compresch.huff.HuffmanFrequencyTableTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2018-05-10T20:54:34" hostname="aeykysti" time="0.001">
+  <properties/>
+  <testcase name="constructHuffmanFrequencyTable" classname="compresch.huff.HuffmanFrequencyTableTest" time="0.0"/>
+  <testcase name="buildFreqTableTest" classname="compresch.huff.HuffmanFrequencyTableTest" time="0.0"/>
+  <testcase name="buildFreqTableFileNotExistsTest" classname="compresch.huff.HuffmanFrequencyTableTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

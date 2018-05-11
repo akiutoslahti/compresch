@@ -38,7 +38,7 @@ import org.junit.Test;
 public class BitOutputStreamTest {
 
     @Test
-    public void newBitOutPutStreamTest() {
+    public void constructBitOutPutStreamTest() {
         try {
             new BitOutputStream(null);
             fail();
@@ -47,7 +47,7 @@ public class BitOutputStreamTest {
         try {
             File testFile = new File("test.txt");
             new BitOutputStream(new BufferedOutputStream(new FileOutputStream(testFile)));
-            testFile.delete();
+            assertTrue(testFile.delete());
         } catch (FileNotFoundException fnfe) {
             System.out.println("Error: " + fnfe);
         }
@@ -68,7 +68,7 @@ public class BitOutputStreamTest {
             InputStream input = new BufferedInputStream(new FileInputStream(testFile));
             numberRead = input.read();
             input.close();
-            testFile.delete();
+            assertTrue(testFile.delete());
             assertEquals(170, numberRead);
         } catch (Exception e) {
 
@@ -90,7 +90,7 @@ public class BitOutputStreamTest {
             InputStream input = new BufferedInputStream(new FileInputStream(testFile));
             numberRead = input.read();
             input.close();
-            testFile.delete();
+            assertTrue(testFile.delete());
             assertEquals(168, numberRead);
         } catch (Exception e) {
 
@@ -108,7 +108,7 @@ public class BitOutputStreamTest {
         } catch (Exception e) {
 
         }
-        testFile.delete();
+        assertTrue(testFile.delete());
     }
 
     @Test
@@ -128,7 +128,7 @@ public class BitOutputStreamTest {
                 numbersRead[i] = (byte)(input.read());
             }
             input.close();
-            testFile.delete();
+            assertTrue(testFile.delete());
             assertArrayEquals(numbers, numbersRead);
         } catch (Exception e) {
 
