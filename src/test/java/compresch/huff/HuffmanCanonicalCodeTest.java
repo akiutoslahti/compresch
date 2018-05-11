@@ -24,63 +24,46 @@
 
 package compresch.huff;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class HuffmanTreeTest {
+public class HuffmanCanonicalCodeTest {
 
-    private File testFile;
-    private HuffmanFrequencyTable frequencyTable;
-
-    @Before
-    public void setUp() {
-        this.testFile = new File("test.txt");
-        try {
-            PrintWriter output = new PrintWriter(this.testFile);
-            output.println("AYBABTU");
-            output.close();
-            this.frequencyTable = new HuffmanFrequencyTable();
-            this.frequencyTable.buildFreqTable(this.testFile);
-        } catch (Exception e) {
-        }
-    }
-
-    @After
-    public void tearDown() {
-        assertTrue(this.testFile.delete());
+    @Test
+    public void constructHuffmanCanonicalCodeTest() {
+        HuffmanCanonicalCode huffmanCanonicalCode = new HuffmanCanonicalCode();
+        assertNotNull(huffmanCanonicalCode);
     }
 
     @Test
-    public void constructHuffmanTreeTest() {
-        HuffmanTree huffmanTree = new HuffmanTree();
-        assertNotNull(huffmanTree);
+    public void getCanonRootNullTest() {
+        HuffmanCanonicalCode huffmanCanonicalCode = new HuffmanCanonicalCode();
+        assertNull(huffmanCanonicalCode.getCanonRoot());
     }
 
     @Test
-    public void getRootNullTest() {
-        HuffmanTree huffmanTree = new HuffmanTree();
-        assertNull(huffmanTree.getRoot());
-    }
-
-    @Test
-    public void buildHuffmanTreeFrequencyTableTest() {
-        HuffmanTree huffmanTree = new HuffmanTree();
-        huffmanTree.buildHuffmanTree(this.frequencyTable);
-        HuffmanNode root = huffmanTree.getRoot();
-        assertTrue(root instanceof HuffmanNode);
+    public void buildCanonCodeTest() {
+        int[] codeLengths = new int[257];
+        codeLengths[(int)('\n')] = 3;
+        codeLengths[(int)('A')] = 3;
+        codeLengths[(int)('B')] = 2;
+        codeLengths[(int)('T')] = 3;
+        codeLengths[(int)('U')] = 3;
+        codeLengths[(int)('Y')] = 3;
+        codeLengths[256] = 3;
+        HuffmanCanonicalCode huffmanCanonicalCode = new HuffmanCanonicalCode();
+        huffmanCanonicalCode.buildCanonCode(codeLengths);
+        HuffmanNode canonRoot = huffmanCanonicalCode.getCanonRoot();
+        assertTrue(canonRoot instanceof HuffmanNode);
         List<String> expectedCodes = new ArrayList<>(
                 Arrays.asList("00", "010", "011", "100", "101", "110", "111"));
         List<String> actualCodes = new ArrayList<>();
-        checkTree(root, actualCodes, "");
+        checkTree(canonRoot, actualCodes, "");
         assertArrayEquals(expectedCodes.toArray(), actualCodes.toArray());
     }
 
@@ -92,10 +75,4 @@ public class HuffmanTreeTest {
         checkTree(node.getLeft(), actualCodes, currentPath + "0");
         checkTree(node.getRight(), actualCodes, currentPath + "1");
     }
-
-    @Test
-    public void buildHuffmanTreeCodeLengthsTest() {
-
-    }
-
 }
