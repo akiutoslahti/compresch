@@ -1,7 +1,8 @@
-# Huffman coding and Lempel-Ziv-Welch
+#Compresch
+## Huffman coding and Lempel-Ziv-Welch
 
-![travis](https://travis-ci.org/akiutoslahti/huff-lzw.svg?branch=master)
-[![Code Coverage](https://img.shields.io/codecov/c/github/akiutoslahti/huff-lzw/master.svg)](https://codecov.io/github/akiutoslahti/huff-lzw/)
+![travis](https://travis-ci.org/akiutoslahti/compresch.svg?branch=master)
+[![Code Coverage](https://img.shields.io/codecov/c/github/akiutoslahti/compresch/master.svg)](https://codecov.io/github/akiutoslahti/compresch/)
 
 This repository is for course **Laboratory work: Data structures and algorithms** in **University of Helsinki**.
 
