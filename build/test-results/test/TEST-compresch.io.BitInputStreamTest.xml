@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="compresch.io.BitInputStreamTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2018-05-10T20:54:34" hostname="aeykysti" time="0.003">
+<testsuite name="compresch.io.BitInputStreamTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2018-05-11T05:07:19" hostname="aeykysti" time="0.008">
   <properties/>
-  <testcase name="readTest" classname="compresch.io.BitInputStreamTest" time="0.001"/>
+  <testcase name="readTest" classname="compresch.io.BitInputStreamTest" time="0.004"/>
   <testcase name="constructBitInputStreamTest" classname="compresch.io.BitInputStreamTest" time="0.001"/>
   <testcase name="readByteTest" classname="compresch.io.BitInputStreamTest" time="0.0"/>
   <testcase name="readEndOfFileTest" classname="compresch.io.BitInputStreamTest" time="0.001"/>
