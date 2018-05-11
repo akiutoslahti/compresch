@@ -1,4 +1,4 @@
-#Compresch
+# Compresch
 ## Huffman coding and Lempel-Ziv-Welch
 
 ![travis](https://travis-ci.org/akiutoslahti/compresch.svg?branch=master)
