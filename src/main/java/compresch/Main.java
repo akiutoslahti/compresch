@@ -28,10 +28,11 @@ import compresch.huff.HuffmanDecoder;
 import compresch.huff.HuffmanEncoder;
 
 import java.io.File;
+import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
 
         if (args.length != 3) {
             throw new IllegalArgumentException("Faulty paramenters.");
@@ -51,7 +52,7 @@ public class Main {
 
     }
 
-    private static void compress(File input, File output) {
+    private static void compress(File input, File output) throws IOException {
         HuffmanEncoder encoder = new HuffmanEncoder(input, output);
         encoder.encode();
     }

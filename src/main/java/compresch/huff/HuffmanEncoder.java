@@ -59,36 +59,26 @@ public class HuffmanEncoder {
     /**
      * Public method to execute encode.
      */
-    public void encode() {
-        getCodetable();
-        try {
-            InputStream input = new BufferedInputStream(new FileInputStream(this.inputFile));
-            BitOutputStream output = new BitOutputStream(new BufferedOutputStream(
-                    new FileOutputStream(this.outputFile)));
+    public void encode() throws IOException{
+        getCodeBook();
+        InputStream input = new BufferedInputStream(new FileInputStream(this.inputFile));
+        BitOutputStream output = new BitOutputStream(new BufferedOutputStream(
+                new FileOutputStream(this.outputFile)));
 
-            writeCodeLengths(output);
-            writeEncoded(input, output);
+        writeCodeLengths(output);
+        writeEncoded(input, output);
 
-            input.close();
-            output.close();
-        } catch (FileNotFoundException fnfe) {
-            System.out.println("Input file could not be found." + fnfe);
-        } catch (IOException ioe) {
-            System.out.println("Input file could not be read." + ioe);
-        }
+        input.close();
+        output.close();
     }
 
     /**
      * Private helper method for encoding.
      * Constructs a code table from given input.
      */
-    private void getCodetable() {
+    private void getCodeBook() throws IOException{
         HuffmanFrequencyTable freqTable = new HuffmanFrequencyTable();
-        try {
-            freqTable.buildFreqTable(this.inputFile);
-        } catch (IOException ioe) {
-
-        }
+        freqTable.buildFreqTable(this.inputFile);
         HuffmanTree huffTree = new HuffmanTree();
         huffTree.buildHuffmanTree(freqTable);
         this.codeBook.buildCodeBook(huffTree.getRoot());
