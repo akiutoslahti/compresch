@@ -34,10 +34,10 @@ public class HuffmanCodeBook {
 
     /**
      * Populate code table with codes from Huffman tree.
-     * @param huffmanTree full constructed Huffman tree.
+     * @param root root node of fully constructed Huffman tree.
      */
-    public void buildCodeTable(HuffmanTree huffmanTree) {
-        dfsTraverse(huffmanTree.getRoot(), "");
+    public void buildCodeBook(HuffmanNode root) {
+        dfsTraverse(root, "");
     }
 
     /**

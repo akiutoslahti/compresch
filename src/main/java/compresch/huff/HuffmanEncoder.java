@@ -91,7 +91,7 @@ public class HuffmanEncoder {
         }
         HuffmanTree huffTree = new HuffmanTree();
         huffTree.buildHuffmanTree(freqTable);
-        this.codeBook.buildCodeTable(huffTree);
+        this.codeBook.buildCodeBook(huffTree.getRoot());
     }
 
     /**
