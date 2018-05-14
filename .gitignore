@@ -3,4 +3,6 @@ out/
 .gradle
 build/
 
+*.iml
+
 !gradle-wrapper.jar

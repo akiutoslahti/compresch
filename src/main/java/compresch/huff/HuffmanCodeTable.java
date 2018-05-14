@@ -27,7 +27,7 @@ package compresch.huff;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HuffmanCodeBook {
+public class HuffmanCodeTable {
 
     @SuppressWarnings("unchecked")
     private List<Integer>[] codes = new ArrayList[257];
