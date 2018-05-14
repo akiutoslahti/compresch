@@ -40,7 +40,7 @@ public class HuffmanEncoder {
 
     private File inputFile;
     private File outputFile;
-    private HuffmanCodeTable codeTable;
+    private HuffmanCodeBook codeBook;
 
     /**
      * Construct encoder to encode Huffman coding.
@@ -53,7 +53,7 @@ public class HuffmanEncoder {
         Objects.requireNonNull(output);
         this.inputFile = input;
         this.outputFile = output;
-        this.codeTable = new HuffmanCodeTable();
+        this.codeBook = new HuffmanCodeBook();
     }
 
     /**
@@ -91,7 +91,7 @@ public class HuffmanEncoder {
         }
         HuffmanTree huffTree = new HuffmanTree();
         huffTree.buildHuffmanTree(freqTable);
-        this.codeTable.buildCodeTable(huffTree);
+        this.codeBook.buildCodeTable(huffTree);
     }
 
     /**
@@ -101,7 +101,7 @@ public class HuffmanEncoder {
      */
     private void writeCodeLengths(BitOutputStream output) throws IOException {
         for (int i = 0; i < 257; i++) {
-            List<Integer> bits = codeTable.getCode(i);
+            List<Integer> bits = codeBook.getCode(i);
             if (bits == null) {
                 output.writeByte((byte)0);
             } else {
@@ -135,7 +135,7 @@ public class HuffmanEncoder {
      * @throws IOException if an I/O exception occurs.
      */
     private void writeSymbol(int symbol, BitOutputStream output) throws IOException {
-        List<Integer> bits = codeTable.getCode(symbol);
+        List<Integer> bits = codeBook.getCode(symbol);
         for (int bit : bits) {
             output.write(bit);
         }

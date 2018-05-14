@@ -24,6 +24,8 @@
 
 package compresch.huff;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class HuffmanTree {
@@ -49,9 +51,7 @@ public class HuffmanTree {
         initAuxHeap(freqTbl);
         assembleHuffmanTree();
         populateCodeLengths();
-        HuffmanCanonicalCode canonCode = new HuffmanCanonicalCode();
-        canonCode.buildCanonCode(this.codeLengths);
-        this.root = canonCode.getCanonRoot();
+        buildCanonicalTree();
     }
 
     /**
@@ -59,9 +59,8 @@ public class HuffmanTree {
      * @param codeLengths array of Huffman codeword lengths.
      */
     public void buildHuffmanTree(int[] codeLengths) {
-        HuffmanCanonicalCode canonCode = new HuffmanCanonicalCode();
-        canonCode.buildCanonCode(codeLengths);
-        this.root = canonCode.getCanonRoot();
+        this.codeLengths = codeLengths;
+        buildCanonicalTree();
     }
 
     /**
@@ -108,6 +107,35 @@ public class HuffmanTree {
         }
         dfsTraversal(node.getLeft(), depth + 1);
         dfsTraversal(node.getRight(), depth + 1);
+    }
+
+    private void buildCanonicalTree() {
+        List<HuffmanNode> nodes = new ArrayList<>();
+        for (int i = maxCodeLength(); i >= 0; i--) {
+            List<HuffmanNode> newNodes = new ArrayList<>();
+            if (i > 0) {
+                for (int j = 0; j < codeLengths.length; j++) {
+                    if (codeLengths[j] == i) {
+                        newNodes.add(new HuffmanNode(j));
+                    }
+                }
+            }
+            for (int j = 0; j < nodes.size(); j += 2) {
+                newNodes.add(new HuffmanNode(nodes.get(j), nodes.get(j + 1)));
+            }
+            nodes = newNodes;
+        }
+        this.root = nodes.get(0);
+    }
+
+    private int maxCodeLength() {
+        int max = 0;
+        for (int i = 0; i < this.codeLengths.length; i++) {
+            if (this.codeLengths[i] > max) {
+                max = this.codeLengths[i];
+            }
+        }
+        return max;
     }
 
 }

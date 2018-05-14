@@ -27,7 +27,7 @@ package compresch.huff;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HuffmanCodeTable {
+public class HuffmanCodeBook {
 
     @SuppressWarnings("unchecked")
     private List<Integer>[] codes = new ArrayList[257];
@@ -59,9 +59,9 @@ public class HuffmanCodeTable {
     }
 
     /**
-     * Return a List containing symbols huffman code.
+     * Return a list containing bits which make for a codeword of a symbol.
      * @param symbol byte value as unsigned integer.
-     * @return List containing bits of symbols huffman code.
+     * @return List containing bits of codeword.
      */
     public List<Integer> getCode(int symbol) {
         if (checkSymbol(symbol)) {
@@ -80,20 +80,6 @@ public class HuffmanCodeTable {
             return true;
         }
         return false;
-    }
-
-    /**
-     * String representation of built code table for debugging purposes.
-     * @return Every symbol in code table with coding as a string without EOL.
-     */
-    public String toString() {
-        String res = "";
-        for (int i = 0; i < 257; i++) {
-            if (codes[i] != null) {
-                res += i + ": " + codes[i] + "\n";
-            }
-        }
-        return res.substring(0, res.length() - 1);
     }
 
 }

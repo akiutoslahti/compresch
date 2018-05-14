@@ -75,27 +75,45 @@ public class HuffmanTreeTest {
     public void buildHuffmanTreeFrequencyTableTest() {
         HuffmanTree huffmanTree = new HuffmanTree();
         huffmanTree.buildHuffmanTree(this.frequencyTable);
-        HuffmanNode root = huffmanTree.getRoot();
-        assertTrue(root instanceof HuffmanNode);
-        List<String> expectedCodes = new ArrayList<>(
-                Arrays.asList("00", "010", "011", "100", "101", "110", "111"));
-        List<String> actualCodes = new ArrayList<>();
-        checkTree(root, actualCodes, "");
-        assertArrayEquals(expectedCodes.toArray(), actualCodes.toArray());
-    }
-
-    private void checkTree(HuffmanNode node, List<String> actualCodes, String currentPath) {
-        if (node.isLeaf()) {
-            actualCodes.add(currentPath);
-            return;
-        }
-        checkTree(node.getLeft(), actualCodes, currentPath + "0");
-        checkTree(node.getRight(), actualCodes, currentPath + "1");
+        checkTree(huffmanTree.getRoot());
     }
 
     @Test
     public void buildHuffmanTreeCodeLengthsTest() {
+        int[] codeLengths = initCodeLengths();
+        HuffmanTree huffmanTree = new HuffmanTree();
+        huffmanTree.buildHuffmanTree(codeLengths);
+        checkTree(huffmanTree.getRoot());
+    }
 
+    private void checkTree(HuffmanNode root) {
+        assertTrue(root instanceof HuffmanNode);
+        List<String> expectedCodes = new ArrayList<>(
+                Arrays.asList("00", "010", "011", "100", "101", "110", "111"));
+        List<String> actualCodes = new ArrayList<>();
+        getCodes(root, actualCodes, "");
+        assertArrayEquals(expectedCodes.toArray(), actualCodes.toArray());
+    }
+
+    private int[] initCodeLengths() {
+        int[] codeLengths = new int[257];
+        codeLengths[(int)('\n')] = 3;
+        codeLengths[(int)('A')] = 3;
+        codeLengths[(int)('B')] = 2;
+        codeLengths[(int)('T')] = 3;
+        codeLengths[(int)('U')] = 3;
+        codeLengths[(int)('Y')] = 3;
+        codeLengths[256] = 3;
+        return codeLengths;
+    }
+
+    private void getCodes(HuffmanNode node, List<String> actualCodes, String currentPath) {
+        if (node.isLeaf()) {
+            actualCodes.add(currentPath);
+            return;
+        }
+        getCodes(node.getLeft(), actualCodes, currentPath + "0");
+        getCodes(node.getRight(), actualCodes, currentPath + "1");
     }
 
 }
