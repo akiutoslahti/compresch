@@ -24,13 +24,14 @@
 
 package compresch.huff;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 public class HuffmanCodeBookTest {
 
@@ -61,15 +62,15 @@ public class HuffmanCodeBookTest {
     }
 
     private String codewordToString(List<Integer> codeword) {
-        String res = "";
-        for (int i = 0; i < codeword.size(); i++) {
-            res += codeword.get(i);
+        StringBuilder builder = new StringBuilder();
+        for (Integer codeWord : codeword) {
+            builder.append(codeWord);
         }
-        return res;
+        return builder.toString();
     }
 
     private HuffmanNode initHuffmanTree() {
-        HuffmanNode root = new HuffmanNode(
+        return new HuffmanNode(
                 new HuffmanNode(
                         new HuffmanNode((int)('B')),
                         new HuffmanNode(
@@ -82,7 +83,6 @@ public class HuffmanCodeBookTest {
                         new HuffmanNode(
                                 new HuffmanNode((int)('Y')),
                                 new HuffmanNode(256))));
-        return root;
     }
 
 }

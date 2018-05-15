@@ -55,7 +55,7 @@ public class BitOutputStream implements AutoCloseable {
      * @throws IOException if an I/O exception occurs.
      * @throws IllegalArgumentException when trying to write something else than 0 or 1 bit.
      */
-    public void write(int bit) throws IOException {
+    public void write(int bit) throws IOException, IllegalArgumentException {
         if (bit != 0 && bit != 1) {
             throw new IllegalArgumentException();
         }

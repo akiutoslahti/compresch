@@ -24,7 +24,10 @@
 
 package compresch.io;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -32,8 +35,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,11 +52,12 @@ public class BitInputStreamTest {
         this.numbers = new byte[]{118, 99, 12, 1, 16};
         try {
             OutputStream output = new BufferedOutputStream(new FileOutputStream(this.testFile));
-            for (int i = 0; i < this.numbers.length; i++) {
-                output.write(this.numbers[i]);
+            for (byte number : this.numbers) {
+                output.write(number);
             }
             output.close();
-        } catch (Exception e) {
+        } catch (IOException ioe) {
+            fail("IOException thrown but not expected");
         }
     }
 
@@ -66,18 +70,22 @@ public class BitInputStreamTest {
     public void constructBitInputStreamTest() {
         try {
             new BitInputStream(null);
-            fail();
+            fail("expected NullPointerException");
         } catch (NullPointerException npe) {
+            assert true;
         }
         try {
             new BitInputStream(new BufferedInputStream(new FileInputStream(
                     new File("notfound.txt"))));
-            fail();
+            fail("expected FileNotFoundException");
         } catch (FileNotFoundException fnfe) {
+            assert true;
         }
         try {
             new BitInputStream(new BufferedInputStream(new FileInputStream(this.testFile)));
+            assert true;
         } catch (FileNotFoundException fnfe) {
+            fail("FileNotFoundException thrown but not expected");
         }
     }
 
@@ -93,7 +101,8 @@ public class BitInputStreamTest {
             int[] expectedByte = new int[]{0, 1, 1, 1, 0, 1, 1, 0};
             input.close();
             assertArrayEquals(expectedByte, readByte);
-        } catch (Exception e) {
+        } catch (IOException ioe) {
+            fail("IOException thrown but not expected");
         }
     }
 
@@ -108,7 +117,8 @@ public class BitInputStreamTest {
             assertEquals(-1, input.read());
             assertEquals(-1, input.read());
             input.close();
-        } catch (Exception e) {
+        } catch (IOException ioe) {
+            fail("IOException thrown but not expected");
         }
     }
 
@@ -123,7 +133,8 @@ public class BitInputStreamTest {
             }
             input.close();
             assertArrayEquals(this.numbers, inputRead);
-        } catch (Exception e) {
+        } catch (IOException ioe) {
+            fail("IOException thrown but not expected");
         }
     }
 

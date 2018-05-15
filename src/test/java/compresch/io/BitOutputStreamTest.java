@@ -24,7 +24,10 @@
 
 package compresch.io;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -32,6 +35,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import org.junit.Test;
 
@@ -41,15 +45,16 @@ public class BitOutputStreamTest {
     public void constructBitOutPutStreamTest() {
         try {
             new BitOutputStream(null);
-            fail();
+            fail("expected NullPointerException");
         } catch (NullPointerException npe) {
+            assert true;
         }
         try {
             File testFile = new File("test.txt");
             new BitOutputStream(new BufferedOutputStream(new FileOutputStream(testFile)));
             assertTrue(testFile.delete());
         } catch (FileNotFoundException fnfe) {
-            System.out.println("Error: " + fnfe);
+            fail("FileNotFoundException thrown but not expected");
         }
     }
 
@@ -61,8 +66,8 @@ public class BitOutputStreamTest {
                     new FileOutputStream(testFile)));
             int[] numbers = new int[]{1, 0, 1, 0, 1, 0, 1, 0};
             int numberRead;
-            for (int i = 0; i < numbers.length; i++) {
-                output.write(numbers[i]);
+            for (int number : numbers) {
+                output.write(number);
             }
             output.close();
             InputStream input = new BufferedInputStream(new FileInputStream(testFile));
@@ -70,8 +75,8 @@ public class BitOutputStreamTest {
             input.close();
             assertTrue(testFile.delete());
             assertEquals(170, numberRead);
-        } catch (Exception e) {
-
+        } catch (IOException ioe) {
+            fail("IOException thrown but not expected");
         }
     }
 
@@ -92,8 +97,8 @@ public class BitOutputStreamTest {
             input.close();
             assertTrue(testFile.delete());
             assertEquals(168, numberRead);
-        } catch (Exception e) {
-
+        } catch (IOException ioe) {
+            fail("IOException thrown but not expected");
         }
     }
 
@@ -104,9 +109,11 @@ public class BitOutputStreamTest {
             BitOutputStream output = new BitOutputStream(new BufferedOutputStream(
                     new FileOutputStream(testFile)));
             output.write(2);
-            fail();
-        } catch (Exception e) {
-
+            fail("expected IllegalArgumentException");
+        } catch (IOException ioe) {
+            fail("IOException thrown but not expected");
+        } catch (IllegalArgumentException iae) {
+            assert true;
         }
         assertTrue(testFile.delete());
     }
@@ -119,8 +126,8 @@ public class BitOutputStreamTest {
                     new FileOutputStream(testFile)));
             byte[] numbers = new byte[]{46, 127, 99, 12, 6};
             byte[] numbersRead = new byte[numbers.length];
-            for (int i = 0; i < numbers.length; i++) {
-                output.writeByte((numbers[i]));
+            for (byte number : numbers) {
+                output.writeByte((number));
             }
             output.close();
             InputStream input = new BufferedInputStream(new FileInputStream(testFile));
@@ -130,10 +137,9 @@ public class BitOutputStreamTest {
             input.close();
             assertTrue(testFile.delete());
             assertArrayEquals(numbers, numbersRead);
-        } catch (Exception e) {
-
+        } catch (IOException ioe) {
+            fail("IOException thrown but not expected");
         }
     }
-
 
 }

@@ -24,17 +24,21 @@
 
 package compresch.huff;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.junit.Assert.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 public class HuffmanTreeTest {
 
@@ -50,7 +54,8 @@ public class HuffmanTreeTest {
             output.close();
             this.frequencyTable = new HuffmanFrequencyTable();
             this.frequencyTable.buildFreqTable(this.testFile);
-        } catch (Exception e) {
+        } catch (IOException ioe) {
+            fail("IOException thrown but not expected");
         }
     }
 
@@ -87,7 +92,7 @@ public class HuffmanTreeTest {
     }
 
     private void checkTree(HuffmanNode root) {
-        assertTrue(root instanceof HuffmanNode);
+        assertNotNull(root);
         List<String> expectedCodes = new ArrayList<>(
                 Arrays.asList("00", "010", "011", "100", "101", "110", "111"));
         List<String> actualCodes = new ArrayList<>();

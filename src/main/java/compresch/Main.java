@@ -32,10 +32,14 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws Exception{
+    /**
+     * Compresses/decompresses input file to output file depending on given arguments.
+     * @param args [-c/-d] [input file] [output file]
+     */
+    public static void main(String[] args) {
 
         if (args.length != 3) {
-            throw new IllegalArgumentException("Faulty paramenters.");
+            throw new IllegalArgumentException("Faulty parameters.");
         }
 
         String action = args[0];
@@ -43,9 +47,19 @@ public class Main {
         File outputFile = new File(args[2]);
 
         if (action.equals("-c")) {
-            compress(inputFile, outputFile);
+            try {
+                compress(inputFile, outputFile);
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+                throw new RuntimeException("Command failed.");
+            }
         } else if (action.equals("-d")) {
-            decompress(inputFile, outputFile);
+            try {
+                decompress(inputFile, outputFile);
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+                throw new RuntimeException("Command failed.");
+            }
         } else {
             throw new IllegalArgumentException("Unknown command.");
         }
@@ -57,7 +71,7 @@ public class Main {
         encoder.encode();
     }
 
-    private static void decompress(File input, File output) {
+    private static void decompress(File input, File output) throws IOException {
         HuffmanDecoder decoder = new HuffmanDecoder(input, output);
         decoder.decode();
     }

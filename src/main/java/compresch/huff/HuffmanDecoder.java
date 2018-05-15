@@ -29,7 +29,6 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -55,21 +54,16 @@ public class HuffmanDecoder {
     /**
      * Public method to execute decode.
      */
-    public void decode() {
-        try {
-            BitInputStream input = new BitInputStream(new BufferedInputStream(
-                    new FileInputStream(this.inputFile)));
-            OutputStream output = new BufferedOutputStream(new FileOutputStream(this.outputFile));
-            HuffmanNode root = restoreHuffmanTree(input);
-            writeDecoded(input, output, root);
-            input.close();
-            output.close();
-        } catch (FileNotFoundException fnfe) {
-            System.out.println("Input file could not be found." + fnfe);
-        } catch (IOException ioe) {
-            System.out.println("Input file could not be read." + ioe);
-        }
+    public void decode() throws IOException {
+        BitInputStream input = new BitInputStream(new BufferedInputStream(
+                new FileInputStream(this.inputFile)));
+        OutputStream output = new BufferedOutputStream(new FileOutputStream(this.outputFile));
+        HuffmanNode root = restoreHuffmanTree(input);
 
+        writeDecoded(input, output, root);
+
+        input.close();
+        output.close();
     }
 
     /**

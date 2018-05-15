@@ -58,7 +58,7 @@ public class HuffmanEncoder {
     /**
      * Public method to execute encode.
      */
-    public void encode() throws IOException{
+    public void encode() throws IOException {
         getCodeBook();
         InputStream input = new BufferedInputStream(new FileInputStream(this.inputFile));
         BitOutputStream output = new BitOutputStream(new BufferedOutputStream(
@@ -75,7 +75,7 @@ public class HuffmanEncoder {
      * Private helper method for encoding.
      * Constructs a code table from given input.
      */
-    private void getCodeBook() throws IOException{
+    private void getCodeBook() throws IOException {
         HuffmanFrequencyTable freqTable = new HuffmanFrequencyTable();
         freqTable.buildFreqTable(this.inputFile);
         HuffmanTree huffTree = new HuffmanTree();

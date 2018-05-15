@@ -24,7 +24,11 @@
 
 package compresch.huff;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -34,50 +38,57 @@ public class HuffmanNodeTest {
     public void constructHuffmanNodeTest1() {
         try {
             new HuffmanNode(257, 11);
-            fail();
-        } catch (Exception e) {
+            fail("expected IllegalArgumentException");
+        } catch (IllegalArgumentException iae) {
+            assert true;
         }
         try {
             new HuffmanNode(-1, 11);
-            fail();
-        } catch (Exception e) {
+            fail("expected IllegalArgumentException");
+        } catch (IllegalArgumentException iae) {
+            assert true;
         }
-        HuffmanNode node1 = new HuffmanNode(128, 10);
-        assertNotNull(node1);
+        HuffmanNode node = new HuffmanNode(128, 10);
+        assertNotNull(node);
     }
 
     @Test
     public void newHuffmanNodeTest2() {
         try {
             new HuffmanNode(257);
-            fail();
-        } catch (Exception e) {
+            fail("expected IllegalArgumentException");
+        } catch (IllegalArgumentException iae) {
+            assert true;
         }
         try {
             new HuffmanNode(-1);
-            fail();
-        } catch (Exception e) {
+            fail("expected IllegalArgumentException");
+        } catch (IllegalArgumentException iae) {
+            assert true;
         }
-        HuffmanNode node1 = new HuffmanNode(128);
-        assertNotNull(node1);
+        HuffmanNode node = new HuffmanNode(128);
+        assertNotNull(node);
     }
 
     @Test
     public void newHuffmanNodeTest3() {
         try {
             new HuffmanNode(null, new HuffmanNode(128));
-            fail();
-        } catch (Exception e) {
+            fail("expected NullPointerException");
+        } catch (NullPointerException npe) {
+            assert true;
         }
         try {
             new HuffmanNode(new HuffmanNode(128), null);
-            fail();
-        } catch (Exception e) {
+            fail("expected NullPointerException");
+        } catch (NullPointerException npe) {
+            assert true;
         }
         try {
             new HuffmanNode(null, null);
-            fail();
-        } catch (Exception e) {
+            fail("expected NullPointerException");
+        } catch (NullPointerException npe) {
+            assert true;
         }
         HuffmanNode node1 = new HuffmanNode(new HuffmanNode(127), new HuffmanNode(128));
         assertNotNull(node1);
@@ -98,7 +109,9 @@ public class HuffmanNodeTest {
         HuffmanNode node = new HuffmanNode(new HuffmanNode(
                 128,10), new HuffmanNode(127, 10));
         assertNotNull(node.getLeft());
+        assertEquals(128, node.getLeft().getSymbol());
         assertNotNull(node.getRight());
+        assertEquals(127, node.getRight().getSymbol());
     }
 
     @Test

@@ -24,9 +24,13 @@
 
 package compresch.huff;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import org.junit.After;
 import org.junit.Before;
@@ -43,7 +47,8 @@ public class HuffmanFrequencyTableTest {
             PrintWriter output = new PrintWriter(this.testFile);
             output.println("AYBABTU");
             output.close();
-        } catch (Exception e) {
+        } catch (IOException ioe) {
+            fail("IOException thrown but not expected");
         }
     }
 
@@ -63,8 +68,9 @@ public class HuffmanFrequencyTableTest {
         try {
             HuffmanFrequencyTable frequencyTable = new HuffmanFrequencyTable();
             frequencyTable.buildFreqTable(new File("notExist"));
-            fail();
-        } catch (Exception e) {
+            fail("expected IOException");
+        } catch (IOException ioe) {
+            assert true;
         }
     }
 
@@ -73,7 +79,8 @@ public class HuffmanFrequencyTableTest {
         HuffmanFrequencyTable frequencyTable = new HuffmanFrequencyTable();
         try {
             frequencyTable.buildFreqTable(this.testFile);
-        } catch (Exception e) {
+        } catch (IOException ioe) {
+            fail("IOException thrown but not expected");
         }
         assertEquals(2, frequencyTable.getFrequency((int)('A')));
         assertEquals(2, frequencyTable.getFrequency((int)('B')));
