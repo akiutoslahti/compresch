@@ -36,7 +36,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class HuffmanEncoderTest {
+public class HuffmanDecoderTest {
 
     private File testInputFile;
     private File testOutputFile;
@@ -47,7 +47,7 @@ public class HuffmanEncoderTest {
         this.testOutputFile = new File("output.txt");
         try {
             PrintWriter output = new PrintWriter(this.testInputFile);
-            output.write("Pretend this is something to be encoded.\n");
+            output.write("Pretend this is something encoded.\n");
             output.close();
         } catch (FileNotFoundException fnfe) {
             fail("FileNotFoundException thrown but not expected");
@@ -63,21 +63,21 @@ public class HuffmanEncoderTest {
     }
 
     @Test
-    public void constructHuffmanEncoderNullTest() {
+    public void constructHuffmanDecoderNullTest() {
         try {
-            new HuffmanEncoder(null, null);
+            new HuffmanDecoder(null, null);
             fail("expected NullPointerException");
         } catch (NullPointerException npe) {
             assert true;
         }
         try {
-            new HuffmanEncoder(this.testInputFile, null);
+            new HuffmanDecoder(this.testInputFile, null);
             fail("expected NullPointerException");
         } catch (NullPointerException npe) {
             assert true;
         }
         try {
-            new HuffmanEncoder(null, this.testOutputFile);
+            new HuffmanDecoder(null, this.testOutputFile);
             fail("expected NullPointerException");
         } catch (NullPointerException npe) {
             assert true;
@@ -85,17 +85,17 @@ public class HuffmanEncoderTest {
     }
 
     @Test
-    public void constructHuffmanEncoderTest() {
-        HuffmanEncoder huffmanEncoder = new HuffmanEncoder(this.testInputFile, this.testOutputFile);
-        assertNotNull(huffmanEncoder);
+    public void constructHuffmanDecoderTest() {
+        HuffmanDecoder huffmanDecoder = new HuffmanDecoder(this.testInputFile, this.testOutputFile);
+        assertNotNull(huffmanDecoder);
     }
 
     @Test
-    public void encodeFailTest() {
-        HuffmanEncoder huffmanEncoder = new HuffmanEncoder(
+    public void decodeFailTest() {
+        HuffmanDecoder huffmanDecoder = new HuffmanDecoder(
                 new File("notExists"), this.testOutputFile);
         try {
-            huffmanEncoder.encode();
+            huffmanDecoder.decode();
             fail("expected IOException");
         } catch (IOException ioe) {
             assert true;
