@@ -30,10 +30,12 @@ Compressed files will be attached a short header which informs decoder about wha
 
 ## Target time and space complexity
 **Huffman coding**
-Time complexity: O(n log n), space complexity: O(n)
+Time complexity O(n log k) and space complexity O(k).
 
 **Lempel-Ziv-Welch**
-Time complexity: O(n), space complexity: O(1)
+Time complexity: O(n), space complexity: O(k).
+
+In all complexities *n* denotes length of input file in bytes and *k* denotes size of dictionary used in encoding/decoding.
 
 ## Sources
 Thomas H. Cormen, Charles E. Leiserson, Ronald R. Rivest, and Clifford Stein: Introduction to algorithms, Third Edition. MIT Press, 2009. ISBN 978-0-262-53305-8. Section 16.3, pp. 428-437
