@@ -22,70 +22,47 @@
  * SOFTWARE.
  */
 
-package compresch.io;
+package compresch.lzw;
+
+import compresch.io.BitInputStream;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Objects;
 
-/**
- * Utility class for reading data bit by bit using java.io.InputStream as a basis.
- */
-public class BitInputStream implements AutoCloseable {
+public class LzwReader implements AutoCloseable {
 
-    private InputStream input;
-    private int inputBuffer;
-    private int bitsLeft;
+    private BitInputStream input;
 
     /**
-     * Construct bit input stream based on underlying byte input stream.
-     * @param input byte input stream
-     * @throws NullPointerException when null is provided as param
+     * Constructs new LzwReader.
+     * @param input BitInputStream to read data from.
+     * @throws NullPointerException if parameter is null.
      */
-    public BitInputStream(InputStream input) {
+    public LzwReader(BitInputStream input) {
         Objects.requireNonNull(input);
         this.input = input;
-        inputBuffer = 0;
-        bitsLeft = 0;
     }
 
     /**
-     * Read next bit from stream.
-     * @return 0 or 1 as next bit. -1 if end of stream is reached.
+     * Reads next 12bits from the BitInputStream.
+     * @return read codeword as integer.
      * @throws IOException if an I/O exception occurs.
      */
     public int read() throws IOException {
-        if (inputBuffer == -1) {
-            return -1;
-        }
-        if (bitsLeft == 0) {
-            inputBuffer = input.read();
-            if (inputBuffer == -1) {
-                return -1;
+        int codeWord = 0;
+        for (int i = 0; i < 12; i++) {
+            int buffer = this.input.read();
+            if (buffer == -1) {
+                throw new IOException();
             }
-            bitsLeft = 8;
+            codeWord = (codeWord << 1);
+            codeWord = codeWord | buffer;
         }
-        bitsLeft--;
-        return (inputBuffer >>> bitsLeft) & 1;
+        return codeWord;
     }
 
-    /**
-     * Read a byte from stream.
-     * @return byte as integer value in range [0,255]. -1 if end of stream is reached.
-     * @throws IOException if an I/O exception occurs.
-     */
-    public int readByte() throws IOException {
-        return input.read();
-    }
-
-    /**
-     * Close underlying byte stream.
-     * @throws IOException if an I/O exception occurs.
-     */
     @Override
     public void close() throws IOException {
-        this.inputBuffer = 0;
-        this.bitsLeft = 0;
-        input.close();
+        this.input.close();
     }
 }

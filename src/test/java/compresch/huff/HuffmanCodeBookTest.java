@@ -31,6 +31,7 @@ import static org.junit.Assert.assertNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.junit.Test;
 
 public class HuffmanCodeBookTest {
@@ -53,8 +54,8 @@ public class HuffmanCodeBookTest {
         HuffmanCodeBook huffmanCodeBook = new HuffmanCodeBook();
         huffmanCodeBook.buildCodeBook(initHuffmanTree());
         int[] symbols = {10, 65, 66, 84, 85, 89, 256};
-        List<String> expectedCodes = new ArrayList<>(
-                Arrays.asList("010", "011", "00", "100", "101", "110", "111"));
+        List<String> expectedCodes =
+            new ArrayList<>(Arrays.asList("010", "011", "00", "100", "101", "110", "111"));
         for (int i = 0; i < symbols.length; i++) {
             List<Integer> codeword = huffmanCodeBook.getCode(symbols[i]);
             assertEquals(expectedCodes.get(i), codewordToString(codeword));
@@ -71,18 +72,11 @@ public class HuffmanCodeBookTest {
 
     private HuffmanNode initHuffmanTree() {
         return new HuffmanNode(
-                new HuffmanNode(
-                        new HuffmanNode((int)('B')),
-                        new HuffmanNode(
-                                new HuffmanNode((int)('\n')),
-                                new HuffmanNode((int)('A')))),
-                new HuffmanNode(
-                        new HuffmanNode(
-                                new HuffmanNode((int)('T')),
-                                new HuffmanNode((int)('U'))),
-                        new HuffmanNode(
-                                new HuffmanNode((int)('Y')),
-                                new HuffmanNode(256))));
+            new HuffmanNode(
+                new HuffmanNode((int) ('B')),
+                new HuffmanNode(new HuffmanNode((int) ('\n')), new HuffmanNode((int) ('A')))),
+            new HuffmanNode(
+                new HuffmanNode(new HuffmanNode((int) ('T')), new HuffmanNode((int) ('U'))),
+                new HuffmanNode(new HuffmanNode((int) ('Y')), new HuffmanNode(256))));
     }
-
 }

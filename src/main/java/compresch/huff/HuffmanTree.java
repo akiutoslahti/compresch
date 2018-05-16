@@ -130,12 +130,11 @@ public class HuffmanTree {
 
     private int maxCodeLength() {
         int max = 0;
-        for (int i = 0; i < this.codeLengths.length; i++) {
-            if (this.codeLengths[i] > max) {
-                max = this.codeLengths[i];
+        for (int codeLength : this.codeLengths) {
+            if (codeLength > max) {
+                max = codeLength;
             }
         }
         return max;
     }
-
 }

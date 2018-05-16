@@ -37,6 +37,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Random;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -120,8 +121,7 @@ public class HuffmanCompreschTest {
         }
         try {
             InputStream orig = new BufferedInputStream(new FileInputStream(this.inputFile));
-            InputStream copy = new BufferedInputStream(
-                    new FileInputStream(this.decompressedFile));
+            InputStream copy = new BufferedInputStream(new FileInputStream(this.decompressedFile));
             while (true) {
                 int origByte = orig.read();
                 int copyByte = copy.read();
@@ -137,5 +137,4 @@ public class HuffmanCompreschTest {
         }
         return true;
     }
-
 }

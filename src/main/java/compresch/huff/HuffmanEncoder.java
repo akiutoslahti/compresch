@@ -25,6 +25,7 @@
 package compresch.huff;
 
 import compresch.io.BitOutputStream;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -43,7 +44,7 @@ public class HuffmanEncoder {
 
     /**
      * Construct encoder to encode Huffman coding.
-     * @param input input file to be compressed.
+     * @param input  input file to be compressed.
      * @param output output file to compress to.
      * @throws NullPointerException if either one of parameters is null.
      */
@@ -61,8 +62,8 @@ public class HuffmanEncoder {
     public void encode() throws IOException {
         getCodeBook();
         InputStream input = new BufferedInputStream(new FileInputStream(this.inputFile));
-        BitOutputStream output = new BitOutputStream(new BufferedOutputStream(
-                new FileOutputStream(this.outputFile)));
+        BitOutputStream output =
+            new BitOutputStream(new BufferedOutputStream(new FileOutputStream(this.outputFile)));
 
         writeCodeLengths(output);
         writeEncoded(input, output);
@@ -72,8 +73,7 @@ public class HuffmanEncoder {
     }
 
     /**
-     * Private helper method for encoding.
-     * Constructs a code table from given input.
+     * Private helper method for encoding. Constructs a code table from given input.
      */
     private void getCodeBook() throws IOException {
         HuffmanFrequencyTable freqTable = new HuffmanFrequencyTable();
@@ -92,17 +92,17 @@ public class HuffmanEncoder {
         for (int i = 0; i < 257; i++) {
             List<Integer> bits = codeBook.getCode(i);
             if (bits == null) {
-                output.writeByte((byte)0);
+                output.writeByte((byte) 0);
             } else {
-                output.writeByte((byte)bits.size());
+                output.writeByte((byte) bits.size());
             }
         }
     }
 
     /**
-     * Private helper method for encoding.
-     * Uses pre-constructed code table to encode every symbol from input to output.
-     * @param input InputStream to read symbols to be encoded.
+     * Private helper method for encoding. Uses pre-constructed code table to
+     * encode every symbol from input to output.
+     * @param input  InputStream to read symbols to be encoded.
      * @param output BitOutputStream to write encoded symbols to.
      * @throws IOException if an I/O exception occurs.
      */
@@ -129,5 +129,4 @@ public class HuffmanEncoder {
             output.write(bit);
         }
     }
-
 }

@@ -63,7 +63,6 @@ public class Main {
         } else {
             throw new IllegalArgumentException("Unknown command.");
         }
-
     }
 
     private static void compress(File input, File output) throws IOException {
@@ -75,5 +74,4 @@ public class Main {
         HuffmanDecoder decoder = new HuffmanDecoder(input, output);
         decoder.decode();
     }
-
 }

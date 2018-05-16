@@ -37,6 +37,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
 import org.junit.Test;
 
 public class BitOutputStreamTest {
@@ -62,8 +63,8 @@ public class BitOutputStreamTest {
     public void writeTest() {
         try {
             File testFile = new File("test.txt");
-            BitOutputStream output = new BitOutputStream(new BufferedOutputStream(
-                    new FileOutputStream(testFile)));
+            BitOutputStream output =
+                new BitOutputStream(new BufferedOutputStream(new FileOutputStream(testFile)));
             int[] numbers = new int[]{1, 0, 1, 0, 1, 0, 1, 0};
             int numberRead;
             for (int number : numbers) {
@@ -84,8 +85,8 @@ public class BitOutputStreamTest {
     public void writeIncompleteTest() {
         try {
             File testFile = new File("test.txt");
-            BitOutputStream output = new BitOutputStream(new BufferedOutputStream(
-                    new FileOutputStream(testFile)));
+            BitOutputStream output =
+                new BitOutputStream(new BufferedOutputStream(new FileOutputStream(testFile)));
             int[] numbers = new int[]{1, 0, 1, 0, 1};
             int numberRead;
             for (int i = 0; i < numbers.length; i++) {
@@ -106,8 +107,8 @@ public class BitOutputStreamTest {
     public void writeIllegalArgumentTest() {
         File testFile = new File("test.txt");
         try {
-            BitOutputStream output = new BitOutputStream(new BufferedOutputStream(
-                    new FileOutputStream(testFile)));
+            BitOutputStream output =
+                new BitOutputStream(new BufferedOutputStream(new FileOutputStream(testFile)));
             output.write(2);
             fail("expected IllegalArgumentException");
         } catch (IOException ioe) {
@@ -122,8 +123,8 @@ public class BitOutputStreamTest {
     public void writeByteTest() {
         try {
             File testFile = new File("test.txt");
-            BitOutputStream output = new BitOutputStream(new BufferedOutputStream(
-                    new FileOutputStream(testFile)));
+            BitOutputStream output =
+                new BitOutputStream(new BufferedOutputStream(new FileOutputStream(testFile)));
             byte[] numbers = new byte[]{46, 127, 99, 12, 6};
             byte[] numbersRead = new byte[numbers.length];
             for (byte number : numbers) {
@@ -132,7 +133,7 @@ public class BitOutputStreamTest {
             output.close();
             InputStream input = new BufferedInputStream(new FileInputStream(testFile));
             for (int i = 0; i < numbers.length; i++) {
-                numbersRead[i] = (byte)(input.read());
+                numbersRead[i] = (byte) (input.read());
             }
             input.close();
             assertTrue(testFile.delete());
@@ -141,5 +142,4 @@ public class BitOutputStreamTest {
             fail("IOException thrown but not expected");
         }
     }
-
 }

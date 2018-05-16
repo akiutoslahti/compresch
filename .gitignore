@@ -1,8 +1,7 @@
+build
+gradle
+.gradle
 .idea
 out/
-.gradle
-build/
 
 *.iml
-
-!gradle-wrapper.jar

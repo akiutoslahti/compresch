@@ -22,39 +22,48 @@
  * SOFTWARE.
  */
 
-package compresch.io;
+package compresch.lzw;
 
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import compresch.io.BitInputStream;
+import compresch.io.BitOutputStream;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.util.Random;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class BitInputStreamTest {
+public class LzwReaderTest {
 
     private File testFile;
-    private byte[] numbers;
+    private int[] numbersExpected;
 
     @Before
     public void setUp() {
         this.testFile = new File("test.txt");
-        this.numbers = new byte[]{118, 99, 12, 1, 16};
+        this.numbersExpected = new int[10];
+        Random rng = new Random();
+        for (int i = 0; i < this.numbersExpected.length; i++) {
+            this.numbersExpected[i] = (rng.nextInt(4096));
+        }
         try {
-            OutputStream output = new BufferedOutputStream(new FileOutputStream(this.testFile));
-            for (byte number : this.numbers) {
-                output.write(number);
+            BitOutputStream output =
+                new BitOutputStream(new BufferedOutputStream(new FileOutputStream(this.testFile)));
+            for (Integer i : this.numbersExpected) {
+                for (int j = 11; j >= 0; j--) {
+                    output.write((i >> j) & 1);
+                }
             }
             output.close();
         } catch (IOException ioe) {
@@ -68,74 +77,56 @@ public class BitInputStreamTest {
     }
 
     @Test
-    public void constructBitInputStreamTest() {
+    public void constructLzwReaderTest() {
         try {
-            new BitInputStream(null);
+            new LzwReader(null);
             fail("expected NullPointerException");
         } catch (NullPointerException npe) {
             assert true;
         }
         try {
-            new BitInputStream(new BufferedInputStream(
-                new FileInputStream(new File("notfound.txt"))));
-            fail("expected FileNotFoundException");
-        } catch (FileNotFoundException fnfe) {
+            new LzwReader(new BitInputStream(new BufferedInputStream(
+                new FileInputStream(new File("notExist")))));
+            fail("expected IOException");
+        } catch (IOException ioe) {
             assert true;
         }
         try {
-            new BitInputStream(new BufferedInputStream(new FileInputStream(this.testFile)));
-            assert true;
-        } catch (FileNotFoundException fnfe) {
-            fail("FileNotFoundException thrown but not expected");
+            LzwReader reader = new LzwReader(new BitInputStream(
+                new BufferedInputStream(new FileInputStream(this.testFile))));
+            assertNotNull(reader);
+        } catch (IOException ioe) {
+            fail("IOException thrown but not expected");
         }
     }
 
     @Test
     public void readTest() {
         try {
-            BitInputStream input =
-                new BitInputStream(new BufferedInputStream(new FileInputStream(this.testFile)));
-            int[] readByte = new int[8];
-            for (int i = 0; i < 8; i++) {
-                readByte[i] = input.read();
+            LzwReader reader = new LzwReader(new BitInputStream(
+                new BufferedInputStream(new FileInputStream(this.testFile))));
+            int[] numbersRead = new int[this.numbersExpected.length];
+            for (int i = 0; i < this.numbersExpected.length; i++) {
+                numbersRead[i] = reader.read();
             }
-            int[] expectedByte = new int[]{0, 1, 1, 1, 0, 1, 1, 0};
-            input.close();
-            assertArrayEquals(expectedByte, readByte);
+            reader.close();
+            assertArrayEquals(this.numbersExpected, numbersRead);
         } catch (IOException ioe) {
             fail("IOException thrown but not expected");
         }
     }
 
     @Test
-    public void readEndOfFileTest() {
+    public void readPastEofTest() {
         try {
-            BitInputStream input =
-                new BitInputStream(new BufferedInputStream(new FileInputStream(this.testFile)));
-            for (int i = 0; i < 40; i++) {
-                input.read();
+            LzwReader reader = new LzwReader(new BitInputStream(
+                new BufferedInputStream(new FileInputStream(this.testFile))));
+            for (int i = 0; i < this.numbersExpected.length + 1; i++) {
+                reader.read();
             }
-            assertEquals(-1, input.read());
-            assertEquals(-1, input.read());
-            input.close();
+            fail("expected IOException");
         } catch (IOException ioe) {
-            fail("IOException thrown but not expected");
-        }
-    }
-
-    @Test
-    public void readByteTest() {
-        try {
-            BitInputStream input =
-                new BitInputStream(new BufferedInputStream(new FileInputStream(this.testFile)));
-            byte[] inputRead = new byte[this.numbers.length];
-            for (int i = 0; i < this.numbers.length; i++) {
-                inputRead[i] = (byte) (input.readByte());
-            }
-            input.close();
-            assertArrayEquals(this.numbers, inputRead);
-        } catch (IOException ioe) {
-            fail("IOException thrown but not expected");
+            assert true;
         }
     }
 }

@@ -98,16 +98,13 @@ public class HuffmanNodeTest {
     public void isLeafTest() {
         HuffmanNode node = new HuffmanNode(128, 10);
         assertTrue(node.isLeaf());
-        node = new HuffmanNode(new HuffmanNode(
-                128,10), new HuffmanNode(127, 10));
+        node = new HuffmanNode(new HuffmanNode(128, 10), new HuffmanNode(127, 10));
         assertFalse(node.isLeaf());
-
     }
 
     @Test
     public void getChildrenTest() {
-        HuffmanNode node = new HuffmanNode(new HuffmanNode(
-                128,10), new HuffmanNode(127, 10));
+        HuffmanNode node = new HuffmanNode(new HuffmanNode(128, 10), new HuffmanNode(127, 10));
         assertNotNull(node.getLeft());
         assertEquals(128, node.getLeft().getSymbol());
         assertNotNull(node.getRight());
@@ -135,7 +132,5 @@ public class HuffmanNodeTest {
         assertTrue(node1.compareTo(node2) < 0);
         assertTrue(node3.compareTo(node1) > 0);
         assertEquals(0, node3.compareTo(node4));
-
     }
-
 }

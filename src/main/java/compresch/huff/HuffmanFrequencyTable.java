@@ -36,8 +36,7 @@ public class HuffmanFrequencyTable {
     private int[] frequency;
 
     /**
-     * Construct a frequency table for symbols [0, 255].
-     * Symbol 256 acts as a pseudo EOF.
+     * Construct a frequency table for symbols [0, 255]. Symbol 256 acts as a pseudo EOF.
      */
     public HuffmanFrequencyTable() {
         this.frequency = new int[257];
@@ -45,8 +44,8 @@ public class HuffmanFrequencyTable {
     }
 
     /**
-     * Build frequency table from input file by traversing it once and counting occurrences
-     * of all bytes.
+     * Build frequency table from input file by traversing it once and counting occurrences of all
+     * bytes.
      * @param inputFile File to base frequency table on.
      * @throws IOException if an I/O exception occurs.
      */
@@ -64,7 +63,6 @@ public class HuffmanFrequencyTable {
 
     /**
      * Returns frequency of a symbol.
-     *
      * @param symbol byte as unsigned integer value.
      * @return frequency of symbol. -1 if parameter is not valid.
      */
@@ -86,5 +84,4 @@ public class HuffmanFrequencyTable {
         }
         return false;
     }
-
 }

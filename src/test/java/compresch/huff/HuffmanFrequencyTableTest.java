@@ -32,6 +32,7 @@ import static org.junit.Assert.fail;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -82,15 +83,14 @@ public class HuffmanFrequencyTableTest {
         } catch (IOException ioe) {
             fail("IOException thrown but not expected");
         }
-        assertEquals(2, frequencyTable.getFrequency((int)('A')));
-        assertEquals(2, frequencyTable.getFrequency((int)('B')));
-        assertEquals(1, frequencyTable.getFrequency((int)('T')));
-        assertEquals(1, frequencyTable.getFrequency((int)('U')));
-        assertEquals(1, frequencyTable.getFrequency((int)('Y')));
-        assertEquals(1, frequencyTable.getFrequency((int)('\n')));
+        assertEquals(2, frequencyTable.getFrequency((int) ('A')));
+        assertEquals(2, frequencyTable.getFrequency((int) ('B')));
+        assertEquals(1, frequencyTable.getFrequency((int) ('T')));
+        assertEquals(1, frequencyTable.getFrequency((int) ('U')));
+        assertEquals(1, frequencyTable.getFrequency((int) ('Y')));
+        assertEquals(1, frequencyTable.getFrequency((int) ('\n')));
         assertEquals(1, frequencyTable.getFrequency(256));
         assertEquals(-1, frequencyTable.getFrequency(257));
         assertEquals(-1, frequencyTable.getFrequency(-1));
     }
-
 }

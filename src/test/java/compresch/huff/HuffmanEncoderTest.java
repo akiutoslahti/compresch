@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -92,8 +93,8 @@ public class HuffmanEncoderTest {
 
     @Test
     public void encodeFailTest() {
-        HuffmanEncoder huffmanEncoder = new HuffmanEncoder(
-                new File("notExists"), this.testOutputFile);
+        HuffmanEncoder huffmanEncoder =
+            new HuffmanEncoder(new File("notExists"), this.testOutputFile);
         try {
             huffmanEncoder.encode();
             fail("expected IOException");
@@ -101,5 +102,4 @@ public class HuffmanEncoderTest {
             assert true;
         }
     }
-
 }

@@ -25,6 +25,7 @@
 package compresch.huff;
 
 import compresch.io.BitInputStream;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -41,7 +42,7 @@ public class HuffmanDecoder {
 
     /**
      * Constructs decoder to decode Huffman coding.
-     * @param input input file to be decompressed.
+     * @param input  input file to be decompressed.
      * @param output output file to decompress to.
      */
     public HuffmanDecoder(File input, File output) {
@@ -55,8 +56,8 @@ public class HuffmanDecoder {
      * Public method to execute decode.
      */
     public void decode() throws IOException {
-        BitInputStream input = new BitInputStream(new BufferedInputStream(
-                new FileInputStream(this.inputFile)));
+        BitInputStream input =
+            new BitInputStream(new BufferedInputStream(new FileInputStream(this.inputFile)));
         OutputStream output = new BufferedOutputStream(new FileOutputStream(this.outputFile));
         HuffmanNode root = restoreHuffmanTree(input);
 
@@ -68,13 +69,13 @@ public class HuffmanDecoder {
 
     /**
      * Read encoded input file and write decoded data to output file.
-     * @param input BitInputStream where to read encoded data.
-     * @param output OutpuStream where to write decoded data.
-     * @param root root node of Huffman tree for decoding code words.
+     * @param input  BitInputStream where to read encoded data.
+     * @param output OutputStream where to write decoded data.
+     * @param root   root node of Huffman tree for decoding code words.
      * @throws IOException if an I/O exception occurs.
      */
-    private void writeDecoded(BitInputStream input, OutputStream output,
-                              HuffmanNode root) throws IOException {
+    private void writeDecoded(BitInputStream input, OutputStream output, HuffmanNode root)
+        throws IOException {
         HuffmanNode node = root;
         while (true) {
             if (node.isLeaf()) {
@@ -120,5 +121,4 @@ public class HuffmanDecoder {
         }
         return codeLengths;
     }
-
 }

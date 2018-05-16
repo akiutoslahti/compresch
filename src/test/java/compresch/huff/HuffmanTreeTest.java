@@ -36,6 +36,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -93,8 +94,8 @@ public class HuffmanTreeTest {
 
     private void checkTree(HuffmanNode root) {
         assertNotNull(root);
-        List<String> expectedCodes = new ArrayList<>(
-                Arrays.asList("00", "010", "011", "100", "101", "110", "111"));
+        List<String> expectedCodes =
+            new ArrayList<>(Arrays.asList("00", "010", "011", "100", "101", "110", "111"));
         List<String> actualCodes = new ArrayList<>();
         getCodes(root, actualCodes, "");
         assertArrayEquals(expectedCodes.toArray(), actualCodes.toArray());
@@ -102,12 +103,12 @@ public class HuffmanTreeTest {
 
     private int[] initCodeLengths() {
         int[] codeLengths = new int[257];
-        codeLengths[(int)('\n')] = 3;
-        codeLengths[(int)('A')] = 3;
-        codeLengths[(int)('B')] = 2;
-        codeLengths[(int)('T')] = 3;
-        codeLengths[(int)('U')] = 3;
-        codeLengths[(int)('Y')] = 3;
+        codeLengths[(int) ('\n')] = 3;
+        codeLengths[(int) ('A')] = 3;
+        codeLengths[(int) ('B')] = 2;
+        codeLengths[(int) ('T')] = 3;
+        codeLengths[(int) ('U')] = 3;
+        codeLengths[(int) ('Y')] = 3;
         codeLengths[256] = 3;
         return codeLengths;
     }
@@ -120,5 +121,4 @@ public class HuffmanTreeTest {
         getCodes(node.getLeft(), actualCodes, currentPath + "0");
         getCodes(node.getRight(), actualCodes, currentPath + "1");
     }
-
 }

@@ -35,7 +35,7 @@ public class HuffmanNode implements Comparable<HuffmanNode> {
 
     /**
      * Constructor for leaf node containing a symbol and its frequency.
-     * @param symbol byte as unsigned integer value, range 0-255. 256 reserved for pseudo-EOF.
+     * @param symbol    byte as unsigned integer value, range 0-255. 256 reserved for pseudo-EOF.
      * @param frequency frequency of symbol in input file.
      * @throws IllegalArgumentException if symbol value is out of bounds.
      */
@@ -50,8 +50,8 @@ public class HuffmanNode implements Comparable<HuffmanNode> {
     }
 
     /**
-     * Constructor for leaf node containing only symbol.
-     * Targeted for building canonical code from initial code lengths.
+     * Constructor for leaf node containing only symbol. Targeted for building canonical code from
+     * initial code lengths.
      * @param symbol byte as unsigned integer value, range 0-255. 256 reserved for pseudo-EOF.
      * @throws IllegalArgumentException if symbol value is out of bounds.
      */
@@ -66,9 +66,8 @@ public class HuffmanNode implements Comparable<HuffmanNode> {
     }
 
     /**
-     * Constructor for internal node, whose  'symbol' and frequency are
-     * sums of those in child nodes.
-     * @param left left child node.
+     * Constructor for internal node, whose 'symbol' and frequency are sums of those in child nodes.
+     * @param left  left child node.
      * @param right right child node.
      * @throws NullPointerException if one of arguments is null.
      */
@@ -129,6 +128,7 @@ public class HuffmanNode implements Comparable<HuffmanNode> {
      * @param other Huffman node to compare to.
      * @return -1, 0 or 1 if parameter node is greater, equal or less.
      */
+    @Override
     public int compareTo(HuffmanNode other) {
         if (this.frequency == other.frequency) {
             return this.symbol - other.symbol;
@@ -137,7 +137,7 @@ public class HuffmanNode implements Comparable<HuffmanNode> {
     }
 
     /**
-     * Check whether symbol value is in range [0,255] or 256(pseudo-EOF). 
+     * Check whether symbol value is in range [0,255] or 256(pseudo-EOF).
      * @param symbol byte as unsigned integer value, range 0-255. 256 reserved for pseudo-EOF.
      * @return true if symbol is in valid range, false otherwise.
      */
@@ -147,5 +147,4 @@ public class HuffmanNode implements Comparable<HuffmanNode> {
         }
         return false;
     }
-
 }

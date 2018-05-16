@@ -42,7 +42,7 @@ public class HuffmanCodeBook {
 
     /**
      * Recursive helper method to do depth first search on Huffman tree.
-     * @param node node to start/continue dfs traversal.
+     * @param node        node to start/continue dfs traversal.
      * @param currentCode string of current path choices. 0 for left child and 1 for right child.
      */
     private void dfsTraverse(HuffmanNode node, String currentCode) {
@@ -81,5 +81,4 @@ public class HuffmanCodeBook {
         }
         return false;
     }
-
 }

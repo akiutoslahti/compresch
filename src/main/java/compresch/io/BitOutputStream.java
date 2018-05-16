@@ -48,11 +48,11 @@ public class BitOutputStream implements AutoCloseable {
         this.outputBuffer = 0;
         this.bitsLeft = 8;
     }
-    
+
     /**
      * Writes single bits as bytes to underlying byte output stream.
      * @param bit 0 or 1 bit as int value
-     * @throws IOException if an I/O exception occurs.
+     * @throws IOException              if an I/O exception occurs.
      * @throws IllegalArgumentException when trying to write something else than 0 or 1 bit.
      */
     public void write(int bit) throws IOException, IllegalArgumentException {
@@ -78,15 +78,15 @@ public class BitOutputStream implements AutoCloseable {
     }
 
     /**
-     * Close underlying byte output stream. If there are bits left to write
-     * to reach byte boundary, fill with zeroes.
+     * Close underlying byte output stream. If there are bits left to write to reach byte boundary,
+     * fill with zeroes.
      * @throws IOException if an I/O exception occurs.
      */
+    @Override
     public void close() throws IOException {
         while (this.bitsLeft != 8) {
             write(0);
         }
         this.output.close();
     }
-
 }
