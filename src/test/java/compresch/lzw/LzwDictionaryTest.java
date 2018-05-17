@@ -27,6 +27,7 @@ package compresch.lzw;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -38,8 +39,8 @@ public class LzwDictionaryTest {
     public void constructLzwDictionaryTest() {
         LzwDictionary dictionary = new LzwDictionary();
         assertNotNull(dictionary);
-        assertEquals("A", dictionary.getSymbol((int)('A')));
-        assertEquals((int)('A'), dictionary.getCodeword("A"));
+        assertEquals("A", dictionary.getSymbol((int) ('A')));
+        assertEquals((int) ('A'), dictionary.getCodeword("A"));
     }
 
     @Test
@@ -60,8 +61,9 @@ public class LzwDictionaryTest {
     public void getSymbolTest() {
         LzwDictionary dictionary = new LzwDictionary();
         for (int i = 0; i < 256; i++) {
-            assertEquals((char)(i) + "",dictionary.getSymbol(i));
+            assertEquals((char) (i) + "", dictionary.getSymbol(i));
         }
+        assertNull(dictionary.getSymbol(256));
         try {
             dictionary.getSymbol(-1);
             fail("expected IllegalArgumentException");
@@ -69,7 +71,7 @@ public class LzwDictionaryTest {
             assert true;
         }
         try {
-            dictionary.getSymbol(256);
+            dictionary.getSymbol(4096);
             fail("expected IllegalArgumentException");
         } catch (IllegalArgumentException iae) {
             assert true;
@@ -80,7 +82,7 @@ public class LzwDictionaryTest {
     public void getCodewordTest() {
         LzwDictionary dictionary = new LzwDictionary();
         for (int i = 0; i < 256; i++) {
-            assertEquals(i, dictionary.getCodeword((char)(i) + ""));
+            assertEquals(i, dictionary.getCodeword((char) (i) + ""));
         }
         assertEquals(-1, dictionary.getCodeword("STILL-AYBABTU"));
     }

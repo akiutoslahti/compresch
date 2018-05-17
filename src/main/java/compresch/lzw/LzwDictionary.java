@@ -47,7 +47,7 @@ public class LzwDictionary {
      */
     private void initDictionary() {
         for (int i = 0; i < 256; i++) {
-            addEntry((char)(i) + "");
+            addEntry((char) (i) + "");
         }
     }
 
@@ -70,11 +70,13 @@ public class LzwDictionary {
      * Returns symbol corresponding to parameter codeword.
      * @param codeword Integer codeword to be searched from dictionary.
      * @return String symbol for given codeword from dictionary.
-     * @throws IllegalArgumentException if parameter is out of dictionary bounds.
      */
     public String getSymbol(int codeword) throws IllegalArgumentException {
-        if (codeword < 0 || codeword >= this.numOfCodes) {
+        if (codeword < 0 || codeword > 4095) {
             throw new IllegalArgumentException();
+        }
+        if (codeword >= this.numOfCodes) {
+            return null;
         }
         return this.index[codeword];
     }

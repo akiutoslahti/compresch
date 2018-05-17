@@ -46,7 +46,7 @@ public class LzwWriter implements AutoCloseable {
     /**
      * Writes a 12bit codeword to BitOutputStream.
      * @param codeWord 12bit integer value.
-     * @throws IOException if an I/O exception occurs.
+     * @throws IOException              if an I/O exception occurs.
      * @throws IllegalArgumentException if parameter is not in range [0, 4095].
      */
     public void write(int codeWord) throws IOException, IllegalArgumentException {
@@ -56,6 +56,10 @@ public class LzwWriter implements AutoCloseable {
         for (int i = 11; i >= 0; i--) {
             this.output.write((codeWord >> i) & 1);
         }
+    }
+
+    public void writePseudoEof() throws IOException {
+        write(4095);
     }
 
     @Override

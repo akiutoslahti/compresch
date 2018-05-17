@@ -24,6 +24,7 @@
 
 package compresch.huff;
 
+import compresch.Encoder;
 import compresch.io.BitOutputStream;
 
 import java.io.BufferedInputStream;
@@ -36,7 +37,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Objects;
 
-public class HuffmanEncoder {
+public class HuffmanEncoder implements Encoder {
 
     private File inputFile;
     private File outputFile;

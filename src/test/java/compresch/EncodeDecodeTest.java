@@ -22,10 +22,15 @@
  * SOFTWARE.
  */
 
-package compresch.huff;
+package compresch;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import compresch.huff.HuffmanDecoder;
+import compresch.huff.HuffmanEncoder;
+import compresch.lzw.LzwDecoder;
+import compresch.lzw.LzwEncoder;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -42,7 +47,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class HuffmanCompreschTest {
+public class EncodeDecodeTest {
 
     private File inputFile;
     private File compressedFile;
@@ -63,7 +68,34 @@ public class HuffmanCompreschTest {
     }
 
     @Test
-    public void encodeDecodeRandomBytesTest() {
+    public void huffmanRandomBytesTest() {
+        Encoder encoder = new HuffmanEncoder(this.inputFile, this.compressedFile);
+        Decoder decoder = new HuffmanDecoder(this.compressedFile, this.decompressedFile);
+        randomBytesTest(encoder, decoder);
+    }
+
+    @Test
+    public void huffmanTextTest() {
+        Encoder encoder = new HuffmanEncoder(this.inputFile, this.compressedFile);
+        Decoder decoder = new HuffmanDecoder(this.compressedFile, this.decompressedFile);
+        textTest(encoder, decoder);
+    }
+
+    @Test
+    public void lzwRandomBytesTest() {
+        Encoder encoder = new LzwEncoder(this.inputFile, this.compressedFile);
+        Decoder decoder = new LzwDecoder(this.compressedFile, this.decompressedFile);
+        randomBytesTest(encoder, decoder);
+    }
+
+    @Test
+    public void lzwTextTest() {
+        Encoder encoder = new HuffmanEncoder(this.inputFile, this.compressedFile);
+        Decoder decoder = new HuffmanDecoder(this.compressedFile, this.decompressedFile);
+        textTest(encoder, decoder);
+    }
+
+    private void randomBytesTest(Encoder encoder, Decoder decoder) {
         Random rng = new Random();
         try {
             OutputStream output = new BufferedOutputStream(new FileOutputStream(this.inputFile));
@@ -74,11 +106,10 @@ public class HuffmanCompreschTest {
         } catch (IOException ioe) {
             fail("IOException thrown but not expected");
         }
-        assertTrue(encodeDecodeTest());
+        assertTrue(encodeDecodeTest(encoder, decoder));
     }
 
-    @Test
-    public void encodeDecodeTextTest() {
+    private void textTest(Encoder encoder, Decoder decoder) {
         try {
             PrintWriter output = new PrintWriter(this.inputFile);
             output.write("Aki was here!\n");
@@ -88,17 +119,16 @@ public class HuffmanCompreschTest {
         } catch (IOException ioe) {
             fail("IOException thrown but not expected");
         }
-        assertTrue(encodeDecodeTest());
+        assertTrue(encodeDecodeTest(encoder, decoder));
     }
 
-    private boolean encodeDecodeTest() {
-        compress();
-        decompress();
+    private boolean encodeDecodeTest(Encoder encoder, Decoder decoder) {
+        compress(encoder);
+        decompress(decoder);
         return checkDiff();
     }
 
-    private void compress() {
-        HuffmanEncoder encoder = new HuffmanEncoder(this.inputFile, this.compressedFile);
+    private void compress(Encoder encoder) {
         try {
             encoder.encode();
         } catch (IOException ioe) {
@@ -106,8 +136,7 @@ public class HuffmanCompreschTest {
         }
     }
 
-    private void decompress() {
-        HuffmanDecoder decoder = new HuffmanDecoder(this.compressedFile, this.decompressedFile);
+    private void decompress(Decoder decoder) {
         try {
             decoder.decode();
         } catch (IOException ioe) {
