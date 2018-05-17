@@ -34,17 +34,27 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 public class LzwEncoder implements Encoder {
 
     private File inputFile;
     private File outputFile;
 
+    /**
+     * Construct encoder to encode with LZW.
+     * @param input  input file to be compressed.
+     * @param output output file to compress to.
+     * @throws NullPointerException if either one of parameters is null.
+     */
     public LzwEncoder(File input, File output) {
+        Objects.requireNonNull(input);
+        Objects.requireNonNull(output);
         this.inputFile = input;
         this.outputFile = output;
     }
 
+    @Override
     public void encode() throws IOException {
         InputStream input = new BufferedInputStream(new FileInputStream(this.inputFile));
         LzwWriter output = new LzwWriter(new BitOutputStream(
@@ -55,6 +65,12 @@ public class LzwEncoder implements Encoder {
         output.close();
     }
 
+    /**
+     * Private helper method to actually read input and encode it to output.
+     * @param input InputStream to read from.
+     * @param output LzwWriter to write to.
+     * @throws IOException if an I/O exception occurs.
+     */
     private void makeEncode(InputStream input, LzwWriter output) throws IOException {
         LzwDictionary dict = new LzwDictionary();
         StringBuilder inputBuffer = new StringBuilder();

@@ -28,6 +28,10 @@ import java.io.IOException;
 
 public interface Decoder {
 
+    /**
+     * Executes decode.
+     * @throws IOException if an I/O exception occurs.
+     */
     public void decode() throws IOException;
 
 }

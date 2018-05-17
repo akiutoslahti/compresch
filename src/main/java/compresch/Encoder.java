@@ -28,6 +28,10 @@ import java.io.IOException;
 
 public interface Encoder {
 
+    /**
+     * Executes encode.
+     * @throws IOException if an I/O exception occurs.
+     */
     public void encode() throws IOException;
 
 }
