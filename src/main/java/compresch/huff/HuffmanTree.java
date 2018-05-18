@@ -96,10 +96,18 @@ public class HuffmanTree {
         this.root = auxHeap.poll();
     }
 
+    /**
+     * Traverses Huffman tree and populates array containing lengths of codewords.
+     */
     private void populateCodeLengths() {
         dfsTraversal(this.root, 0);
     }
 
+    /**
+     * Recursive helper method to traverse Huffman tree.
+     * @param node HuffmanNode to continue traversal.
+     * @param depth Current node distance from zero depth (root node).
+     */
     private void dfsTraversal(HuffmanNode node, int depth) {
         if (node.isLeaf()) {
             codeLengths[node.getSymbol()] = depth;
@@ -109,6 +117,10 @@ public class HuffmanTree {
         dfsTraversal(node.getRight(), depth + 1);
     }
 
+    /**
+     * Builds canonical Huffman tree from array of codeword lengths.
+     * Building is done from the lowest depth up to the root.
+     */
     private void buildCanonicalTree() {
         List<HuffmanNode> nodes = new ArrayList<>();
         for (int i = maxCodeLength(); i >= 0; i--) {
@@ -128,6 +140,10 @@ public class HuffmanTree {
         this.root = nodes.get(0);
     }
 
+    /**
+     * Finds the maximum length of codeword from array of lengths.
+     * @return The length of the longest codeword.
+     */
     private int maxCodeLength() {
         int max = 0;
         for (int codeLength : this.codeLengths) {

@@ -58,6 +58,10 @@ public class LzwWriter implements AutoCloseable {
         }
     }
 
+    /**
+     * Writes PseudoEOF symbol to mark end of encoded data.
+     * @throws IOException if an I/O exception occurs
+     */
     public void writePseudoEof() throws IOException {
         write(4095);
     }
