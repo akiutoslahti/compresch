@@ -88,4 +88,9 @@ public class BitInputStream implements AutoCloseable {
         this.bitsLeft = 0;
         input.close();
     }
+
+    public void skip(int n) throws IOException {
+        this.input.skip(n);
+    }
+
 }

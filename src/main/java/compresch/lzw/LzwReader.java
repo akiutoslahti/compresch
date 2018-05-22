@@ -65,4 +65,8 @@ public class LzwReader implements AutoCloseable {
     public void close() throws IOException {
         this.input.close();
     }
+
+    public void skip(int n) throws IOException {
+        this.input.skip(n);
+    }
 }

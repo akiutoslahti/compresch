@@ -70,4 +70,8 @@ public class LzwWriter implements AutoCloseable {
     public void close() throws IOException {
         this.output.close();
     }
+
+    public void writeByte(byte b) throws IOException {
+        this.output.writeByte(b);
+    }
 }

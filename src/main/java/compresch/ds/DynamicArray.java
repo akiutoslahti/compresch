@@ -22,16 +22,53 @@
  * SOFTWARE.
  */
 
-package compresch;
+package compresch.ds;
 
-import java.io.IOException;
+public class DynamicArray {
 
-public interface Encoder {
+    private int[] array;
+    private int size;
+    private int maxSize;
 
-    /**
-     * Executes encode.
-     * @throws IOException if an I/O exception occurs.
-     */
-    void encode() throws IOException;
+    public DynamicArray() {
+        this.array = new int[10];
+        this.size = 0;
+        this.maxSize = 10;
+    }
+
+    public void push(int value) {
+        if (this.size == this.maxSize) {
+            resize();
+        }
+        this.array[this.size++] = value;
+    }
+
+    public int at(int i) {
+        if (i < 0 || i >= this.size) {
+            throw new NullPointerException();
+        } else {
+            return this.array[i];
+        }
+    }
+
+    public int size() {
+        return this.size;
+    }
+
+    private void resize() {
+        this.maxSize *= 2;
+        int[] newArray = new int[this.maxSize];
+        System.arraycopy(this.array, 0, newArray, 0, this.size);
+        this.array = newArray;
+    }
+
+    public String contents() {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < this.size; i++) {
+            builder.append(this.array[i]);
+            builder.append(" ");
+        }
+        return builder.toString().substring(0, builder.length() - 1);
+    }
 
 }

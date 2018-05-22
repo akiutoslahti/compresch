@@ -59,6 +59,7 @@ public class LzwDecoder implements Decoder {
         LzwReader input = new LzwReader(new BitInputStream(
             new BufferedInputStream(new FileInputStream(this.inputFile))));
         OutputStream output = new BufferedOutputStream(new FileOutputStream(this.outputFile));
+        input.skip(3);
         makeDecode(input, output);
         input.close();
         output.close();

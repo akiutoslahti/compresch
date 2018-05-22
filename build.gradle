@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    compile 'commons-cli:commons-cli:1.4'
     testCompile 'junit:junit:4.12'
 }
 
@@ -29,5 +30,8 @@ check.dependsOn jacocoTestReport
 jar {
     manifest {
         attributes 'Main-Class': 'compresch.Main'
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }

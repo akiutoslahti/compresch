@@ -66,11 +66,18 @@ public class HuffmanEncoder implements Encoder {
         BitOutputStream output =
             new BitOutputStream(new BufferedOutputStream(new FileOutputStream(this.outputFile)));
 
+        writeEncoding(output);
         writeCodeLengths(output);
-        writeEncoded(input, output);
+        makeEncode(input, output);
 
         input.close();
         output.close();
+    }
+
+    private void writeEncoding(BitOutputStream output) throws IOException {
+        output.writeByte((byte)('H'));
+        output.writeByte((byte)('U'));
+        output.writeByte((byte)('F'));
     }
 
     /**
@@ -101,13 +108,13 @@ public class HuffmanEncoder implements Encoder {
     }
 
     /**
-     * Private helper method for encoding. Uses pre-constructed code table to
+     * Helper method to make encoding happen. Uses pre-constructed code table to
      * encode every symbol from input to output.
      * @param input  InputStream to read symbols to be encoded.
      * @param output BitOutputStream to write encoded symbols to.
      * @throws IOException if an I/O exception occurs.
      */
-    private void writeEncoded(InputStream input, BitOutputStream output) throws IOException {
+    private void makeEncode(InputStream input, BitOutputStream output) throws IOException {
         while (true) {
             int readBuffer = input.read();
             if (readBuffer == -1) {

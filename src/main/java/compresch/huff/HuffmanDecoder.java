@@ -61,6 +61,9 @@ public class HuffmanDecoder implements Decoder {
         BitInputStream input =
             new BitInputStream(new BufferedInputStream(new FileInputStream(this.inputFile)));
         OutputStream output = new BufferedOutputStream(new FileOutputStream(this.outputFile));
+
+        input.skip(3);
+
         HuffmanNode root = restoreHuffmanTree(input);
 
         writeDecoded(input, output, root);

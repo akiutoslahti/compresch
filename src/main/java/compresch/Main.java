@@ -26,52 +26,139 @@ package compresch;
 
 import compresch.huff.HuffmanDecoder;
 import compresch.huff.HuffmanEncoder;
+import compresch.lzw.LzwDecoder;
+import compresch.lzw.LzwEncoder;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 
 public class Main {
+
+    private static final String DECOMPRESS = "D";
+    private static final String HUFFMAN = "H";
+    private static final String LZW = "L";
 
     /**
      * Compresses/decompresses input file to output file depending on given arguments.
      * @param args [-c/-d] [input file] [output file]
      */
     public static void main(String[] args) {
+        Options options = buildOptions();
+        CommandLineParser parser = new DefaultParser();
+        try {
 
-        if (args.length != 3) {
-            throw new IllegalArgumentException("Faulty parameters.");
+            CommandLine cmdLine = parser.parse(options, args);
+            if (checkArgs(cmdLine) && args.length == 3) {
+                File inputFile = new File(args[1]);
+                File outputFile = new File(args[2]);
+                if (!inputFile.exists()) {
+                    throw new FileNotFoundException("Input file not found");
+                }
+
+                if (cmdLine.hasOption(HUFFMAN)) {
+                    Encoder encoder = new HuffmanEncoder(inputFile, outputFile);
+                    encoder.encode();
+                }
+
+                if (cmdLine.hasOption(LZW)) {
+                    Encoder encoder = new LzwEncoder(inputFile, outputFile);
+                    encoder.encode();
+                }
+
+                if (cmdLine.hasOption(DECOMPRESS)) {
+                    String encoding = readEncoding(inputFile);
+                    if (encoding.equals("HUF")) {
+                        Decoder decoder = new HuffmanDecoder(inputFile, outputFile);
+                        decoder.decode();
+                    }
+                    if (encoding.equals("LZW")) {
+                        Decoder decoder = new LzwDecoder(inputFile, outputFile);
+                        decoder.decode();
+                    }
+                }
+
+            } else {
+                printHelp(options);
+            }
+
+        } catch (ParseException pe) {
+            System.out.println(pe.getMessage());
+            printHelp(options);
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
         }
+    }
 
-        String action = args[0];
-        File inputFile = new File(args[1]);
-        File outputFile = new File(args[2]);
-
-        if (action.equals("-c")) {
-            try {
-                compress(inputFile, outputFile);
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
-                throw new RuntimeException("Command failed.");
-            }
-        } else if (action.equals("-d")) {
-            try {
-                decompress(inputFile, outputFile);
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
-                throw new RuntimeException("Command failed.");
-            }
+    private static String readEncoding(File inputFile) throws IOException {
+        InputStream input = new BufferedInputStream(new FileInputStream(inputFile));
+        int[] readBytes = new int[3];
+        for (int i = 0; i < readBytes.length; i++) {
+            readBytes[i] = input.read();
+        }
+        input.close();
+        StringBuilder builder = new StringBuilder();
+        for (int i : readBytes) {
+            builder.append((char)(i));
+        }
+        if (builder.toString().equals("HUF") || builder.toString().equals("LZW")) {
+            return builder.toString();
         } else {
-            throw new IllegalArgumentException("Unknown command.");
+            throw new UnsupportedEncodingException("Input file doesn't contain valid header");
         }
     }
 
-    private static void compress(File input, File output) throws IOException {
-        HuffmanEncoder encoder = new HuffmanEncoder(input, output);
-        encoder.encode();
+    private static boolean checkArgs(CommandLine cmdLine) {
+        boolean decompress = cmdLine.hasOption(DECOMPRESS);
+        boolean huffman = cmdLine.hasOption(HUFFMAN);
+        boolean lzw = cmdLine.hasOption(LZW);
+
+        return (decompress && !huffman && !lzw)
+            || (!decompress && huffman && !lzw)
+            || (!decompress && !huffman && lzw);
     }
 
-    private static void decompress(File input, File output) throws IOException {
-        HuffmanDecoder decoder = new HuffmanDecoder(input, output);
-        decoder.decode();
+    private static void printHelp(Options options) {
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp("java -jar compresch [OPTION] [INPUT] [OUTPUT]", options);
     }
+
+    private static Options buildOptions() {
+        Options options = new Options();
+
+        options.addOption(Option.builder(DECOMPRESS)
+            .longOpt("decompress")
+            .desc("decompress file")
+            .build());
+
+        options.addOption(Option.builder(HUFFMAN)
+            .longOpt("huffman-coding")
+            .desc("compress file using Huffman coding")
+            .build());
+
+        options.addOption(Option.builder(LZW)
+            .longOpt("lempel-ziv-welch")
+            .desc("compress file using Lempel-Ziw-Welch")
+            .build());
+
+        options.addOption(Option.builder("h")
+            .longOpt("help")
+            .desc("print this message")
+            .build());
+
+        return options;
+    }
+
 }

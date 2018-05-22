@@ -59,14 +59,21 @@ public class LzwEncoder implements Encoder {
         InputStream input = new BufferedInputStream(new FileInputStream(this.inputFile));
         LzwWriter output = new LzwWriter(new BitOutputStream(
             new BufferedOutputStream(new FileOutputStream(this.outputFile))));
+        writeEncoding(output);
         makeEncode(input, output);
         output.writePseudoEof();
         input.close();
         output.close();
     }
 
+    public static void writeEncoding(LzwWriter output) throws IOException {
+        output.writeByte((byte)('L'));
+        output.writeByte((byte)('Z'));
+        output.writeByte((byte)('W'));
+    }
+
     /**
-     * Private helper method to actually read input and encode it to output.
+     * Helper method to make encoding happen.
      * @param input InputStream to read from.
      * @param output LzwWriter to write to.
      * @throws IOException if an I/O exception occurs.
