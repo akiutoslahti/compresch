@@ -50,6 +50,7 @@ public class Main {
     private static final String DECOMPRESS = "D";
     private static final String HUFFMAN = "H";
     private static final String LZW = "L";
+    private static final String HELP = "h";
 
     /**
      * Compresses/decompresses input file to output file depending on given arguments.
@@ -59,13 +60,12 @@ public class Main {
         Options options = buildOptions();
         CommandLineParser parser = new DefaultParser();
         try {
-
             CommandLine cmdLine = parser.parse(options, args);
-            if (checkArgs(cmdLine) && args.length == 3) {
+            if (args.length == 3 && cmdLine.getOptions().length == 1 && !cmdLine.hasOption(HELP)) {
                 File inputFile = new File(args[1]);
                 File outputFile = new File(args[2]);
                 if (!inputFile.exists()) {
-                    throw new FileNotFoundException("Input file not found");
+                    throw new FileNotFoundException("Input file not found: " + inputFile.getName());
                 }
 
                 if (cmdLine.hasOption(HUFFMAN)) {
@@ -90,15 +90,14 @@ public class Main {
                     }
                 }
 
-            } else {
+            } else if (args.length == 1 && cmdLine.hasOption(HELP)) {
                 printHelp(options);
+            } else {
+                System.out.println("Invalid arguments. Use -h to print help.");
             }
 
-        } catch (ParseException pe) {
-            System.out.println(pe.getMessage());
-            printHelp(options);
-        } catch (IOException ioe) {
-            System.out.println(ioe.getMessage());
+        } catch (ParseException | IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -116,18 +115,8 @@ public class Main {
         if (builder.toString().equals("HUF") || builder.toString().equals("LZW")) {
             return builder.toString();
         } else {
-            throw new UnsupportedEncodingException("Input file doesn't contain valid header");
+            throw new UnsupportedEncodingException("Input file doesn't contain valid header.");
         }
-    }
-
-    private static boolean checkArgs(CommandLine cmdLine) {
-        boolean decompress = cmdLine.hasOption(DECOMPRESS);
-        boolean huffman = cmdLine.hasOption(HUFFMAN);
-        boolean lzw = cmdLine.hasOption(LZW);
-
-        return (decompress && !huffman && !lzw)
-            || (!decompress && huffman && !lzw)
-            || (!decompress && !huffman && lzw);
     }
 
     private static void printHelp(Options options) {
@@ -153,7 +142,7 @@ public class Main {
             .desc("compress file using Lempel-Ziw-Welch")
             .build());
 
-        options.addOption(Option.builder("h")
+        options.addOption(Option.builder(HELP)
             .longOpt("help")
             .desc("print this message")
             .build());
