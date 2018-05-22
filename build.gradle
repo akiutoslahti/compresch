@@ -12,7 +12,6 @@ repositories {
 dependencies {
     compile 'commons-cli:commons-cli:1.4'
     testCompile 'junit:junit:4.12'
-    testCompile 'commons-io:commons-io:2.6'
 }
 
 checkstyle {

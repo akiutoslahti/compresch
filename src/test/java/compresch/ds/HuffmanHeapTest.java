@@ -71,7 +71,7 @@ public class HuffmanHeapTest {
         for (int i = 20; i > 0; i--) {
             heap.push(new HuffmanNode(i));
             if (i % 3 == 0) {
-                heap.poll();
+                heap.pop();
                 assertEquals(i + 1, heap.peek().getSymbol());
             } else {
                 assertEquals(i, heap.peek().getSymbol());
@@ -90,7 +90,7 @@ public class HuffmanHeapTest {
             pq.add(curr);
             if (i % 3 == 0) {
                 pq.poll();
-                heap.poll();
+                heap.pop();
             }
             if (!pq.isEmpty() && heap.size() > 0) {
                 assertEquals((int) pq.peek(), heap.peek().getSymbol());

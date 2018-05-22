@@ -24,17 +24,18 @@
 
 package compresch;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
+import java.io.PrintWriter;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 public class MainTest {
@@ -46,51 +47,30 @@ public class MainTest {
     }
 
     private void encodeDecodeTest(String encoding) {
+        File inputFile = new File("test.txt");
+        File compressedFile = new File("test.txt.compressed");
+        File decompressedFile = new File("test.txt.decompressed");
         try {
-            File testFile = downloadBible();
-            File compressed = new File("compressed");
-            File decompressed = new File("decompressed");
-            Main.main(new String[]{encoding, testFile.getName(), compressed.getName()});
-            Main.main(new String[]{"-D", compressed.getName(), decompressed.getName()});
-            assertTrue(checkDiff(testFile, decompressed));
-            deleteFile(testFile);
-        } catch (IOException ioe) {
-            fail();
-        }
-    }
-
-    private File downloadBible() throws IOException {
-        File bibleFile = new File("testBible.txt");
-        URL bibleUrl = new URL("http://www.gutenberg.org/cache/epub/10/pg10.txt");
-        FileUtils.copyURLToFile(bibleUrl, bibleFile, 1000, 1000);
-        return bibleFile;
-    }
-
-    private void deleteFile(File file) {
-        assertTrue(file.delete());
-    }
-
-    private boolean checkDiff(File inputFile, File decompressedFile) {
-        if (inputFile.length() != decompressedFile.length()) {
-            return false;
-        }
-        try {
-            InputStream orig = new BufferedInputStream(new FileInputStream(inputFile));
-            InputStream copy = new BufferedInputStream(new FileInputStream(decompressedFile));
-            while (true) {
-                int origByte = orig.read();
-                int copyByte = copy.read();
-                if (origByte != copyByte) {
-                    return false;
-                }
-                if (origByte == -1) {
-                    break;
-                }
+            PrintWriter writer = new PrintWriter(inputFile);
+            String expected = "AYBABTU ONCE MORE\n";
+            writer.write(expected);
+            writer.close();
+            Main.main(new String[]{encoding, inputFile.getName(), compressedFile.getName()});
+            Main.main(new String[]{"-D", compressedFile.getName(), decompressedFile.getName()});
+            InputStream input = new BufferedInputStream(new FileInputStream(decompressedFile));
+            StringBuilder builder = new StringBuilder();
+            int readBuffer;
+            while ((readBuffer = input.read()) != -1) {
+                builder.append((char)(readBuffer));
             }
+            input.close();
+            assertEquals(expected, builder.toString());
         } catch (IOException ioe) {
             fail("IOException thrown but not expected");
         }
-        return true;
+        assertTrue(inputFile.delete());
+        assertTrue(compressedFile.delete());
+        assertTrue(decompressedFile.delete());
     }
 
 }

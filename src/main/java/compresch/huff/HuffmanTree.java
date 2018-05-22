@@ -25,12 +25,11 @@
 package compresch.huff;
 
 import compresch.ds.DynamicArray;
-
-import java.util.PriorityQueue;
+import compresch.ds.HuffmanHeap;
 
 public class HuffmanTree {
 
-    private PriorityQueue<HuffmanNode> auxHeap;
+    private HuffmanHeap auxHeap;
     private HuffmanNode root;
     private int[] codeLengths;
 
@@ -38,7 +37,7 @@ public class HuffmanTree {
      * Construct new empty Huffman tree.
      */
     public HuffmanTree() {
-        this.auxHeap = new PriorityQueue<>();
+        this.auxHeap = new HuffmanHeap();
         this.root = null;
         this.codeLengths = new int[257];
     }
@@ -79,7 +78,7 @@ public class HuffmanTree {
         for (int i = 0; i < 257; i++) {
             int frequency = freqTbl.getFrequency(i);
             if (frequency > 0) {
-                this.auxHeap.add(new HuffmanNode(i, frequency));
+                this.auxHeap.push(new HuffmanNode(i, frequency));
             }
         }
     }
@@ -89,11 +88,14 @@ public class HuffmanTree {
      */
     private void assembleHuffmanTree() {
         while (this.auxHeap.size() > 1) {
-            HuffmanNode left = auxHeap.poll();
-            HuffmanNode right = auxHeap.poll();
-            auxHeap.add(new HuffmanNode(left, right));
+            HuffmanNode left = auxHeap.peek();
+            auxHeap.pop();
+            HuffmanNode right = auxHeap.peek();
+            auxHeap.pop();
+            auxHeap.push(new HuffmanNode(left, right));
         }
-        this.root = auxHeap.poll();
+        this.root = auxHeap.peek();
+        auxHeap.pop();
     }
 
     /**

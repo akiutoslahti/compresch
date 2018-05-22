@@ -55,7 +55,7 @@ public class HuffmanHeap {
         return this.heap[1];
     }
 
-    public void poll() {
+    public void pop() {
         this.heap[1] = this.heap[this.size];
         this.size--;
         heapify(1);

@@ -54,7 +54,7 @@ public class Main {
 
     /**
      * Compresses/decompresses input file to output file depending on given arguments.
-     * @param args [-c/-d] [input file] [output file]
+     * @param args [-D/-H/-L] [input file] [output file] or [-h]
      */
     public static void main(String[] args) {
         Options options = buildOptions();
