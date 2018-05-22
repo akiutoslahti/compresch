@@ -24,13 +24,12 @@
 
 package compresch.huff;
 
-import java.util.ArrayList;
-import java.util.List;
+import compresch.ds.DynamicArray;
 
 public class HuffmanCodeBook {
 
     @SuppressWarnings("unchecked")
-    private List<Integer>[] codes = new ArrayList[257];
+    private DynamicArray<Integer>[] codes = new DynamicArray[257];
 
     /**
      * Populate code table with codes from Huffman tree.
@@ -48,9 +47,9 @@ public class HuffmanCodeBook {
     private void dfsTraverse(HuffmanNode node, String currentCode) {
         if (node.isLeaf()) {
             int symbol = node.getSymbol();
-            codes[symbol] = new ArrayList<>();
+            codes[symbol] = new DynamicArray<>();
             for (int i = 0; i < currentCode.length(); i++) {
-                codes[symbol].add(Integer.parseInt(currentCode.charAt(i) + ""));
+                codes[symbol].push(Integer.parseInt(currentCode.charAt(i) + ""));
             }
             return;
         }
@@ -63,7 +62,7 @@ public class HuffmanCodeBook {
      * @param symbol byte value as unsigned integer.
      * @return List containing bits of codeword.
      */
-    public List<Integer> getCode(int symbol) {
+    public DynamicArray<Integer> getCode(int symbol) {
         if (checkSymbol(symbol)) {
             return codes[symbol];
         }

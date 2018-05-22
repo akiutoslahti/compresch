@@ -25,6 +25,7 @@
 package compresch.huff;
 
 import compresch.Encoder;
+import compresch.ds.DynamicArray;
 import compresch.io.BitOutputStream;
 
 import java.io.BufferedInputStream;
@@ -34,7 +35,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Objects;
 
 public class HuffmanEncoder implements Encoder {
@@ -98,7 +98,7 @@ public class HuffmanEncoder implements Encoder {
      */
     private void writeCodeLengths(BitOutputStream output) throws IOException {
         for (int i = 0; i < 257; i++) {
-            List<Integer> bits = codeBook.getCode(i);
+            DynamicArray bits = codeBook.getCode(i);
             if (bits == null) {
                 output.writeByte((byte) 0);
             } else {
@@ -132,9 +132,9 @@ public class HuffmanEncoder implements Encoder {
      * @throws IOException if an I/O exception occurs.
      */
     private void writeSymbol(int symbol, BitOutputStream output) throws IOException {
-        List<Integer> bits = codeBook.getCode(symbol);
-        for (int bit : bits) {
-            output.write(bit);
+        DynamicArray<Integer> bits = codeBook.getCode(symbol);
+        for (int i = 0; i < bits.size(); i++) {
+            output.write(bits.at(i));
         }
     }
 }

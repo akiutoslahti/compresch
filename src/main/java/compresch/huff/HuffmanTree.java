@@ -24,8 +24,8 @@
 
 package compresch.huff;
 
-import java.util.ArrayList;
-import java.util.List;
+import compresch.ds.DynamicArray;
+
 import java.util.PriorityQueue;
 
 public class HuffmanTree {
@@ -122,22 +122,22 @@ public class HuffmanTree {
      * Building is done from the lowest depth up to the root.
      */
     private void buildCanonicalTree() {
-        List<HuffmanNode> nodes = new ArrayList<>();
+        DynamicArray<HuffmanNode> nodes = new DynamicArray<>();
         for (int i = maxCodeLength(); i >= 0; i--) {
-            List<HuffmanNode> newNodes = new ArrayList<>();
+            DynamicArray<HuffmanNode> newNodes = new DynamicArray<>();
             if (i > 0) {
                 for (int j = 0; j < codeLengths.length; j++) {
                     if (codeLengths[j] == i) {
-                        newNodes.add(new HuffmanNode(j));
+                        newNodes.push(new HuffmanNode(j));
                     }
                 }
             }
             for (int j = 0; j < nodes.size(); j += 2) {
-                newNodes.add(new HuffmanNode(nodes.get(j), nodes.get(j + 1)));
+                newNodes.push(new HuffmanNode(nodes.at(j), nodes.at(j + 1)));
             }
             nodes = newNodes;
         }
-        this.root = nodes.get(0);
+        this.root = nodes.at(0);
     }
 
     /**

@@ -45,7 +45,7 @@ public class DynamicArrayTest {
     public void pushRandomTest() {
         Random rng = new Random();
         List<Integer> expected = new ArrayList<>();
-        DynamicArray actual = new DynamicArray();
+        DynamicArray<Integer> actual = new DynamicArray<>();
         for (int i = 0; i < 997; i++) {
             int curr = rng.nextInt();
             expected.add(curr);
@@ -58,7 +58,7 @@ public class DynamicArrayTest {
     @Test
     public void atNullPointerTest() {
         Random rng = new Random();
-        DynamicArray actual = new DynamicArray();
+        DynamicArray<Integer> actual = new DynamicArray<>();
         for (int i = 0; i < 7; i++) {
             int curr = rng.nextInt();
             actual.push(curr);

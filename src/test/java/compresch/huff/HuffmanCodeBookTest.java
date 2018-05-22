@@ -28,6 +28,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import compresch.ds.DynamicArray;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -57,15 +59,15 @@ public class HuffmanCodeBookTest {
         List<String> expectedCodes =
             new ArrayList<>(Arrays.asList("010", "011", "00", "100", "101", "110", "111"));
         for (int i = 0; i < symbols.length; i++) {
-            List<Integer> codeword = huffmanCodeBook.getCode(symbols[i]);
+            DynamicArray codeword = huffmanCodeBook.getCode(symbols[i]);
             assertEquals(expectedCodes.get(i), codewordToString(codeword));
         }
     }
 
-    private String codewordToString(List<Integer> codeword) {
+    private String codewordToString(DynamicArray codeword) {
         StringBuilder builder = new StringBuilder();
-        for (Integer codeWord : codeword) {
-            builder.append(codeWord);
+        for (int i = 0; i < codeword.size(); i++) {
+            builder.append(codeword.at(i));
         }
         return builder.toString();
     }

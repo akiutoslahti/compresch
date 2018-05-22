@@ -24,30 +24,31 @@
 
 package compresch.ds;
 
-public class DynamicArray {
+public class DynamicArray<T> {
 
-    private int[] array;
+    private Object[] array;
     private int size;
     private int maxSize;
 
     public DynamicArray() {
-        this.array = new int[10];
+        this.array = new Object[10];
         this.size = 0;
         this.maxSize = 10;
     }
 
-    public void push(int value) {
+    public void push(T value) {
         if (this.size == this.maxSize) {
             resize();
         }
         this.array[this.size++] = value;
     }
 
-    public int at(int i) {
+    @SuppressWarnings("unchecked")
+    public T at(int i) {
         if (i < 0 || i >= this.size) {
             throw new NullPointerException();
         } else {
-            return this.array[i];
+            return (T) this.array[i];
         }
     }
 
@@ -57,7 +58,7 @@ public class DynamicArray {
 
     private void resize() {
         this.maxSize *= 2;
-        int[] newArray = new int[this.maxSize];
+        Object[] newArray = new Object[this.maxSize];
         System.arraycopy(this.array, 0, newArray, 0, this.size);
         this.array = newArray;
     }
