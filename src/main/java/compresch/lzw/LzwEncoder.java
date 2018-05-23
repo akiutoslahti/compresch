@@ -66,7 +66,7 @@ public class LzwEncoder implements Encoder {
         output.close();
     }
 
-    public static void writeEncoding(LzwWriter output) throws IOException {
+    private static void writeEncoding(LzwWriter output) throws IOException {
         output.writeByte((byte)('L'));
         output.writeByte((byte)('Z'));
         output.writeByte((byte)('W'));

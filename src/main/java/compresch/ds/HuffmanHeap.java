@@ -32,12 +32,19 @@ public class HuffmanHeap {
     private int size;
     private int maxSize;
 
+    /**
+     * Constructs a new minimum heap with default values.
+     */
     public HuffmanHeap() {
         this.heap = new HuffmanNode[16];
         this.size = 0;
         this.maxSize = 15;
     }
 
+    /**
+     * Inserts new node to the heap.
+     * @param node HuffmanNode to be inserted to heap.
+     */
     public void push(HuffmanNode node) {
         this.size++;
         if (this.size == this.maxSize) {
@@ -55,6 +62,9 @@ public class HuffmanHeap {
         return this.heap[1];
     }
 
+    /**
+     * Removes top(minimum) element from the heap.
+     */
     public void pop() {
         this.heap[1] = this.heap[this.size];
         this.size--;

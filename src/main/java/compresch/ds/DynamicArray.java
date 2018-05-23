@@ -30,12 +30,19 @@ public class DynamicArray<T> {
     private int size;
     private int maxSize;
 
+    /**
+     * Constructs a new DynamicArray for generic objects with initial size of 10.
+     */
     public DynamicArray() {
         this.array = new Object[10];
         this.size = 0;
         this.maxSize = 10;
     }
 
+    /**
+     * Inserts generic object to the back of the array.
+     * @param value Object of type T.
+     */
     public void push(T value) {
         if (this.size == this.maxSize) {
             resize();
@@ -43,6 +50,12 @@ public class DynamicArray<T> {
         this.array[this.size++] = value;
     }
 
+    /**
+     * Returns generic object from given index of the array.
+     * @param i Index to get from array.
+     * @return Generic object of type T.
+     * @throws NullPointerException if given parameter is not in valid range.
+     */
     @SuppressWarnings("unchecked")
     public T at(int i) {
         if (i < 0 || i >= this.size) {
@@ -63,6 +76,11 @@ public class DynamicArray<T> {
         this.array = newArray;
     }
 
+    /**
+     * Returns String with String representation of all objects stored in array.
+     * Used for debuggin and testing purposes.
+     * @return String containing all objects stored in array
+     */
     public String contents() {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < this.size; i++) {
