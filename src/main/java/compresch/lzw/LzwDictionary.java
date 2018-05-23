@@ -24,12 +24,12 @@
 
 package compresch.lzw;
 
-import java.util.HashMap;
-import java.util.Map;
+import compresch.ds.LzwEntry;
+import compresch.ds.LzwHashTable;
 
 public class LzwDictionary {
 
-    private Map<String, Integer> dictionary;
+    private LzwHashTable dictionary;
     private String[] index;
     private int numOfCodes;
 
@@ -37,7 +37,7 @@ public class LzwDictionary {
      * Constructs and initiates new dictionary.
      */
     public LzwDictionary() {
-        this.dictionary = new HashMap<>();
+        this.dictionary = new LzwHashTable();
         this.index = new String[4096];
         initDictionary();
     }
@@ -58,7 +58,7 @@ public class LzwDictionary {
      */
     public boolean addEntry(String symbol) {
         if (this.numOfCodes < 4095) {
-            this.dictionary.put(symbol, this.numOfCodes);
+            this.dictionary.insert(new LzwEntry(symbol, this.numOfCodes));
             this.index[this.numOfCodes] = symbol;
             numOfCodes++;
             return true;
@@ -87,10 +87,7 @@ public class LzwDictionary {
      * @return codeword for given symbol in range [0, 4095] if found. -1 if not found.
      */
     public int getCodeword(String symbol) {
-        if (this.dictionary.containsKey(symbol)) {
-            return this.dictionary.get(symbol);
-        }
-        return -1;
+        return this.dictionary.search(symbol);
     }
 
 }
