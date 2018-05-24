@@ -12,3 +12,4 @@ This repository is for course **Laboratory work: Data structures and algorithms*
 ## Weekly reports
 * [Week 1](docs/WEEK1.md)
 * [Week 2](docs/WEEK2.md)
+* [Week 3](docs/WEEK3.md)
