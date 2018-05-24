@@ -133,8 +133,8 @@ public class HuffmanEncoder implements Encoder {
      */
     private void writeSymbol(int symbol, BitOutputStream output) throws IOException {
         DynamicArray<Integer> bits = codeBook.getCode(symbol);
-        for (int i = 0; i < bits.size(); i++) {
-            output.write(bits.at(i));
+        for (Integer i : bits) {
+            output.write(i);
         }
     }
 }

@@ -24,7 +24,9 @@
 
 package compresch.ds;
 
-public class DynamicArray<T> {
+import java.util.Iterator;
+
+public class DynamicArray<T> implements Iterable<T> {
 
     private Object[] array;
     private int size;
@@ -88,6 +90,29 @@ public class DynamicArray<T> {
             builder.append(" ");
         }
         return builder.toString().substring(0, builder.length() - 1);
+    }
+
+    /**
+     * Constructs iterator for DynamicArray to allow use of for each statement.
+     * @return Iterator to contents
+     */
+    public Iterator<T> iterator() {
+        Iterator<T> it = new Iterator<T>() {
+
+            private int currentIndex = 0;
+
+            @Override
+            public boolean hasNext() {
+                return currentIndex < size;
+            }
+
+            @Override
+            @SuppressWarnings("unchecked")
+            public T next() {
+                return (T) array[currentIndex++];
+            }
+        };
+        return it;
     }
 
 }
