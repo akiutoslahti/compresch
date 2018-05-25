@@ -7,6 +7,7 @@ Lots of programming again and a little bit of research on how to improve LZW com
 * CLI usage has been implemented properly with Apache Commons CLI library.
 * My own data structures for minimum heap, dynamic array and hashtable have been implemented and Javas own data structures have been replaced with them.
 * Encoded files now contain a short 3byte header to identify used compression method.
+* All core functions are present.
 
 ## What did I learn?
 Learned how to use third party library with my IDE and gradle.
