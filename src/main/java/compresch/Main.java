@@ -26,6 +26,7 @@ package compresch;
 
 import compresch.huff.HuffmanDecoder;
 import compresch.huff.HuffmanEncoder;
+import compresch.util.PerformanceTester;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -49,10 +50,11 @@ public class Main {
     private static final String HUFFMAN = "H";
     private static final String LZW = "L";
     private static final String HELP = "h";
+    private static final String TEST = "T";
 
     /**
      * Compresses/decompresses input file to output file depending on given arguments.
-     * @param args [-D/-H/-L] [input file] [output file] or [-h]
+     * @param args [-D/-H/-L] [input] [output] or [-h]
      */
     public static void main(String[] args) {
         Options options = buildOptions();
@@ -88,13 +90,18 @@ public class Main {
                     }
                 }
 
+                if (cmdLine.hasOption(TEST)) {
+                    PerformanceTester tester = new PerformanceTester(inputFile, outputFile);
+                    tester.testAll();
+                }
+
             } else if (args.length == 1 && cmdLine.hasOption(HELP)) {
                 printHelp(options);
             } else {
                 System.out.println("Invalid arguments. Use -h to print help.");
             }
 
-        } catch (ParseException | IOException e) {
+        } catch (ParseException | IOException | IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -143,6 +150,11 @@ public class Main {
         options.addOption(Option.builder(HELP)
             .longOpt("help")
             .desc("print this message")
+            .build());
+
+        options.addOption(Option.builder(TEST)
+            .longOpt("test")
+            .desc("run performance tests\n - INPUT: folder\n - OUTPUT: markdown")
             .build());
 
         return options;
