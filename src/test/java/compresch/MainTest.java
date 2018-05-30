@@ -60,7 +60,7 @@ public class MainTest {
             StringBuilder builder = new StringBuilder();
             int readBuffer;
             while ((readBuffer = input.read()) != -1) {
-                builder.append((char)(readBuffer));
+                builder.append((char) (readBuffer));
             }
             input.close();
             assertEquals(expected, builder.toString());

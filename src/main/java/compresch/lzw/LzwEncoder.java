@@ -63,14 +63,14 @@ public class LzwEncoder implements Encoder {
     }
 
     private void writeEncoding(LzwWriter output) throws IOException {
-        output.writeByte((byte)('L'));
-        output.writeByte((byte)('Z'));
-        output.writeByte((byte)('W'));
+        output.writeByte((byte) ('L'));
+        output.writeByte((byte) ('Z'));
+        output.writeByte((byte) ('W'));
     }
 
     /**
      * Helper method to make encoding happen.
-     * @param input InputStream to read from.
+     * @param input  InputStream to read from.
      * @param output LzwWriter to write to.
      * @throws IOException if an I/O exception occurs.
      */

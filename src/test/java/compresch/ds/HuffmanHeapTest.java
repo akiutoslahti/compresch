@@ -28,8 +28,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import compresch.huff.HuffmanNode;
+
 import java.util.PriorityQueue;
 import java.util.Random;
+
 import org.junit.Test;
 
 public class HuffmanHeapTest {

@@ -72,9 +72,9 @@ public class HuffmanEncoder implements Encoder {
     }
 
     private void writeEncoding(BitOutputStream output) throws IOException {
-        output.writeByte((byte)('H'));
-        output.writeByte((byte)('U'));
-        output.writeByte((byte)('F'));
+        output.writeByte((byte) ('H'));
+        output.writeByte((byte) ('U'));
+        output.writeByte((byte) ('F'));
     }
 
     /**

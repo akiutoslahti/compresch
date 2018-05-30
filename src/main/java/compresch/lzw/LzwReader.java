@@ -38,7 +38,7 @@ public class LzwReader {
     /**
      * Constructs new LzwReader.
      * @param inputFile input file to read data from.
-     * @throws NullPointerException if parameter is null.
+     * @throws NullPointerException  if parameter is null.
      * @throws FileNotFoundException if input file does not exist.
      */
     public LzwReader(File inputFile) throws FileNotFoundException {

@@ -35,7 +35,7 @@ public class LzwEntry {
 
     /**
      * Constructs a new LzwEntry to be used in LzwHashTable.
-     * @param key String to be used as key in hashtable.
+     * @param key   String to be used as key in hashtable.
      * @param value codeword for @param key
      * @throws NullPointerException if @param key is null.
      */

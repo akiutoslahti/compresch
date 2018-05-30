@@ -108,7 +108,7 @@ public class Main {
         input.close();
         StringBuilder builder = new StringBuilder();
         for (int i : readBytes) {
-            builder.append((char)(i));
+            builder.append((char) (i));
         }
         if (builder.toString().equals("HUF") || builder.toString().equals("LZW")) {
             return builder.toString();

@@ -63,7 +63,7 @@ public class LzwDecoder implements Decoder {
 
     /**
      * Private helper method to actually read compressed input and decode it to output.
-     * @param input LzwReader to read encoded input from.
+     * @param input  LzwReader to read encoded input from.
      * @param output OutputStream to write decoded data to.
      * @throws IOException if an I/O exception occurs.
      */
@@ -94,7 +94,7 @@ public class LzwDecoder implements Decoder {
     /**
      * Private helper method to actually write decoded string to output.
      * @param outputBuffer String to write to output.
-     * @param output OutputStream to write data to.
+     * @param output       OutputStream to write data to.
      * @throws IOException if an I/O exception occurs.
      */
     private void writeDecoded(String outputBuffer, OutputStream output) throws IOException {

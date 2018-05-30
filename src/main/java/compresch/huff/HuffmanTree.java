@@ -107,7 +107,7 @@ public class HuffmanTree {
 
     /**
      * Recursive helper method to traverse Huffman tree.
-     * @param node HuffmanNode to continue traversal.
+     * @param node  HuffmanNode to continue traversal.
      * @param depth Current node distance from zero depth (root node).
      */
     private void dfsTraversal(HuffmanNode node, int depth) {

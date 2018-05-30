@@ -44,7 +44,7 @@ public class BitOutputStream {
     /**
      * Construct bit output stream based on underlying byte output stream.
      * @param outputFile file to be written to.
-     * @throws NullPointerException when null is provided as param.
+     * @throws NullPointerException  when null is provided as param.
      * @throws FileNotFoundException if outputFile cannot be opened.
      */
     public BitOutputStream(File outputFile) throws FileNotFoundException {

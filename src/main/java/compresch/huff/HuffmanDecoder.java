@@ -41,7 +41,7 @@ public class HuffmanDecoder implements Decoder {
 
     /**
      * Constructs decoder to decode Huffman coding.
-     * @param inputFile input file to be decompressed.
+     * @param inputFile  input file to be decompressed.
      * @param outputFile output file to decompress to.
      * @throws NullPointerException if either one of parameters is null.
      */

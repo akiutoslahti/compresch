@@ -44,7 +44,7 @@ public class BitInputStream {
     /**
      * Construct bit input stream based on underlying byte input stream.
      * @param inputFile file to be read
-     * @throws NullPointerException when null is provided as param
+     * @throws NullPointerException  when null is provided as param
      * @throws FileNotFoundException if parameter inputFile is not found
      */
     public BitInputStream(File inputFile) throws FileNotFoundException {
