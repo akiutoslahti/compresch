@@ -29,6 +29,8 @@ import static org.junit.Assert.fail;
 
 import compresch.huff.HuffmanDecoder;
 import compresch.huff.HuffmanEncoder;
+import compresch.lzw.LzwDecoder;
+import compresch.lzw.LzwEncoder;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -60,7 +62,9 @@ public class EncodeDecodeTest {
 
     @After
     public void tearDown() {
-        assertTrue(this.inputFile.delete());
+        if (this.inputFile.exists()) {
+            assertTrue(this.inputFile.delete());
+        }
         assertTrue(this.compressedFile.delete());
         assertTrue(this.decompressedFile.delete());
     }
@@ -80,17 +84,33 @@ public class EncodeDecodeTest {
     }
 
     @Test
+    public void huffmanBibleTest() {
+        Encoder encoder = new HuffmanEncoder(
+            new File("src/test/resources/bible.txt"), this.compressedFile);
+        Decoder decoder = new HuffmanDecoder(this.compressedFile, this.decompressedFile);
+        encodeDecodeTest(encoder, decoder);
+    }
+
+    @Test
     public void lzwRandomBytesTest() {
-        Encoder encoder = new compresch.lzw.LzwEncoder(this.inputFile, this.compressedFile);
-        Decoder decoder = new compresch.lzw.LzwDecoder(this.compressedFile, this.decompressedFile);
+        Encoder encoder = new LzwEncoder(this.inputFile, this.compressedFile);
+        Decoder decoder = new LzwDecoder(this.compressedFile, this.decompressedFile);
         randomBytesTest(encoder, decoder);
     }
 
     @Test
     public void lzwTextTest() {
-        Encoder encoder = new HuffmanEncoder(this.inputFile, this.compressedFile);
-        Decoder decoder = new HuffmanDecoder(this.compressedFile, this.decompressedFile);
+        Encoder encoder = new LzwEncoder(this.inputFile, this.compressedFile);
+        Decoder decoder = new LzwDecoder(this.compressedFile, this.decompressedFile);
         textTest(encoder, decoder);
+    }
+
+    @Test
+    public void lzwBibleTest() {
+        Encoder encoder = new LzwEncoder(
+            new File("src/test/resources/bible.txt"), this.compressedFile);
+        Decoder decoder = new LzwDecoder(this.compressedFile, this.decompressedFile);
+        encodeDecodeTest(encoder, decoder);
     }
 
     private void randomBytesTest(Encoder encoder, Decoder decoder) {

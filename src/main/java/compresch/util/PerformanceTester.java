@@ -86,8 +86,8 @@ public class PerformanceTester {
     private void writeTableHeader(String header) {
         this.writer.println("##" + header + "##");
         this.writer.println("Testfile | input size (bytes) | compressed size (bytes) "
-            + "| compress ratio (%) | compression time (us) | decompression time (us)");
-        this.writer.println("--- | --- | --- | --- | --- | ---");
+            + "| compress ratio | compression time (ms) | decompression time (ms)");
+        this.writer.println("--- | ---: | ---: | ---: | ---: | ---:");
     }
 
     private long[] testSingle(String encoding, String testFilePath) {
