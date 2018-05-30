@@ -26,8 +26,6 @@ package compresch;
 
 import compresch.huff.HuffmanDecoder;
 import compresch.huff.HuffmanEncoder;
-import compresch.lzw.LzwDecoder;
-import compresch.lzw.LzwEncoder;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -74,7 +72,7 @@ public class Main {
                 }
 
                 if (cmdLine.hasOption(LZW)) {
-                    Encoder encoder = new LzwEncoder(inputFile, outputFile);
+                    Encoder encoder = new compresch.lzw.LzwEncoder(inputFile, outputFile);
                     encoder.encode();
                 }
 
@@ -85,7 +83,7 @@ public class Main {
                         decoder.decode();
                     }
                     if (encoding.equals("LZW")) {
-                        Decoder decoder = new LzwDecoder(inputFile, outputFile);
+                        Decoder decoder = new compresch.lzw.LzwDecoder(inputFile, outputFile);
                         decoder.decode();
                     }
                 }

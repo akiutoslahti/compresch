@@ -30,11 +30,9 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -49,10 +47,12 @@ public class BitOutputStreamTest {
             fail("expected NullPointerException");
         } catch (NullPointerException npe) {
             assert true;
+        } catch (FileNotFoundException fnfe) {
+            fail("FileNotFoundException thrown but not expected");
         }
         try {
             File testFile = new File("test.txt");
-            new BitOutputStream(new BufferedOutputStream(new FileOutputStream(testFile)));
+            new BitOutputStream(testFile);
             assertTrue(testFile.delete());
         } catch (FileNotFoundException fnfe) {
             fail("FileNotFoundException thrown but not expected");
@@ -64,7 +64,7 @@ public class BitOutputStreamTest {
         try {
             File testFile = new File("test.txt");
             BitOutputStream output =
-                new BitOutputStream(new BufferedOutputStream(new FileOutputStream(testFile)));
+                new BitOutputStream(testFile);
             int[] numbers = new int[]{1, 0, 1, 0, 1, 0, 1, 0};
             int numberRead;
             for (int number : numbers) {
@@ -86,7 +86,7 @@ public class BitOutputStreamTest {
         try {
             File testFile = new File("test.txt");
             BitOutputStream output =
-                new BitOutputStream(new BufferedOutputStream(new FileOutputStream(testFile)));
+                new BitOutputStream(testFile);
             int[] numbers = new int[]{1, 0, 1, 0, 1};
             int numberRead;
             for (int i = 0; i < numbers.length; i++) {
@@ -108,7 +108,7 @@ public class BitOutputStreamTest {
         File testFile = new File("test.txt");
         try {
             BitOutputStream output =
-                new BitOutputStream(new BufferedOutputStream(new FileOutputStream(testFile)));
+                new BitOutputStream(testFile);
             output.write(2);
             fail("expected IllegalArgumentException");
         } catch (IOException ioe) {
@@ -124,7 +124,7 @@ public class BitOutputStreamTest {
         try {
             File testFile = new File("test.txt");
             BitOutputStream output =
-                new BitOutputStream(new BufferedOutputStream(new FileOutputStream(testFile)));
+                new BitOutputStream(testFile);
             byte[] numbers = new byte[]{46, 127, 99, 12, 6};
             byte[] numbersRead = new byte[numbers.length];
             for (byte number : numbers) {

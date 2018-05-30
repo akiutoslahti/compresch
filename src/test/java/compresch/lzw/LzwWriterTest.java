@@ -29,13 +29,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import compresch.io.BitOutputStream;
-
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -66,10 +63,11 @@ public class LzwWriterTest {
             fail("expected NullPointerException");
         } catch (NullPointerException npe) {
             assert true;
+        } catch (FileNotFoundException fnfe) {
+            fail("FileNotFoundException thrown but not expected");
         }
         try {
-            LzwWriter writer = new LzwWriter(new BitOutputStream(
-                new BufferedOutputStream(new FileOutputStream(this.testFile))));
+            LzwWriter writer = new LzwWriter(this.testFile);
             assertNotNull(writer);
             writer.close();
         } catch (IOException ioe) {
@@ -80,8 +78,7 @@ public class LzwWriterTest {
     @Test
     public void writeTest() {
         try {
-            LzwWriter writer = new LzwWriter(new BitOutputStream(
-                new BufferedOutputStream(new FileOutputStream(this.testFile))));
+            LzwWriter writer = new LzwWriter((this.testFile));
             int[] numbersToWrite =
                 new int[]{0x471, 0xdb9, 0x331, 0xa8d, 0x6cc, 0x344, 0x70f, 0xbfe};
             for (int i : numbersToWrite) {
@@ -110,8 +107,7 @@ public class LzwWriterTest {
         int[] illegalNumbers = new int[]{-1, 4096};
         for (int i : illegalNumbers) {
             try {
-                LzwWriter writer = new LzwWriter(new BitOutputStream(
-                    new BufferedOutputStream(new FileOutputStream(this.testFile))));
+                LzwWriter writer = new LzwWriter(this.testFile);
                 writer.write(i);
                 fail("expected IllegalArgumentException");
             } catch (IOException ioe) {

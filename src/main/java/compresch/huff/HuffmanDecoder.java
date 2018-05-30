@@ -27,10 +27,8 @@ package compresch.huff;
 import compresch.Decoder;
 import compresch.io.BitInputStream;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -43,23 +41,22 @@ public class HuffmanDecoder implements Decoder {
 
     /**
      * Constructs decoder to decode Huffman coding.
-     * @param input  input file to be decompressed.
-     * @param output output file to decompress to.
+     * @param inputFile input file to be decompressed.
+     * @param outputFile output file to decompress to.
      * @throws NullPointerException if either one of parameters is null.
      */
-    public HuffmanDecoder(File input, File output) {
-        Objects.requireNonNull(input);
-        Objects.requireNonNull(output);
-        this.inputFile = input;
-        this.outputFile = output;
+    public HuffmanDecoder(File inputFile, File outputFile) {
+        Objects.requireNonNull(inputFile);
+        Objects.requireNonNull(outputFile);
+        this.inputFile = inputFile;
+        this.outputFile = outputFile;
     }
 
     /**
      * Public method to execute decode.
      */
     public void decode() throws IOException {
-        BitInputStream input =
-            new BitInputStream(new BufferedInputStream(new FileInputStream(this.inputFile)));
+        BitInputStream input = new BitInputStream(this.inputFile);
         OutputStream output = new BufferedOutputStream(new FileOutputStream(this.outputFile));
 
         input.skip(3);

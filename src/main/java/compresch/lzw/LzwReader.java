@@ -26,21 +26,24 @@ package compresch.lzw;
 
 import compresch.io.BitInputStream;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
 
-public class LzwReader implements AutoCloseable {
+public class LzwReader {
 
     private BitInputStream input;
 
     /**
      * Constructs new LzwReader.
-     * @param input BitInputStream to read data from.
+     * @param inputFile input file to read data from.
      * @throws NullPointerException if parameter is null.
+     * @throws FileNotFoundException if input file does not exist.
      */
-    public LzwReader(BitInputStream input) {
-        Objects.requireNonNull(input);
-        this.input = input;
+    public LzwReader(File inputFile) throws FileNotFoundException {
+        Objects.requireNonNull(inputFile);
+        this.input = new BitInputStream(inputFile);
     }
 
     /**
@@ -61,7 +64,6 @@ public class LzwReader implements AutoCloseable {
         return codeWord;
     }
 
-    @Override
     public void close() throws IOException {
         this.input.close();
     }

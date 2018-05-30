@@ -24,6 +24,10 @@
 
 package compresch.io;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
@@ -31,7 +35,7 @@ import java.util.Objects;
 /**
  * Utility class for reading data bit by bit using java.io.InputStream as a basis.
  */
-public class BitInputStream implements AutoCloseable {
+public class BitInputStream {
 
     private InputStream input;
     private int inputBuffer;
@@ -39,12 +43,13 @@ public class BitInputStream implements AutoCloseable {
 
     /**
      * Construct bit input stream based on underlying byte input stream.
-     * @param input byte input stream
+     * @param inputFile file to be read
      * @throws NullPointerException when null is provided as param
+     * @throws FileNotFoundException if parameter inputFile is not found
      */
-    public BitInputStream(InputStream input) {
-        Objects.requireNonNull(input);
-        this.input = input;
+    public BitInputStream(File inputFile) throws FileNotFoundException {
+        Objects.requireNonNull(inputFile);
+        this.input = new BufferedInputStream(new FileInputStream(inputFile));
         inputBuffer = 0;
         bitsLeft = 0;
     }
@@ -82,7 +87,6 @@ public class BitInputStream implements AutoCloseable {
      * Close underlying byte stream.
      * @throws IOException if an I/O exception occurs.
      */
-    @Override
     public void close() throws IOException {
         this.inputBuffer = 0;
         this.bitsLeft = 0;

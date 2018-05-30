@@ -29,8 +29,6 @@ import static org.junit.Assert.fail;
 
 import compresch.huff.HuffmanDecoder;
 import compresch.huff.HuffmanEncoder;
-import compresch.lzw.LzwDecoder;
-import compresch.lzw.LzwEncoder;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -83,8 +81,8 @@ public class EncodeDecodeTest {
 
     @Test
     public void lzwRandomBytesTest() {
-        Encoder encoder = new LzwEncoder(this.inputFile, this.compressedFile);
-        Decoder decoder = new LzwDecoder(this.compressedFile, this.decompressedFile);
+        Encoder encoder = new compresch.lzw.LzwEncoder(this.inputFile, this.compressedFile);
+        Decoder decoder = new compresch.lzw.LzwDecoder(this.compressedFile, this.decompressedFile);
         randomBytesTest(encoder, decoder);
     }
 

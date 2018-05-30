@@ -24,6 +24,10 @@
 
 package compresch.io;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Objects;
@@ -31,7 +35,7 @@ import java.util.Objects;
 /**
  * Utility class for writing data bit by bit using java.io.OutpuStream as a basis.
  */
-public class BitOutputStream implements AutoCloseable {
+public class BitOutputStream {
 
     private OutputStream output;
     private int outputBuffer;
@@ -39,12 +43,13 @@ public class BitOutputStream implements AutoCloseable {
 
     /**
      * Construct bit output stream based on underlying byte output stream.
-     * @param output byte output stream
+     * @param outputFile file to be written to.
      * @throws NullPointerException when null is provided as param.
+     * @throws FileNotFoundException if outputFile cannot be opened.
      */
-    public BitOutputStream(OutputStream output) {
-        Objects.requireNonNull(output);
-        this.output = output;
+    public BitOutputStream(File outputFile) throws FileNotFoundException {
+        Objects.requireNonNull(outputFile);
+        this.output = new BufferedOutputStream(new FileOutputStream(outputFile));
         this.outputBuffer = 0;
         this.bitsLeft = 8;
     }
@@ -82,7 +87,6 @@ public class BitOutputStream implements AutoCloseable {
      * fill with zeroes.
      * @throws IOException if an I/O exception occurs.
      */
-    @Override
     public void close() throws IOException {
         while (this.bitsLeft != 8) {
             write(0);

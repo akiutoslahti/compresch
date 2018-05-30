@@ -25,13 +25,10 @@
 package compresch.lzw;
 
 import compresch.Encoder;
-import compresch.io.BitOutputStream;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
@@ -57,8 +54,7 @@ public class LzwEncoder implements Encoder {
     @Override
     public void encode() throws IOException {
         InputStream input = new BufferedInputStream(new FileInputStream(this.inputFile));
-        LzwWriter output = new LzwWriter(new BitOutputStream(
-            new BufferedOutputStream(new FileOutputStream(this.outputFile))));
+        LzwWriter output = new LzwWriter(this.outputFile);
         writeEncoding(output);
         makeEncode(input, output);
         output.writePseudoEof();
@@ -66,7 +62,7 @@ public class LzwEncoder implements Encoder {
         output.close();
     }
 
-    private static void writeEncoding(LzwWriter output) throws IOException {
+    private void writeEncoding(LzwWriter output) throws IOException {
         output.writeByte((byte)('L'));
         output.writeByte((byte)('Z'));
         output.writeByte((byte)('W'));

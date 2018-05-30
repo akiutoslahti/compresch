@@ -29,10 +29,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -74,16 +72,17 @@ public class BitInputStreamTest {
             fail("expected NullPointerException");
         } catch (NullPointerException npe) {
             assert true;
+        } catch (FileNotFoundException fnfe) {
+            fail("FileNotFoundException thrown but not expected");
         }
         try {
-            new BitInputStream(new BufferedInputStream(
-                new FileInputStream(new File("notfound.txt"))));
+            new BitInputStream(new File("notfound.txt"));
             fail("expected FileNotFoundException");
         } catch (FileNotFoundException fnfe) {
             assert true;
         }
         try {
-            new BitInputStream(new BufferedInputStream(new FileInputStream(this.testFile)));
+            new BitInputStream(this.testFile);
             assert true;
         } catch (FileNotFoundException fnfe) {
             fail("FileNotFoundException thrown but not expected");
@@ -94,7 +93,7 @@ public class BitInputStreamTest {
     public void readTest() {
         try {
             BitInputStream input =
-                new BitInputStream(new BufferedInputStream(new FileInputStream(this.testFile)));
+                new BitInputStream(this.testFile);
             int[] readByte = new int[8];
             for (int i = 0; i < 8; i++) {
                 readByte[i] = input.read();
@@ -111,7 +110,7 @@ public class BitInputStreamTest {
     public void readEndOfFileTest() {
         try {
             BitInputStream input =
-                new BitInputStream(new BufferedInputStream(new FileInputStream(this.testFile)));
+                new BitInputStream(this.testFile);
             for (int i = 0; i < 40; i++) {
                 input.read();
             }
@@ -127,7 +126,7 @@ public class BitInputStreamTest {
     public void readByteTest() {
         try {
             BitInputStream input =
-                new BitInputStream(new BufferedInputStream(new FileInputStream(this.testFile)));
+                new BitInputStream(this.testFile);
             byte[] inputRead = new byte[this.numbers.length];
             for (int i = 0; i < this.numbers.length; i++) {
                 inputRead[i] = (byte) (input.readByte());

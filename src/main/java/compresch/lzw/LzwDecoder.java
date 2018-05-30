@@ -25,12 +25,9 @@
 package compresch.lzw;
 
 import compresch.Decoder;
-import compresch.io.BitInputStream;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -56,8 +53,7 @@ public class LzwDecoder implements Decoder {
 
     @Override
     public void decode() throws IOException {
-        LzwReader input = new LzwReader(new BitInputStream(
-            new BufferedInputStream(new FileInputStream(this.inputFile))));
+        LzwReader input = new LzwReader(this.inputFile);
         OutputStream output = new BufferedOutputStream(new FileOutputStream(this.outputFile));
         input.skip(3);
         makeDecode(input, output);

@@ -32,7 +32,6 @@ import java.util.PriorityQueue;
 import java.util.Random;
 import org.junit.Test;
 
-
 public class HuffmanHeapTest {
 
     @Test

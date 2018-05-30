@@ -29,14 +29,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import compresch.io.BitInputStream;
 import compresch.io.BitOutputStream;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Random;
 
@@ -58,8 +54,7 @@ public class LzwReaderTest {
             this.numbersExpected[i] = (rng.nextInt(4096));
         }
         try {
-            BitOutputStream output =
-                new BitOutputStream(new BufferedOutputStream(new FileOutputStream(this.testFile)));
+            BitOutputStream output = new BitOutputStream(this.testFile);
             for (Integer i : this.numbersExpected) {
                 for (int j = 11; j >= 0; j--) {
                     output.write((i >> j) & 1);
@@ -83,17 +78,17 @@ public class LzwReaderTest {
             fail("expected NullPointerException");
         } catch (NullPointerException npe) {
             assert true;
+        } catch (FileNotFoundException fnfe) {
+            fail("FileNotFoundException thrown but not expected");
         }
         try {
-            new LzwReader(new BitInputStream(new BufferedInputStream(
-                new FileInputStream(new File("notExist")))));
+            new LzwReader(new File("notExist"));
             fail("expected IOException");
         } catch (IOException ioe) {
             assert true;
         }
         try {
-            LzwReader reader = new LzwReader(new BitInputStream(
-                new BufferedInputStream(new FileInputStream(this.testFile))));
+            LzwReader reader = new LzwReader(this.testFile);
             assertNotNull(reader);
         } catch (IOException ioe) {
             fail("IOException thrown but not expected");
@@ -103,8 +98,7 @@ public class LzwReaderTest {
     @Test
     public void readTest() {
         try {
-            LzwReader reader = new LzwReader(new BitInputStream(
-                new BufferedInputStream(new FileInputStream(this.testFile))));
+            LzwReader reader = new LzwReader(this.testFile);
             int[] numbersRead = new int[this.numbersExpected.length];
             for (int i = 0; i < this.numbersExpected.length; i++) {
                 numbersRead[i] = reader.read();
@@ -119,8 +113,7 @@ public class LzwReaderTest {
     @Test
     public void readPastEofTest() {
         try {
-            LzwReader reader = new LzwReader(new BitInputStream(
-                new BufferedInputStream(new FileInputStream(this.testFile))));
+            LzwReader reader = new LzwReader(this.testFile);
             for (int i = 0; i < this.numbersExpected.length + 1; i++) {
                 reader.read();
             }
