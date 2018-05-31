@@ -7,7 +7,8 @@
 This repository is for course **Laboratory work: Data structures and algorithms** in **University of Helsinki**.
 
 ## Documentation
-[Project specification](docs/01-SPECIFICATION.md)
+* [Project specification](docs/01-SPECIFICATION.md)
+* [User guide](docs/04-USER-GUIDE.md)
 
 ## Weekly reports
 * [Week 1](docs/WEEK1.md)
