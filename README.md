@@ -8,6 +8,7 @@ This repository is for course **Laboratory work: Data structures and algorithms*
 
 ## Documentation
 * [Project specification](docs/01-SPECIFICATION.md)
+* [Implementation](docs/02-IMPLEMENTATION.md)
 * [Testing](docs/03-TESTING.md)
 * [User guide](docs/04-USER-GUIDE.md)
 
