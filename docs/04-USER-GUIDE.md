@@ -20,6 +20,9 @@ Checkstyle report is generated to ./build/reports/checkstyle/???
 Code coverage report is generated to ./build/reports/jacoco/???  
 
 ## Usage/Help
+Compresch takes a single input file and single output file as argument for compression/decompression. For compression all file formats are supported. For decompression only files compressed with Compresch can be passed as argument. For decompression used encoding does not have to be specified as Compresch will automatically detect which encoding was utilized in compression stage.
+
+For performance testing a folder containing test files is taken as input and output will be single Markdown formatted file.
 ```
 /* paste help here */
 ```
