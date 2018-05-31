@@ -13,11 +13,11 @@ gradle wrapper
 ./gradlew build
 ./gradlew javadoc
 ```
-Classes are build to ./build/classes/
-Jar is build to ./build/libs/
-Javadoc is generated to
-Checkstyle report is generated to ./build/reports/checkstyle/???
-Code coverage report is generated to ./build/reports/jacoco/???
+Classes are build to ./build/classes/  
+Jar is build to ./build/libs/  
+Javadoc is generated to  
+Checkstyle report is generated to ./build/reports/checkstyle/???  
+Code coverage report is generated to ./build/reports/jacoco/???  
 
 ## Usage/Help
 ```
