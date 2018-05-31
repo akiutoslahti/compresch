@@ -50,7 +50,7 @@ public class PerformanceTester {
     public void testAll() throws FileNotFoundException {
         this.writer = new PrintWriter(this.testReport);
         this.writer.println("#Performance testing results#");
-        File[] testFiles = this.testFileFolder.listFiles();
+        File[] testFiles = sortFileArray(testFileFolder.listFiles());
         if (testFiles.length == 0) {
             throw new IllegalArgumentException("Test file location is empty");
         }
@@ -112,6 +112,19 @@ public class PerformanceTester {
         decompressed.delete();
 
         return testResults;
+    }
+
+    private File[] sortFileArray(File[] testFiles) {
+        for (int i = 1; i < testFiles.length; i++) {
+            File current = testFiles[i];
+            int j = i - 1;
+            while (j >= 0 && testFiles[j].getName().compareTo(current.getName()) > 0) {
+                testFiles[j + 1] = testFiles[j];
+                j--;
+            }
+            testFiles[j + 1] = current;
+        }
+        return testFiles;
     }
 
 }

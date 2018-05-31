@@ -6,27 +6,35 @@ First clone repository and then change directory to cloned repository:
 git clone https://github.com/akiutoslahti/compresch
 cd compresch
 ```
-Init gradle wrapper, upgrade wrapper and then build project and javadoc:
+Init latest version of gradle wrapper and then build project and javadoc:
 ```
-gradle wrapper
-./gradlew wrapper --gradle-version 4.2.1
+gradle wrapper --gradle-version 4.7
 ./gradlew build
 ./gradlew javadoc
 ```
-Classes are build to ./build/classes/  
-Jar is build to ./build/libs/  
-Javadoc is generated to  
-Checkstyle report is generated to ./build/reports/checkstyle/???  
-Code coverage report is generated to ./build/reports/jacoco/???  
+Classes are build to **./build/classes/java/**  
+Jar is build to **./build/libs/**  
+Javadoc is generated to  **./build/docs/javadoc/**  
+Checkstyle report is generated to **./build/reports/checkstyle/**  
+Code coverage report is generated to **./build/reports/jacoco/test/**  
 
 ## Usage/Help
 Compresch takes a single input file and single output file as argument for compression/decompression. For compression all file formats are supported. For decompression only files compressed with Compresch can be passed as argument. For decompression used encoding does not have to be specified as Compresch will automatically detect which encoding was utilized in compression stage.
 
 For performance testing a folder containing test files is taken as input and output will be single Markdown formatted file.
+
+Basic usage (java -jar compresch -h):
 ```
-/* paste help here */
+usage: java -jar compresch [OPTION] [INPUT] [OUTPUT]
+ -D,--decompress         decompress file
+ -H,--huffman-coding     compress file using Huffman coding
+ -h,--help               print this message
+ -L,--lempel-ziv-welch   compress file using Lempel-Ziw-Welch
+ -T,--test               run performance tests
+                         - INPUT: folder
+                         - OUTPUT: markdown
 ```
-## Examples
+## Examples of use
 Compress file *text.txt* to file *test.txt.H* using Huffman coding.
 ```
 java -jar compresch.jar -H test.txt test.txt.H
