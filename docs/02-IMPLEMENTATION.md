@@ -1,4 +1,4 @@
 # Implementation
 
-## Class diagram
-![??](pics/ClassDiagram.png)
+## Packaging and classes
+![??](pics/packagediagram.png)
