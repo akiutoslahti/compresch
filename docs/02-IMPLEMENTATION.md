@@ -22,7 +22,7 @@ Huffman encoding takes a byte sequence of symbols as input and produces a bit se
 ## Lempel-Ziv-Welch
 ![wut](pics/lzwclasses.png)
 
-Lempel-Ziv-Welch(from here on LZW) read variable length symbols from input producing fixed length symbols as output producing a dictionary of codewords during encoding/decoding. Intent is that encoded bit sequence is shorter than original bit sequence by utilizing codewords for bitsequences seen before.
+Lempel-Ziv-Welch read variable length symbols from input producing fixed length symbols as output producing a dictionary of codewords during encoding/decoding. Intent is that encoded bit sequence is shorter than original bit sequence by utilizing codewords for bitsequences seen before.
 
 **LzwEncoder** and **LzwDecoder** are the pair of classes that handle the logic behind compression and decompression of data and utilize the secondary classes designed to help them.
 
