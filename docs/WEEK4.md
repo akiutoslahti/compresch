@@ -6,7 +6,7 @@
 * Added functionality for performance testing with automatic creation of Markdown formatted report.
 * Improved tests for encoding and decoding.
 * Documentation on implementation and testing.
-* Build and user guide.
+* Wrote build and user guide.
 
 ## How I have progressed?
 * Performance testing has been implemented.
