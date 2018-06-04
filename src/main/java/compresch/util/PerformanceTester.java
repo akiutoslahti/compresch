@@ -37,6 +37,13 @@ public class PerformanceTester {
     private File testReport;
     private PrintWriter writer;
 
+    /**
+     * Constructs new PerformanceTester if parameters appear to be okay.
+     * @param testFileFolder File folder, where files to be tested are in.
+     * @param testReport     File path, where markdown report is saved.
+     * @throws NullPointerException     if either one of parameters is null.
+     * @throws IllegalArgumentException if first parameter is not a folder.
+     */
     public PerformanceTester(File testFileFolder, File testReport) {
         Objects.requireNonNull(testFileFolder);
         Objects.requireNonNull(testReport);
@@ -47,9 +54,14 @@ public class PerformanceTester {
         this.testReport = testReport;
     }
 
+    /**
+     * Runs compression testing to all files in testFileFolder.
+     * @throws FileNotFoundException    if File testReport cannot be opened for writing.
+     * @throws IllegalArgumentException if testFileFolder is empty.
+     */
     public void testAll() throws FileNotFoundException {
         this.writer = new PrintWriter(this.testReport);
-        this.writer.println("#Performance testing results#");
+        this.writer.println("## Performance testing results");
         File[] testFiles = sortFileArray(testFileFolder.listFiles());
         if (testFiles.length == 0) {
             throw new IllegalArgumentException("Test file location is empty");
@@ -71,7 +83,7 @@ public class PerformanceTester {
         this.writer.println();
     }
 
-    private void testLzw(File [] testFiles) {
+    private void testLzw(File[] testFiles) {
         writeTableHeader("Lempel-Ziv-Welch");
         for (File testFile : testFiles) {
             long[] testResults = testSingle("-L", testFile.getPath());
@@ -84,12 +96,20 @@ public class PerformanceTester {
     }
 
     private void writeTableHeader(String header) {
-        this.writer.println("##" + header + "##");
+        this.writer.println("### " + header);
         this.writer.println("Testfile | input size (bytes) | compressed size (bytes) "
             + "| compress ratio | compression time (ms) | decompression time (ms)");
         this.writer.println("--- | ---: | ---: | ---: | ---: | ---:");
     }
 
+    /**
+     * Runs compression and decompression test on a single file with both Huffman coding and LZW
+     * compression.
+     * @param encoding     "-H" for Huffman coding and "-L" for LZW compression
+     * @param testFilePath String path to file which is to be tested.
+     * @return long array with following data:
+     * {compressed size in bytes, compression time in ms, decompression time in ms}
+     */
     private long[] testSingle(String encoding, String testFilePath) {
         long[] testResults = new long[3];
         File compressed = new File(this.testFileFolder.getPath() + "/compressed");
