@@ -61,24 +61,20 @@ public class Main {
                 String outputPath = args[2];
 
                 if (cmdLine.hasOption(HUFFMAN)) {
-                    Encoder encoder = new HuffmanEncoder(inputPath, outputPath);
-                    encoder.encode();
+                    HuffmanEncoder.encode(inputPath, outputPath);
                 }
 
                 if (cmdLine.hasOption(LZW)) {
-                    Encoder encoder = new LzwEncoder(inputPath, outputPath);
-                    encoder.encode();
+                    LzwEncoder.encode(inputPath, outputPath);
                 }
 
                 if (cmdLine.hasOption(DECOMPRESS)) {
                     String encoding = EncodingChecker.readEncoding(inputPath);
                     if (encoding.equals("HUF")) {
-                        Decoder decoder = new HuffmanDecoder(inputPath, outputPath);
-                        decoder.decode();
+                        HuffmanDecoder.decode(inputPath, outputPath);
                     }
                     if (encoding.equals("LZW")) {
-                        Decoder decoder = new LzwDecoder(inputPath, outputPath);
-                        decoder.decode();
+                        LzwDecoder.decode(inputPath, outputPath);
                     }
                 }
 

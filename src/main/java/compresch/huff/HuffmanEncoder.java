@@ -24,7 +24,6 @@
 
 package compresch.huff;
 
-import compresch.Encoder;
 import compresch.ds.DynamicArray;
 import compresch.io.BitOutputStream;
 
@@ -34,43 +33,32 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
-public class HuffmanEncoder implements Encoder {
-
-    private String inputFilePath;
-    private String outputFilePath;
-    private HuffmanCodeBook codeBook;
-
-    /**
-     * Construct encoder to encode Huffman coding.
-     * @param inputPath  path to input file to be compressed.
-     * @param outputPath path to output file to compress to.
-     * @throws NullPointerException if either one of parameters is null.
-     */
-    public HuffmanEncoder(String inputPath, String outputPath) {
-        Objects.requireNonNull(inputPath);
-        Objects.requireNonNull(outputPath);
-        this.inputFilePath = inputPath;
-        this.outputFilePath = outputPath;
-        this.codeBook = new HuffmanCodeBook();
-    }
+public class HuffmanEncoder {
 
     /**
      * Public method to execute encode.
+     * @param inputPath  path to input file to be compressed.
+     * @param outputPath path to output file to compress to.
+     * @throws NullPointerException if either of arguments is null.
+     * @throws IOException if an I/O exception occurs.
      */
-    public void encode() throws IOException {
-        getCodeBook();
-        InputStream input = new BufferedInputStream(new FileInputStream(this.inputFilePath));
-        BitOutputStream output = new BitOutputStream(this.outputFilePath);
+    public static void encode(String inputPath, String outputPath) throws IOException {
+        Objects.requireNonNull(inputPath);
+        Objects.requireNonNull(outputPath);
+
+        HuffmanCodeBook codebook = getCodeBook(inputPath);
+        InputStream input = new BufferedInputStream(new FileInputStream(inputPath));
+        BitOutputStream output = new BitOutputStream(outputPath);
 
         writeEncoding(output);
-        writeCodeLengths(output);
-        makeEncode(input, output);
+        writeCodeLengths(output, codebook);
+        makeEncode(input, output, codebook);
 
         input.close();
         output.close();
     }
 
-    private void writeEncoding(BitOutputStream output) throws IOException {
+    private static void writeEncoding(BitOutputStream output) throws IOException {
         output.writeByte((byte) ('H'));
         output.writeByte((byte) ('U'));
         output.writeByte((byte) ('F'));
@@ -79,12 +67,14 @@ public class HuffmanEncoder implements Encoder {
     /**
      * Private helper method for encoding. Constructs a code table from given input.
      */
-    private void getCodeBook() throws IOException {
+    private static HuffmanCodeBook getCodeBook(String inputPath) throws IOException {
         HuffmanFrequencyTable freqTable = new HuffmanFrequencyTable();
-        freqTable.buildFreqTable(this.inputFilePath);
+        freqTable.buildFreqTable(inputPath);
         HuffmanTree huffTree = new HuffmanTree();
         huffTree.buildHuffmanTree(freqTable);
-        this.codeBook.buildCodeBook(huffTree.getRoot());
+        HuffmanCodeBook codebook = new HuffmanCodeBook();
+        codebook.buildCodeBook(huffTree.getRoot());
+        return codebook;
     }
 
     /**
@@ -92,9 +82,10 @@ public class HuffmanEncoder implements Encoder {
      * @param output BitOutputStream to write codeword lengths to.
      * @throws IOException if an I/O exception occurs.
      */
-    private void writeCodeLengths(BitOutputStream output) throws IOException {
+    private static void writeCodeLengths(
+        BitOutputStream output, HuffmanCodeBook codebook) throws IOException {
         for (int i = 0; i < 257; i++) {
-            DynamicArray bits = codeBook.getCode(i);
+            DynamicArray bits = codebook.getCode(i);
             if (bits == null) {
                 output.writeByte((byte) 0);
             } else {
@@ -110,25 +101,26 @@ public class HuffmanEncoder implements Encoder {
      * @param output BitOutputStream to write encoded symbols to.
      * @throws IOException if an I/O exception occurs.
      */
-    private void makeEncode(InputStream input, BitOutputStream output) throws IOException {
+    private static void makeEncode(
+        InputStream input, BitOutputStream output, HuffmanCodeBook codebook) throws IOException {
         while (true) {
             int readBuffer = input.read();
             if (readBuffer == -1) {
                 break;
             }
-            writeSymbol(readBuffer, output);
+            writeSymbol(codebook.getCode(readBuffer), output);
         }
-        writeSymbol(256, output);
+        writeSymbol(codebook.getCode(256), output);
     }
 
     /**
      * Private helper method to actually write encoded symbol to output.
-     * @param symbol byte to be encoded as unsigned integer.
+     * @param bits array of bits representing symbol to be written.
      * @param output BitOutputStream where to write coded symbol.
      * @throws IOException if an I/O exception occurs.
      */
-    private void writeSymbol(int symbol, BitOutputStream output) throws IOException {
-        DynamicArray<Integer> bits = codeBook.getCode(symbol);
+    private static void writeSymbol(
+        DynamicArray<Integer> bits, BitOutputStream output) throws IOException {
         for (Integer i : bits) {
             output.write(i);
         }

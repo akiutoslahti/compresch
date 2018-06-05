@@ -24,36 +24,27 @@
 
 package compresch.lzw;
 
-import compresch.Decoder;
-
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Objects;
 
-public class LzwDecoder implements Decoder {
-
-    private String inputFilePath;
-    private String outputFilePath;
+public class LzwDecoder {
 
     /**
-     * Constructs decoder to decode with LZW.
+     * Public method to decode a file.
      * @param inputPath  path to input file to be decompressed.
      * @param outputPath path to output file to decompress to.
      * @throws NullPointerException if either one of parameters is null.
+     * @throws IOException if an I/O exception occurs.
      */
-    public LzwDecoder(String inputPath, String outputPath) {
+    public static void decode(String inputPath, String outputPath) throws IOException {
         Objects.requireNonNull(inputPath);
         Objects.requireNonNull(outputPath);
-        this.inputFilePath = inputPath;
-        this.outputFilePath = outputPath;
-    }
 
-    @Override
-    public void decode() throws IOException {
-        LzwReader input = new LzwReader(this.inputFilePath);
-        OutputStream output = new BufferedOutputStream(new FileOutputStream(this.outputFilePath));
+        LzwReader input = new LzwReader(inputPath);
+        OutputStream output = new BufferedOutputStream(new FileOutputStream(outputPath));
         input.skip(3);
         makeDecode(input, output);
         input.close();
@@ -66,7 +57,7 @@ public class LzwDecoder implements Decoder {
      * @param output OutputStream to write decoded data to.
      * @throws IOException if an I/O exception occurs.
      */
-    private void makeDecode(LzwReader input, OutputStream output) throws IOException {
+    private static void makeDecode(LzwReader input, OutputStream output) throws IOException {
         LzwDictionary dict = new LzwDictionary();
         int prevCode = input.read();
         String outputBuffer = dict.getSymbol(prevCode);
@@ -96,7 +87,7 @@ public class LzwDecoder implements Decoder {
      * @param output       OutputStream to write data to.
      * @throws IOException if an I/O exception occurs.
      */
-    private void writeDecoded(String outputBuffer, OutputStream output) throws IOException {
+    private static void writeDecoded(String outputBuffer, OutputStream output) throws IOException {
         for (int i = 0; i < outputBuffer.length(); i++) {
             output.write((int) (outputBuffer.charAt(i)));
         }

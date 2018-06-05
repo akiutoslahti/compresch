@@ -55,6 +55,7 @@ public class EncodeDecodeTest {
     private final String inputFilePath = "testInput";
     private final String compressedFilePath = "compressed";
     private final String decompressedFilePath = "decompressed";
+    private final String biblePath = "./src/test/resources/bible.txt";
 
     @Before
     public void setUp() {
@@ -74,59 +75,29 @@ public class EncodeDecodeTest {
 
     @Test
     public void huffmanRandomBytesTest() {
-        Encoder encoder = new HuffmanEncoder(
-            this.inputFilePath, this.compressedFilePath);
-        Decoder decoder = new HuffmanDecoder(
-            this.compressedFilePath, this.decompressedFilePath);
-        randomBytesTest(encoder, decoder);
-    }
-
-    @Test
-    public void huffmanTextTest() {
-        Encoder encoder = new HuffmanEncoder(
-            this.inputFilePath, this.compressedFilePath);
-        Decoder decoder = new HuffmanDecoder(
-            this.compressedFilePath, this.decompressedFilePath);
-        textTest(encoder, decoder);
-    }
-
-    @Test
-    public void huffmanBibleTest() {
-        Encoder encoder = new HuffmanEncoder(
-            "src/test/resources/bible.txt", this.compressedFilePath);
-        Decoder decoder = new HuffmanDecoder(
-            this.compressedFilePath, this.decompressedFilePath);
-        encodeDecodeTest(encoder, decoder);
+        createRandomInput();
+        try {
+            HuffmanEncoder.encode(this.inputFilePath, this.compressedFilePath);
+            HuffmanDecoder.decode(this.compressedFilePath, this.decompressedFilePath);
+        } catch (IOException ioe) {
+            fail("IOEXception thrown but not expected");
+        }
+        assertTrue(checkDiff(null));
     }
 
     @Test
     public void lzwRandomBytesTest() {
-        Encoder encoder = new LzwEncoder(
-            this.inputFilePath, this.compressedFilePath);
-        Decoder decoder = new LzwDecoder(
-            this.compressedFilePath, this.decompressedFilePath);
-        randomBytesTest(encoder, decoder);
+        createRandomInput();
+        try {
+            LzwEncoder.encode(this.inputFilePath, this.compressedFilePath);
+            LzwDecoder.decode(this.compressedFilePath, this.decompressedFilePath);
+        } catch (IOException ioe) {
+            fail("IOEXception thrown but not expected");
+        }
+        assertTrue(checkDiff(null));
     }
 
-    @Test
-    public void lzwTextTest() {
-        Encoder encoder = new LzwEncoder(
-            this.inputFilePath, this.compressedFilePath);
-        Decoder decoder = new LzwDecoder(
-            this.compressedFilePath, this.decompressedFilePath);
-        textTest(encoder, decoder);
-    }
-
-    @Test
-    public void lzwBibleTest() {
-        Encoder encoder = new LzwEncoder(
-            "src/test/resources/bible.txt", this.compressedFilePath);
-        Decoder decoder = new LzwDecoder(
-            this.compressedFilePath, this.decompressedFilePath);
-        encodeDecodeTest(encoder, decoder);
-    }
-
-    private void randomBytesTest(Encoder encoder, Decoder decoder) {
+    private void createRandomInput() {
         Random rng = new Random();
         try {
             OutputStream output = new BufferedOutputStream(new FileOutputStream(this.inputFile));
@@ -137,10 +108,33 @@ public class EncodeDecodeTest {
         } catch (IOException ioe) {
             fail("IOException thrown but not expected");
         }
-        assertTrue(encodeDecodeTest(encoder, decoder));
     }
 
-    private void textTest(Encoder encoder, Decoder decoder) {
+    @Test
+    public void huffmanTextTest() {
+        createTextInput();
+        try {
+            HuffmanEncoder.encode(this.inputFilePath, this.compressedFilePath);
+            HuffmanDecoder.decode(this.compressedFilePath, this.decompressedFilePath);
+        } catch (IOException ioe) {
+            fail("IOEXception thrown but not expected");
+        }
+        assertTrue(checkDiff(null));
+    }
+
+    @Test
+    public void lzwTextTest() {
+        createTextInput();
+        try {
+            LzwEncoder.encode(this.inputFilePath, this.compressedFilePath);
+            LzwDecoder.decode(this.compressedFilePath, this.decompressedFilePath);
+        } catch (IOException ioe) {
+            fail("IOEXception thrown but not expected");
+        }
+        assertTrue(checkDiff(null));
+    }
+
+    private void createTextInput() {
         try {
             PrintWriter output = new PrintWriter(this.inputFile);
             output.write("Aki was here!\n");
@@ -150,37 +144,42 @@ public class EncodeDecodeTest {
         } catch (IOException ioe) {
             fail("IOException thrown but not expected");
         }
-        assertTrue(encodeDecodeTest(encoder, decoder));
     }
 
-    private boolean encodeDecodeTest(Encoder encoder, Decoder decoder) {
-        compress(encoder);
-        decompress(decoder);
-        return checkDiff();
-    }
-
-    private void compress(Encoder encoder) {
+    @Test
+    public void huffmanBibleTest() {
         try {
-            encoder.encode();
+            HuffmanEncoder.encode(this.biblePath, this.compressedFilePath);
+            HuffmanDecoder.decode(this.compressedFilePath, this.decompressedFilePath);
         } catch (IOException ioe) {
-            fail("IOException thrown but not expected");
+            fail("IOEXception thrown but not expected");
         }
+        assertTrue(checkDiff(this.biblePath));
     }
 
-    private void decompress(Decoder decoder) {
+    @Test
+    public void lzwBibleTest() {
         try {
-            decoder.decode();
+            LzwEncoder.encode(this.biblePath, this.compressedFilePath);
+            LzwDecoder.decode(this.compressedFilePath, this.decompressedFilePath);
         } catch (IOException ioe) {
-            fail("IOException thrown but not expected");
+            fail("IOEXception thrown but not expected");
         }
+        assertTrue(checkDiff(this.biblePath));
     }
 
-    private boolean checkDiff() {
-        if (this.inputFile.length() != this.decompressedFile.length()) {
+    private boolean checkDiff(String alternateInputPath) {
+        File testFile;
+        if (alternateInputPath != null) {
+            testFile = new File(alternateInputPath);
+        } else {
+            testFile = this.inputFile;
+        }
+        if (testFile.length() != this.decompressedFile.length()) {
             return false;
         }
         try {
-            InputStream orig = new BufferedInputStream(new FileInputStream(this.inputFile));
+            InputStream orig = new BufferedInputStream(new FileInputStream(testFile));
             InputStream copy = new BufferedInputStream(new FileInputStream(this.decompressedFile));
             while (true) {
                 int origByte = orig.read();
@@ -197,4 +196,5 @@ public class EncodeDecodeTest {
         }
         return true;
     }
+
 }

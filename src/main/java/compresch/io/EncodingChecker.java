@@ -31,6 +31,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Objects;
 
 public class EncodingChecker {
 
@@ -38,9 +39,11 @@ public class EncodingChecker {
      * Check encoding in file to be decompressed.
      * @param inputPath Path to file to be examined.
      * @return String "HUF" for Huffman coding, "LZW" for Lempel-Ziv-Welch compression.
+     * @throws NullPointerException on null input.
      * @throws IOException if input file is not found or cannot be read.
      */
     public static String readEncoding(String inputPath) throws IOException {
+        Objects.requireNonNull(inputPath);
         File inputFile = new File(inputPath);
         if (!inputFile.exists()) {
             throw new FileNotFoundException("input file not found");

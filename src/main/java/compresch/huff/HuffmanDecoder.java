@@ -24,7 +24,6 @@
 
 package compresch.huff;
 
-import compresch.Decoder;
 import compresch.io.BitInputStream;
 
 import java.io.BufferedOutputStream;
@@ -33,30 +32,20 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Objects;
 
-public class HuffmanDecoder implements Decoder {
-
-    private String inputFilePath;
-    private String outputFilePath;
+public class HuffmanDecoder {
 
     /**
-     * Constructs decoder to decode Huffman coding.
+     * Public method to execute decode.
      * @param inputPath  path to input file to be decompressed.
      * @param outputPath path to output file to decompress to.
      * @throws NullPointerException if either one of parameters is null.
      */
-    public HuffmanDecoder(String inputPath, String outputPath) {
+    public static void decode(String inputPath, String outputPath) throws IOException {
         Objects.requireNonNull(inputPath);
         Objects.requireNonNull(outputPath);
-        this.inputFilePath = inputPath;
-        this.outputFilePath = outputPath;
-    }
 
-    /**
-     * Public method to execute decode.
-     */
-    public void decode() throws IOException {
-        BitInputStream input = new BitInputStream(this.inputFilePath);
-        OutputStream output = new BufferedOutputStream(new FileOutputStream(this.outputFilePath));
+        BitInputStream input = new BitInputStream(inputPath);
+        OutputStream output = new BufferedOutputStream(new FileOutputStream(outputPath));
 
         input.skip(3);
 
@@ -75,7 +64,7 @@ public class HuffmanDecoder implements Decoder {
      * @param root   root node of Huffman tree for decoding code words.
      * @throws IOException if an I/O exception occurs.
      */
-    private void writeDecoded(BitInputStream input, OutputStream output, HuffmanNode root)
+    private static void writeDecoded(BitInputStream input, OutputStream output, HuffmanNode root)
         throws IOException {
         HuffmanNode node = root;
         while (true) {
@@ -102,7 +91,7 @@ public class HuffmanDecoder implements Decoder {
      * @return root node of restored Huffman tree.
      * @throws IOException if an I/O exception occurs.
      */
-    private HuffmanNode restoreHuffmanTree(BitInputStream input) throws IOException {
+    private static HuffmanNode restoreHuffmanTree(BitInputStream input) throws IOException {
         int[] codeLengths = readCodelengths(input);
         HuffmanTree huffTree = new HuffmanTree();
         huffTree.buildHuffmanTree(codeLengths);
@@ -115,7 +104,7 @@ public class HuffmanDecoder implements Decoder {
      * @return Array of codeword lengths.
      * @throws IOException if an I/O exception occurs.
      */
-    private int[] readCodelengths(BitInputStream input) throws IOException {
+    private static int[] readCodelengths(BitInputStream input) throws IOException {
         int[] codeLengths = new int[257];
         for (int i = 0; i < 257; i++) {
             codeLengths[i] = input.readByte();

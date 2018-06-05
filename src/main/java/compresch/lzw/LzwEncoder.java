@@ -24,36 +24,27 @@
 
 package compresch.lzw;
 
-import compresch.Encoder;
-
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
-public class LzwEncoder implements Encoder {
-
-    private String inputFilePath;
-    private String outputFilePath;
+public class LzwEncoder {
 
     /**
      * Construct encoder to encode with LZW.
      * @param inputPath  Path to input file to be compressed.
      * @param outputPath Path to output file to compress to.
      * @throws NullPointerException if either one of parameters is null.
+     * @throws IOException if an I/O exception occurs.
      */
-    public LzwEncoder(String inputPath, String outputPath) {
+    public static void encode(String inputPath, String outputPath) throws IOException {
         Objects.requireNonNull(inputPath);
         Objects.requireNonNull(outputPath);
-        this.inputFilePath = inputPath;
-        this.outputFilePath = outputPath;
-    }
 
-    @Override
-    public void encode() throws IOException {
-        InputStream input = new BufferedInputStream(new FileInputStream(this.inputFilePath));
-        LzwWriter output = new LzwWriter(this.outputFilePath);
+        InputStream input = new BufferedInputStream(new FileInputStream(inputPath));
+        LzwWriter output = new LzwWriter(outputPath);
         writeEncoding(output);
         makeEncode(input, output);
         output.writePseudoEof();
@@ -61,7 +52,7 @@ public class LzwEncoder implements Encoder {
         output.close();
     }
 
-    private void writeEncoding(LzwWriter output) throws IOException {
+    private static void writeEncoding(LzwWriter output) throws IOException {
         output.writeByte((byte) ('L'));
         output.writeByte((byte) ('Z'));
         output.writeByte((byte) ('W'));
@@ -73,7 +64,7 @@ public class LzwEncoder implements Encoder {
      * @param output LzwWriter to write to.
      * @throws IOException if an I/O exception occurs.
      */
-    private void makeEncode(InputStream input, LzwWriter output) throws IOException {
+    private static void makeEncode(InputStream input, LzwWriter output) throws IOException {
         LzwDictionary dict = new LzwDictionary();
         StringBuilder inputBuffer = new StringBuilder();
         while (true) {
