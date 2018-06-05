@@ -25,7 +25,6 @@
 package compresch.io;
 
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -43,13 +42,13 @@ public class BitOutputStream {
 
     /**
      * Construct bit output stream based on underlying byte output stream.
-     * @param outputFile file to be written to.
+     * @param outputFilePath file to be written to.
      * @throws NullPointerException  when null is provided as param.
      * @throws FileNotFoundException if outputFile cannot be opened.
      */
-    public BitOutputStream(File outputFile) throws FileNotFoundException {
-        Objects.requireNonNull(outputFile);
-        this.output = new BufferedOutputStream(new FileOutputStream(outputFile));
+    public BitOutputStream(String outputFilePath) throws FileNotFoundException {
+        Objects.requireNonNull(outputFilePath);
+        this.output = new BufferedOutputStream(new FileOutputStream(outputFilePath));
         this.outputBuffer = 0;
         this.bitsLeft = 8;
     }

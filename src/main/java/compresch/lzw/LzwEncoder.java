@@ -27,7 +27,6 @@ package compresch.lzw;
 import compresch.Encoder;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,26 +34,26 @@ import java.util.Objects;
 
 public class LzwEncoder implements Encoder {
 
-    private File inputFile;
-    private File outputFile;
+    private String inputFilePath;
+    private String outputFilePath;
 
     /**
      * Construct encoder to encode with LZW.
-     * @param input  input file to be compressed.
-     * @param output output file to compress to.
+     * @param inputPath  Path to input file to be compressed.
+     * @param outputPath Path to output file to compress to.
      * @throws NullPointerException if either one of parameters is null.
      */
-    public LzwEncoder(File input, File output) {
-        Objects.requireNonNull(input);
-        Objects.requireNonNull(output);
-        this.inputFile = input;
-        this.outputFile = output;
+    public LzwEncoder(String inputPath, String outputPath) {
+        Objects.requireNonNull(inputPath);
+        Objects.requireNonNull(outputPath);
+        this.inputFilePath = inputPath;
+        this.outputFilePath = outputPath;
     }
 
     @Override
     public void encode() throws IOException {
-        InputStream input = new BufferedInputStream(new FileInputStream(this.inputFile));
-        LzwWriter output = new LzwWriter(this.outputFile);
+        InputStream input = new BufferedInputStream(new FileInputStream(this.inputFilePath));
+        LzwWriter output = new LzwWriter(this.outputFilePath);
         writeEncoding(output);
         makeEncode(input, output);
         output.writePseudoEof();

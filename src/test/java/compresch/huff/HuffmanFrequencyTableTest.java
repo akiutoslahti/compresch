@@ -40,10 +40,11 @@ import org.junit.Test;
 public class HuffmanFrequencyTableTest {
 
     private File testFile;
+    private final String testFilePath = "test.txt";
 
     @Before
     public void setUp() {
-        this.testFile = new File("test.txt");
+        this.testFile = new File(this.testFilePath);
         try {
             PrintWriter output = new PrintWriter(this.testFile);
             output.println("AYBABTU");
@@ -68,7 +69,7 @@ public class HuffmanFrequencyTableTest {
     public void buildFreqTableFileNotExistsTest() {
         try {
             HuffmanFrequencyTable frequencyTable = new HuffmanFrequencyTable();
-            frequencyTable.buildFreqTable(new File("notExist"));
+            frequencyTable.buildFreqTable("notExist");
             fail("expected IOException");
         } catch (IOException ioe) {
             assert true;
@@ -79,7 +80,7 @@ public class HuffmanFrequencyTableTest {
     public void buildFreqTableTest() {
         HuffmanFrequencyTable frequencyTable = new HuffmanFrequencyTable();
         try {
-            frequencyTable.buildFreqTable(this.testFile);
+            frequencyTable.buildFreqTable(this.testFilePath);
         } catch (IOException ioe) {
             fail("IOException thrown but not expected");
         }

@@ -25,7 +25,6 @@
 package compresch.io;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -43,13 +42,13 @@ public class BitInputStream {
 
     /**
      * Construct bit input stream based on underlying byte input stream.
-     * @param inputFile file to be read
+     * @param inputFilePath file to be read
      * @throws NullPointerException  when null is provided as param
      * @throws FileNotFoundException if parameter inputFile is not found
      */
-    public BitInputStream(File inputFile) throws FileNotFoundException {
-        Objects.requireNonNull(inputFile);
-        this.input = new BufferedInputStream(new FileInputStream(inputFile));
+    public BitInputStream(String inputFilePath) throws FileNotFoundException {
+        Objects.requireNonNull(inputFilePath);
+        this.input = new BufferedInputStream(new FileInputStream(inputFilePath));
         inputBuffer = 0;
         bitsLeft = 0;
     }

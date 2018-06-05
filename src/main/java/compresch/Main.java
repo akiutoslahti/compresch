@@ -26,18 +26,11 @@ package compresch;
 
 import compresch.huff.HuffmanDecoder;
 import compresch.huff.HuffmanEncoder;
+import compresch.io.EncodingChecker;
 import compresch.lzw.LzwDecoder;
 import compresch.lzw.LzwEncoder;
 import compresch.util.PerformanceTester;
-
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -64,36 +57,33 @@ public class Main {
         try {
             CommandLine cmdLine = parser.parse(options, args);
             if (args.length == 3 && cmdLine.getOptions().length == 1 && !cmdLine.hasOption(HELP)) {
-                File inputFile = new File(args[1]);
-                File outputFile = new File(args[2]);
-                if (!inputFile.exists()) {
-                    throw new FileNotFoundException("Input file not found: " + inputFile.getName());
-                }
+                String inputPath = args[1];
+                String outputPath = args[2];
 
                 if (cmdLine.hasOption(HUFFMAN)) {
-                    Encoder encoder = new HuffmanEncoder(inputFile, outputFile);
+                    Encoder encoder = new HuffmanEncoder(inputPath, outputPath);
                     encoder.encode();
                 }
 
                 if (cmdLine.hasOption(LZW)) {
-                    Encoder encoder = new LzwEncoder(inputFile, outputFile);
+                    Encoder encoder = new LzwEncoder(inputPath, outputPath);
                     encoder.encode();
                 }
 
                 if (cmdLine.hasOption(DECOMPRESS)) {
-                    String encoding = readEncoding(inputFile);
+                    String encoding = EncodingChecker.readEncoding(inputPath);
                     if (encoding.equals("HUF")) {
-                        Decoder decoder = new HuffmanDecoder(inputFile, outputFile);
+                        Decoder decoder = new HuffmanDecoder(inputPath, outputPath);
                         decoder.decode();
                     }
                     if (encoding.equals("LZW")) {
-                        Decoder decoder = new LzwDecoder(inputFile, outputFile);
+                        Decoder decoder = new LzwDecoder(inputPath, outputPath);
                         decoder.decode();
                     }
                 }
 
                 if (cmdLine.hasOption(TEST)) {
-                    PerformanceTester tester = new PerformanceTester(inputFile, outputFile);
+                    PerformanceTester tester = new PerformanceTester(inputPath, outputPath);
                     tester.testAll();
                 }
 
@@ -105,24 +95,6 @@ public class Main {
 
         } catch (ParseException | IOException | IllegalArgumentException e) {
             System.out.println(e.getMessage());
-        }
-    }
-
-    private static String readEncoding(File inputFile) throws IOException {
-        InputStream input = new BufferedInputStream(new FileInputStream(inputFile));
-        int[] readBytes = new int[3];
-        for (int i = 0; i < readBytes.length; i++) {
-            readBytes[i] = input.read();
-        }
-        input.close();
-        StringBuilder builder = new StringBuilder();
-        for (int i : readBytes) {
-            builder.append((char) (i));
-        }
-        if (builder.toString().equals("HUF") || builder.toString().equals("LZW")) {
-            return builder.toString();
-        } else {
-            throw new UnsupportedEncodingException("Input file doesn't contain valid header.");
         }
     }
 

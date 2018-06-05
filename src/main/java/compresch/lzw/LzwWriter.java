@@ -26,7 +26,6 @@ package compresch.lzw;
 
 import compresch.io.BitOutputStream;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
@@ -37,13 +36,13 @@ public class LzwWriter implements AutoCloseable {
 
     /**
      * Constructs new LzwWriter.
-     * @param outputFile BitOutputStream to write data to.
+     * @param outputFilePath BitOutputStream to write data to.
      * @throws NullPointerException  if parameter is null.
      * @throws FileNotFoundException if output file cannot be opened.
      */
-    public LzwWriter(File outputFile) throws FileNotFoundException {
-        Objects.requireNonNull(outputFile);
-        this.output = new BitOutputStream(outputFile);
+    public LzwWriter(String outputFilePath) throws FileNotFoundException {
+        Objects.requireNonNull(outputFilePath);
+        this.output = new BitOutputStream(outputFilePath);
     }
 
     /**

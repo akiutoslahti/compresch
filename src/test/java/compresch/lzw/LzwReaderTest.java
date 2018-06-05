@@ -43,18 +43,19 @@ import org.junit.Test;
 public class LzwReaderTest {
 
     private File testFile;
+    private final String testFilePath = "test.txt";
     private int[] numbersExpected;
 
     @Before
     public void setUp() {
-        this.testFile = new File("test.txt");
+        this.testFile = new File(this.testFilePath);
         this.numbersExpected = new int[10];
         Random rng = new Random();
         for (int i = 0; i < this.numbersExpected.length; i++) {
             this.numbersExpected[i] = (rng.nextInt(4096));
         }
         try {
-            BitOutputStream output = new BitOutputStream(this.testFile);
+            BitOutputStream output = new BitOutputStream(this.testFilePath);
             for (Integer i : this.numbersExpected) {
                 for (int j = 11; j >= 0; j--) {
                     output.write((i >> j) & 1);
@@ -82,13 +83,13 @@ public class LzwReaderTest {
             fail("FileNotFoundException thrown but not expected");
         }
         try {
-            new LzwReader(new File("notExist"));
+            new LzwReader("notExist");
             fail("expected IOException");
         } catch (IOException ioe) {
             assert true;
         }
         try {
-            LzwReader reader = new LzwReader(this.testFile);
+            LzwReader reader = new LzwReader(this.testFilePath);
             assertNotNull(reader);
         } catch (IOException ioe) {
             fail("IOException thrown but not expected");
@@ -98,7 +99,7 @@ public class LzwReaderTest {
     @Test
     public void readTest() {
         try {
-            LzwReader reader = new LzwReader(this.testFile);
+            LzwReader reader = new LzwReader(this.testFilePath);
             int[] numbersRead = new int[this.numbersExpected.length];
             for (int i = 0; i < this.numbersExpected.length; i++) {
                 numbersRead[i] = reader.read();
@@ -113,7 +114,7 @@ public class LzwReaderTest {
     @Test
     public void readPastEofTest() {
         try {
-            LzwReader reader = new LzwReader(this.testFile);
+            LzwReader reader = new LzwReader(this.testFilePath);
             for (int i = 0; i < this.numbersExpected.length + 1; i++) {
                 reader.read();
             }

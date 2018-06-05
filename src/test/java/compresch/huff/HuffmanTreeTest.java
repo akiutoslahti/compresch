@@ -44,17 +44,18 @@ import org.junit.Test;
 public class HuffmanTreeTest {
 
     private File testFile;
+    private final String testFilePath = "test.txt";
     private HuffmanFrequencyTable frequencyTable;
 
     @Before
     public void setUp() {
-        this.testFile = new File("test.txt");
+        this.testFile = new File(this.testFilePath);
         try {
             PrintWriter output = new PrintWriter(this.testFile);
             output.println("AYBABTU");
             output.close();
             this.frequencyTable = new HuffmanFrequencyTable();
-            this.frequencyTable.buildFreqTable(this.testFile);
+            this.frequencyTable.buildFreqTable(this.testFilePath);
         } catch (IOException ioe) {
             fail("IOException thrown but not expected");
         }

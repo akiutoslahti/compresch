@@ -43,11 +43,12 @@ import org.junit.Test;
 public class BitInputStreamTest {
 
     private File testFile;
+    private final String testFilePath = "test.txt";
     private byte[] numbers;
 
     @Before
     public void setUp() {
-        this.testFile = new File("test.txt");
+        this.testFile = new File(this.testFilePath);
         this.numbers = new byte[]{118, 99, 12, 1, 16};
         try {
             OutputStream output = new BufferedOutputStream(new FileOutputStream(this.testFile));
@@ -76,13 +77,13 @@ public class BitInputStreamTest {
             fail("FileNotFoundException thrown but not expected");
         }
         try {
-            new BitInputStream(new File("notfound.txt"));
+            new BitInputStream("notExists.txt");
             fail("expected FileNotFoundException");
         } catch (FileNotFoundException fnfe) {
             assert true;
         }
         try {
-            new BitInputStream(this.testFile);
+            new BitInputStream(this.testFilePath);
             assert true;
         } catch (FileNotFoundException fnfe) {
             fail("FileNotFoundException thrown but not expected");
@@ -93,7 +94,7 @@ public class BitInputStreamTest {
     public void readTest() {
         try {
             BitInputStream input =
-                new BitInputStream(this.testFile);
+                new BitInputStream(this.testFilePath);
             int[] readByte = new int[8];
             for (int i = 0; i < 8; i++) {
                 readByte[i] = input.read();
@@ -110,7 +111,7 @@ public class BitInputStreamTest {
     public void readEndOfFileTest() {
         try {
             BitInputStream input =
-                new BitInputStream(this.testFile);
+                new BitInputStream(this.testFilePath);
             for (int i = 0; i < 40; i++) {
                 input.read();
             }
@@ -126,7 +127,7 @@ public class BitInputStreamTest {
     public void readByteTest() {
         try {
             BitInputStream input =
-                new BitInputStream(this.testFile);
+                new BitInputStream(this.testFilePath);
             byte[] inputRead = new byte[this.numbers.length];
             for (int i = 0; i < this.numbers.length; i++) {
                 inputRead[i] = (byte) (input.readByte());

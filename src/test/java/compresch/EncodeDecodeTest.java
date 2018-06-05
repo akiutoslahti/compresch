@@ -52,12 +52,15 @@ public class EncodeDecodeTest {
     private File inputFile;
     private File compressedFile;
     private File decompressedFile;
+    private final String inputFilePath = "testInput";
+    private final String compressedFilePath = "compressed";
+    private final String decompressedFilePath = "decompressed";
 
     @Before
     public void setUp() {
-        this.inputFile = new File("testInput");
-        this.compressedFile = new File("compressed");
-        this.decompressedFile = new File("decompressed");
+        this.inputFile = new File(this.inputFilePath);
+        this.compressedFile = new File(this.compressedFilePath);
+        this.decompressedFile = new File(this.decompressedFilePath);
     }
 
     @After
@@ -71,45 +74,55 @@ public class EncodeDecodeTest {
 
     @Test
     public void huffmanRandomBytesTest() {
-        Encoder encoder = new HuffmanEncoder(this.inputFile, this.compressedFile);
-        Decoder decoder = new HuffmanDecoder(this.compressedFile, this.decompressedFile);
+        Encoder encoder = new HuffmanEncoder(
+            this.inputFilePath, this.compressedFilePath);
+        Decoder decoder = new HuffmanDecoder(
+            this.compressedFilePath, this.decompressedFilePath);
         randomBytesTest(encoder, decoder);
     }
 
     @Test
     public void huffmanTextTest() {
-        Encoder encoder = new HuffmanEncoder(this.inputFile, this.compressedFile);
-        Decoder decoder = new HuffmanDecoder(this.compressedFile, this.decompressedFile);
+        Encoder encoder = new HuffmanEncoder(
+            this.inputFilePath, this.compressedFilePath);
+        Decoder decoder = new HuffmanDecoder(
+            this.compressedFilePath, this.decompressedFilePath);
         textTest(encoder, decoder);
     }
 
     @Test
     public void huffmanBibleTest() {
         Encoder encoder = new HuffmanEncoder(
-            new File("src/test/resources/bible.txt"), this.compressedFile);
-        Decoder decoder = new HuffmanDecoder(this.compressedFile, this.decompressedFile);
+            "src/test/resources/bible.txt", this.compressedFilePath);
+        Decoder decoder = new HuffmanDecoder(
+            this.compressedFilePath, this.decompressedFilePath);
         encodeDecodeTest(encoder, decoder);
     }
 
     @Test
     public void lzwRandomBytesTest() {
-        Encoder encoder = new LzwEncoder(this.inputFile, this.compressedFile);
-        Decoder decoder = new LzwDecoder(this.compressedFile, this.decompressedFile);
+        Encoder encoder = new LzwEncoder(
+            this.inputFilePath, this.compressedFilePath);
+        Decoder decoder = new LzwDecoder(
+            this.compressedFilePath, this.decompressedFilePath);
         randomBytesTest(encoder, decoder);
     }
 
     @Test
     public void lzwTextTest() {
-        Encoder encoder = new LzwEncoder(this.inputFile, this.compressedFile);
-        Decoder decoder = new LzwDecoder(this.compressedFile, this.decompressedFile);
+        Encoder encoder = new LzwEncoder(
+            this.inputFilePath, this.compressedFilePath);
+        Decoder decoder = new LzwDecoder(
+            this.compressedFilePath, this.decompressedFilePath);
         textTest(encoder, decoder);
     }
 
     @Test
     public void lzwBibleTest() {
         Encoder encoder = new LzwEncoder(
-            new File("src/test/resources/bible.txt"), this.compressedFile);
-        Decoder decoder = new LzwDecoder(this.compressedFile, this.decompressedFile);
+            "src/test/resources/bible.txt", this.compressedFilePath);
+        Decoder decoder = new LzwDecoder(
+            this.compressedFilePath, this.decompressedFilePath);
         encodeDecodeTest(encoder, decoder);
     }
 

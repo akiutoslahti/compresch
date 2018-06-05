@@ -28,7 +28,6 @@ import compresch.Decoder;
 import compresch.io.BitInputStream;
 
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -36,28 +35,28 @@ import java.util.Objects;
 
 public class HuffmanDecoder implements Decoder {
 
-    private File inputFile;
-    private File outputFile;
+    private String inputFilePath;
+    private String outputFilePath;
 
     /**
      * Constructs decoder to decode Huffman coding.
-     * @param inputFile  input file to be decompressed.
-     * @param outputFile output file to decompress to.
+     * @param inputPath  path to input file to be decompressed.
+     * @param outputPath path to output file to decompress to.
      * @throws NullPointerException if either one of parameters is null.
      */
-    public HuffmanDecoder(File inputFile, File outputFile) {
-        Objects.requireNonNull(inputFile);
-        Objects.requireNonNull(outputFile);
-        this.inputFile = inputFile;
-        this.outputFile = outputFile;
+    public HuffmanDecoder(String inputPath, String outputPath) {
+        Objects.requireNonNull(inputPath);
+        Objects.requireNonNull(outputPath);
+        this.inputFilePath = inputPath;
+        this.outputFilePath = outputPath;
     }
 
     /**
      * Public method to execute decode.
      */
     public void decode() throws IOException {
-        BitInputStream input = new BitInputStream(this.inputFile);
-        OutputStream output = new BufferedOutputStream(new FileOutputStream(this.outputFile));
+        BitInputStream input = new BitInputStream(this.inputFilePath);
+        OutputStream output = new BufferedOutputStream(new FileOutputStream(this.outputFilePath));
 
         input.skip(3);
 

@@ -26,7 +26,6 @@ package compresch.lzw;
 
 import compresch.io.BitInputStream;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
@@ -37,13 +36,13 @@ public class LzwReader {
 
     /**
      * Constructs new LzwReader.
-     * @param inputFile input file to read data from.
+     * @param inputFilePath input file to read data from.
      * @throws NullPointerException  if parameter is null.
      * @throws FileNotFoundException if input file does not exist.
      */
-    public LzwReader(File inputFile) throws FileNotFoundException {
-        Objects.requireNonNull(inputFile);
-        this.input = new BitInputStream(inputFile);
+    public LzwReader(String inputFilePath) throws FileNotFoundException {
+        Objects.requireNonNull(inputFilePath);
+        this.input = new BitInputStream(inputFilePath);
     }
 
     /**

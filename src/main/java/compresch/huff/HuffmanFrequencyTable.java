@@ -25,7 +25,6 @@
 package compresch.huff;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,11 +44,11 @@ public class HuffmanFrequencyTable {
     /**
      * Build frequency table from input file by traversing it once and counting occurrences of all
      * bytes.
-     * @param inputFile File to base frequency table on.
+     * @param inputFilePath File to base frequency table on.
      * @throws IOException if an I/O exception occurs.
      */
-    public void buildFreqTable(File inputFile) throws IOException {
-        InputStream input = new BufferedInputStream(new FileInputStream(inputFile));
+    public void buildFreqTable(String inputFilePath) throws IOException {
+        InputStream input = new BufferedInputStream(new FileInputStream(inputFilePath));
         while (true) {
             int readBuffer = input.read();
             if (readBuffer == -1) {

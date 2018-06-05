@@ -29,7 +29,6 @@ import compresch.ds.DynamicArray;
 import compresch.io.BitOutputStream;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,21 +36,21 @@ import java.util.Objects;
 
 public class HuffmanEncoder implements Encoder {
 
-    private File inputFile;
-    private File outputFile;
+    private String inputFilePath;
+    private String outputFilePath;
     private HuffmanCodeBook codeBook;
 
     /**
      * Construct encoder to encode Huffman coding.
-     * @param inputFile  input file to be compressed.
-     * @param outputFile output file to compress to.
+     * @param inputPath  path to input file to be compressed.
+     * @param outputPath path to output file to compress to.
      * @throws NullPointerException if either one of parameters is null.
      */
-    public HuffmanEncoder(File inputFile, File outputFile) {
-        Objects.requireNonNull(inputFile);
-        Objects.requireNonNull(outputFile);
-        this.inputFile = inputFile;
-        this.outputFile = outputFile;
+    public HuffmanEncoder(String inputPath, String outputPath) {
+        Objects.requireNonNull(inputPath);
+        Objects.requireNonNull(outputPath);
+        this.inputFilePath = inputPath;
+        this.outputFilePath = outputPath;
         this.codeBook = new HuffmanCodeBook();
     }
 
@@ -60,8 +59,8 @@ public class HuffmanEncoder implements Encoder {
      */
     public void encode() throws IOException {
         getCodeBook();
-        InputStream input = new BufferedInputStream(new FileInputStream(this.inputFile));
-        BitOutputStream output = new BitOutputStream(this.outputFile);
+        InputStream input = new BufferedInputStream(new FileInputStream(this.inputFilePath));
+        BitOutputStream output = new BitOutputStream(this.outputFilePath);
 
         writeEncoding(output);
         writeCodeLengths(output);
@@ -82,7 +81,7 @@ public class HuffmanEncoder implements Encoder {
      */
     private void getCodeBook() throws IOException {
         HuffmanFrequencyTable freqTable = new HuffmanFrequencyTable();
-        freqTable.buildFreqTable(this.inputFile);
+        freqTable.buildFreqTable(this.inputFilePath);
         HuffmanTree huffTree = new HuffmanTree();
         huffTree.buildHuffmanTree(freqTable);
         this.codeBook.buildCodeBook(huffTree.getRoot());

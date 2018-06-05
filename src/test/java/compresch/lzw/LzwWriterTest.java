@@ -43,10 +43,11 @@ import org.junit.Test;
 public class LzwWriterTest {
 
     private File testFile;
+    private final String testFilePath = "test.txt";
 
     @Before
     public void setUp() {
-        this.testFile = new File("test.txt");
+        this.testFile = new File(this.testFilePath);
     }
 
     @After
@@ -67,7 +68,7 @@ public class LzwWriterTest {
             fail("FileNotFoundException thrown but not expected");
         }
         try {
-            LzwWriter writer = new LzwWriter(this.testFile);
+            LzwWriter writer = new LzwWriter(this.testFilePath);
             assertNotNull(writer);
             writer.close();
         } catch (IOException ioe) {
@@ -78,7 +79,7 @@ public class LzwWriterTest {
     @Test
     public void writeTest() {
         try {
-            LzwWriter writer = new LzwWriter((this.testFile));
+            LzwWriter writer = new LzwWriter((this.testFilePath));
             int[] numbersToWrite =
                 new int[]{0x471, 0xdb9, 0x331, 0xa8d, 0x6cc, 0x344, 0x70f, 0xbfe};
             for (int i : numbersToWrite) {
@@ -107,7 +108,7 @@ public class LzwWriterTest {
         int[] illegalNumbers = new int[]{-1, 4096};
         for (int i : illegalNumbers) {
             try {
-                LzwWriter writer = new LzwWriter(this.testFile);
+                LzwWriter writer = new LzwWriter(this.testFilePath);
                 writer.write(i);
                 fail("expected IllegalArgumentException");
             } catch (IOException ioe) {

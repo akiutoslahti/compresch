@@ -41,11 +41,13 @@ public class LzwDecoderTest {
 
     private File testInputFile;
     private File testOutputFile;
+    private final String testInputFilePath = "test.txt";
+    private final String testOutputFilePath = "output.txt";
 
     @Before
     public void setUp() {
-        this.testInputFile = new File("test.txt");
-        this.testOutputFile = new File("output.txt");
+        this.testInputFile = new File(this.testInputFilePath);
+        this.testOutputFile = new File(this.testOutputFilePath);
         try {
             PrintWriter output = new PrintWriter(this.testInputFile);
             output.write("Pretending this is something encoded.\n");
@@ -72,13 +74,13 @@ public class LzwDecoderTest {
             assert true;
         }
         try {
-            new LzwDecoder(this.testInputFile, null);
+            new LzwDecoder(this.testInputFilePath, null);
             fail("expected NullPointerException");
         } catch (NullPointerException npe) {
             assert true;
         }
         try {
-            new LzwDecoder(null, this.testOutputFile);
+            new LzwDecoder(null, this.testOutputFilePath);
             fail("expected NullPointerException");
         } catch (NullPointerException npe) {
             assert true;
@@ -87,14 +89,15 @@ public class LzwDecoderTest {
 
     @Test
     public void constructLzwDecoderTest() {
-        LzwDecoder lzwDecoder = new LzwDecoder(this.testInputFile, this.testOutputFile);
+        LzwDecoder lzwDecoder = new LzwDecoder(
+            this.testInputFilePath, this.testOutputFilePath);
         assertNotNull(lzwDecoder);
     }
 
     @Test
     public void decodeFailTest() {
         LzwDecoder lzwDecoder =
-            new LzwDecoder(new File("notExists"), this.testOutputFile);
+            new LzwDecoder("notExists", this.testOutputFilePath);
         try {
             lzwDecoder.decode();
             fail("expected IOException");

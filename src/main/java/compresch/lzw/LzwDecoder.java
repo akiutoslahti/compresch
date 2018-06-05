@@ -27,7 +27,6 @@ package compresch.lzw;
 import compresch.Decoder;
 
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -35,26 +34,26 @@ import java.util.Objects;
 
 public class LzwDecoder implements Decoder {
 
-    private File inputFile;
-    private File outputFile;
+    private String inputFilePath;
+    private String outputFilePath;
 
     /**
      * Constructs decoder to decode with LZW.
-     * @param input  input file to be decompressed.
-     * @param output output file to decompress to.
+     * @param inputPath  path to input file to be decompressed.
+     * @param outputPath path to output file to decompress to.
      * @throws NullPointerException if either one of parameters is null.
      */
-    public LzwDecoder(File input, File output) {
-        Objects.requireNonNull(input);
-        Objects.requireNonNull(output);
-        this.inputFile = input;
-        this.outputFile = output;
+    public LzwDecoder(String inputPath, String outputPath) {
+        Objects.requireNonNull(inputPath);
+        Objects.requireNonNull(outputPath);
+        this.inputFilePath = inputPath;
+        this.outputFilePath = outputPath;
     }
 
     @Override
     public void decode() throws IOException {
-        LzwReader input = new LzwReader(this.inputFile);
-        OutputStream output = new BufferedOutputStream(new FileOutputStream(this.outputFile));
+        LzwReader input = new LzwReader(this.inputFilePath);
+        OutputStream output = new BufferedOutputStream(new FileOutputStream(this.outputFilePath));
         input.skip(3);
         makeDecode(input, output);
         input.close();

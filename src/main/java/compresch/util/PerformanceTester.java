@@ -43,19 +43,19 @@ public class PerformanceTester {
 
     /**
      * Constructs new PerformanceTester if parameters appear to be okay.
-     * @param testFileFolder File folder, where files to be tested are in.
-     * @param testReport     File path, where markdown report is saved.
+     * @param testFileFolderPath File folder, where files to be tested are in.
+     * @param testReportPath     File path, where markdown report is saved.
      * @throws NullPointerException     if either one of parameters is null.
      * @throws IllegalArgumentException if first parameter is not a folder.
      */
-    public PerformanceTester(File testFileFolder, File testReport) {
-        Objects.requireNonNull(testFileFolder);
-        Objects.requireNonNull(testReport);
-        if (!testFileFolder.isDirectory()) {
+    public PerformanceTester(String testFileFolderPath, String testReportPath) {
+        Objects.requireNonNull(testFileFolderPath);
+        Objects.requireNonNull(testReportPath);
+        this.testFileFolder = new File(testFileFolderPath);
+        this.testReport = new File(testReportPath);
+        if (!this.testFileFolder.isDirectory()) {
             throw new IllegalArgumentException("Test file location is not a folder");
         }
-        this.testFileFolder = testFileFolder;
-        this.testReport = testReport;
         this.symbols = new DecimalFormatSymbols();
         this.symbols.setGroupingSeparator(' ');
         this.df = new DecimalFormat();
@@ -85,8 +85,8 @@ public class PerformanceTester {
         writeTableHeader("Huffman coding");
         for (File testFile : testFiles) {
             long[] testResults = testSingle("-H", testFile.getPath());
-            this.writer.println(testFile.getName() + " | " + this.df.format(testFile.length()) + " | "
-                + this.df.format(testResults[0]) + " | "
+            this.writer.println(testFile.getName() + " | "
+                + this.df.format(testFile.length()) + " | " + this.df.format(testResults[0]) + " | "
                 + (int) (1.0 * testResults[0] / testFile.length() * 100) + "% | "
                 + this.df.format(testResults[1]) + " | " + this.df.format(testResults[2]));
         }
@@ -97,8 +97,8 @@ public class PerformanceTester {
         writeTableHeader("Lempel-Ziv-Welch");
         for (File testFile : testFiles) {
             long[] testResults = testSingle("-L", testFile.getPath());
-            this.writer.println(testFile.getName() + " | " + this.df.format(testFile.length()) + " | "
-                + this.df.format(testResults[0]) + " | "
+            this.writer.println(testFile.getName() + " | "
+                + this.df.format(testFile.length()) + " | " + this.df.format(testResults[0]) + " | "
                 + (int) (1.0 * testResults[0] / testFile.length() * 100) + "% | "
                 + this.df.format(testResults[1]) + " | " + this.df.format(testResults[2]));
         }
@@ -118,7 +118,7 @@ public class PerformanceTester {
      * @param encoding     "-H" for Huffman coding and "-L" for LZW compression
      * @param testFilePath String path to file which is to be tested.
      * @return long array with following data:
-     * {compressed size in bytes, compression time in ms, decompression time in ms}
+     *      {compressed size in bytes, compression time in ms, decompression time in ms}
      */
     private long[] testSingle(String encoding, String testFilePath) {
         long[] testResults = new long[3];
