@@ -29,6 +29,8 @@ import compresch.Main;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Objects;
 
 public class PerformanceTester {
@@ -36,6 +38,8 @@ public class PerformanceTester {
     private File testFileFolder;
     private File testReport;
     private PrintWriter writer;
+    private DecimalFormatSymbols symbols;
+    private DecimalFormat df;
 
     /**
      * Constructs new PerformanceTester if parameters appear to be okay.
@@ -52,6 +56,12 @@ public class PerformanceTester {
         }
         this.testFileFolder = testFileFolder;
         this.testReport = testReport;
+        this.symbols = new DecimalFormatSymbols();
+        this.symbols.setGroupingSeparator(' ');
+        this.df = new DecimalFormat();
+        this.df.setDecimalFormatSymbols(symbols);
+        this.df.setGroupingSize(3);
+        this.df.setMaximumFractionDigits(0);
     }
 
     /**
@@ -75,10 +85,10 @@ public class PerformanceTester {
         writeTableHeader("Huffman coding");
         for (File testFile : testFiles) {
             long[] testResults = testSingle("-H", testFile.getPath());
-            this.writer.println(testFile.getName() + " | " + testFile.length() + " | "
-                + testResults[0] + " | "
+            this.writer.println(testFile.getName() + " | " + this.df.format(testFile.length()) + " | "
+                + this.df.format(testResults[0]) + " | "
                 + (int) (1.0 * testResults[0] / testFile.length() * 100) + "% | "
-                + testResults[1] + " | " + testResults[2]);
+                + this.df.format(testResults[1]) + " | " + this.df.format(testResults[2]));
         }
         this.writer.println();
     }
@@ -87,10 +97,10 @@ public class PerformanceTester {
         writeTableHeader("Lempel-Ziv-Welch");
         for (File testFile : testFiles) {
             long[] testResults = testSingle("-L", testFile.getPath());
-            this.writer.println(testFile.getName() + " | " + testFile.length() + " | "
-                + testResults[0] + " | "
+            this.writer.println(testFile.getName() + " | " + this.df.format(testFile.length()) + " | "
+                + this.df.format(testResults[0]) + " | "
                 + (int) (1.0 * testResults[0] / testFile.length() * 100) + "% | "
-                + testResults[1] + " | " + testResults[2]);
+                + this.df.format(testResults[1]) + " | " + this.df.format(testResults[2]));
         }
         this.writer.println();
     }
