@@ -77,7 +77,8 @@ public class PerformanceTester {
             throw new IllegalArgumentException("Test file location is empty");
         }
         testHuffman(testFiles);
-        testLzw(testFiles);
+        testLzw4k(testFiles);
+        testLzw64k(testFiles);
         this.writer.close();
     }
 
@@ -93,10 +94,23 @@ public class PerformanceTester {
         this.writer.println();
     }
 
-    private void testLzw(File[] testFiles) {
-        writeTableHeader("Lempel-Ziv-Welch");
+    private void testLzw4k(File[] testFiles) {
+        writeTableHeader("Lempel-Ziv-Welch (4k dictionary)");
         for (File testFile : testFiles) {
             long[] testResults = testSingle("-" + Main.LZW, testFile.getPath());
+            this.writer.println(testFile.getName() + " | "
+                + this.df.format(testFile.length()) + " | " + this.df.format(testResults[0]) + " | "
+                + (int) (1.0 * testResults[0] / testFile.length() * 100) + "% | "
+                + this.df.format(testResults[1]) + " | " + this.df.format(testResults[2]));
+        }
+        this.writer.println();
+    }
+
+    private void testLzw64k(File[] testFiles) {
+        writeTableHeader("Lempel-Ziv-Welch (64k dictionary)");
+        for (File testFile : testFiles) {
+            long[] testResults = testSingleLzw64k(
+                new String[]{"-" + Main.LZW, "16"}, testFile.getPath());
             this.writer.println(testFile.getName() + " | "
                 + this.df.format(testFile.length()) + " | " + this.df.format(testResults[0]) + " | "
                 + (int) (1.0 * testResults[0] / testFile.length() * 100) + "% | "
@@ -127,6 +141,31 @@ public class PerformanceTester {
         long alku = System.currentTimeMillis();
         Main.main(new String[]{
             encoding, "-" + Main.INPUT, testFilePath, "-" + Main.OUTPUT, compressed.getPath()});
+        long loppu = System.currentTimeMillis();
+
+        testResults[0] = compressed.length();
+        testResults[1] = loppu - alku;
+        File decompressed = new File(this.testFileFolder.getPath() + "/decompressed");
+
+        alku = System.currentTimeMillis();
+        Main.main(new String[]{"-" + Main.DECOMPRESS, "-" + Main.INPUT,
+            compressed.getPath(), "-" + Main.OUTPUT, decompressed.getPath()});
+        loppu = System.currentTimeMillis();
+
+        testResults[2] = loppu - alku;
+        compressed.delete();
+        decompressed.delete();
+
+        return testResults;
+    }
+
+    private long[] testSingleLzw64k(String[] encoding, String testFilePath) {
+        long[] testResults = new long[3];
+        File compressed = new File(this.testFileFolder.getPath() + "/compressed");
+
+        long alku = System.currentTimeMillis();
+        Main.main(new String[]{
+            encoding[0], encoding[1], "-" + Main.INPUT, testFilePath, "-" + Main.OUTPUT, compressed.getPath()});
         long loppu = System.currentTimeMillis();
 
         testResults[0] = compressed.length();
