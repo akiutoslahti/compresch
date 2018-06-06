@@ -39,23 +39,24 @@ public class LzwEncoder {
      * @throws NullPointerException if either one of parameters is null.
      * @throws IOException if an I/O exception occurs.
      */
-    public static void encode(String inputPath, String outputPath) throws IOException {
+    public static void encode(
+        String inputPath, String outputPath, int codewordLength) throws IOException {
         Objects.requireNonNull(inputPath);
         Objects.requireNonNull(outputPath);
 
         InputStream input = new BufferedInputStream(new FileInputStream(inputPath));
-        LzwWriter output = new LzwWriter(outputPath);
-        writeEncoding(output);
-        makeEncode(input, output);
-        output.writePseudoEof();
+        LzwWriter output = new LzwWriter(outputPath, codewordLength);
+        writeEncoding(output, codewordLength);
+        makeEncode(input, output, codewordLength);
         input.close();
         output.close();
     }
 
-    private static void writeEncoding(LzwWriter output) throws IOException {
-        output.writeByte((byte) ('L'));
-        output.writeByte((byte) ('Z'));
-        output.writeByte((byte) ('W'));
+    private static void writeEncoding(LzwWriter output, int codewordLength) throws IOException {
+        String encoding = "LZW-" + String.valueOf(codewordLength);
+        for (int i = 0; i < encoding.length(); i++) {
+            output.writeByte((byte) (encoding.charAt(i)));
+        }
     }
 
     /**
@@ -64,8 +65,9 @@ public class LzwEncoder {
      * @param output LzwWriter to write to.
      * @throws IOException if an I/O exception occurs.
      */
-    private static void makeEncode(InputStream input, LzwWriter output) throws IOException {
-        LzwDictionary dict = new LzwDictionary();
+    private static void makeEncode(
+        InputStream input, LzwWriter output, int codewordLength) throws IOException {
+        LzwDictionary dict = new LzwDictionary(codewordLength);
         StringBuilder inputBuffer = new StringBuilder();
         while (true) {
             int readBuffer = input.read();
@@ -80,6 +82,7 @@ public class LzwEncoder {
                 inputBuffer.delete(0, inputBuffer.length() - 1);
             }
         }
+        output.write(dict.getPseudoEof());
     }
 
 }

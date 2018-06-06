@@ -35,27 +35,70 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class MainTest {
 
-    @Test
-    public void encodeDecodeTests() {
-        encodeDecodeTest("-H");
-        encodeDecodeTest("-L");
-    }
+    private File inputFile;
+    private File compressedFile;
+    private File decompressedFile;
+    private String expected;
 
-    private void encodeDecodeTest(String encoding) {
-        File inputFile = new File("test.txt");
-        File compressedFile = new File("test.txt.compressed");
-        File decompressedFile = new File("test.txt.decompressed");
+    @Before
+    public void setUp() {
+        this.inputFile = new File("test.txt");
+        this.compressedFile = new File("test.txt.compressed");
+        this.decompressedFile = new File("test.txt.decompressed");
         try {
             PrintWriter writer = new PrintWriter(inputFile);
-            String expected = "AYBABTU ONCE MORE\n";
+            this.expected = "AYBABTU ONCE MORE\n";
             writer.write(expected);
             writer.close();
-            Main.main(new String[]{encoding, inputFile.getName(), compressedFile.getName()});
-            Main.main(new String[]{"-D", compressedFile.getName(), decompressedFile.getName()});
+        } catch (IOException ioe) {
+            fail("IOException thrown but not expected");
+        }
+    }
+
+    @After
+    public void tearDown() {
+        assertTrue(inputFile.delete());
+        assertTrue(compressedFile.delete());
+        assertTrue(decompressedFile.delete());
+    }
+
+    @Test
+    public void huffmanTest() {
+        Main.main(new String[]{"-" + Main.HUFFMAN, "-" + Main.INPUT, inputFile.getName(),
+            "-" + Main.OUTPUT, compressedFile.getName()});
+        Main.main(new String[]{"-" + Main.DECOMPRESS, "-" + Main.INPUT, compressedFile.getName(),
+            "-" + Main.OUTPUT, decompressedFile.getName()});
+        checkDiff();
+    }
+
+    @Test
+    public void lzwDefaultTest() {
+        Main.main(new String[]{"-" + Main.LZW, "-" + Main.INPUT, inputFile.getName(),
+            "-" + Main.OUTPUT, compressedFile.getName()});
+        Main.main(new String[]{"-" + Main.DECOMPRESS, "-" + Main.INPUT, compressedFile.getName(),
+            "-" + Main.OUTPUT, decompressedFile.getName()});
+        checkDiff();
+    }
+
+    @Test
+    public void lzw16bitTest() {
+        Main.main(
+            new String[]{"-" + Main.LZW, "16", "-" + Main.INPUT, inputFile.getName(),
+                "-" + Main.OUTPUT, compressedFile.getName()});
+        Main.main(
+            new String[]{"-" + Main.DECOMPRESS, "-" + Main.INPUT, compressedFile.getName(),
+                "-" + Main.OUTPUT, decompressedFile.getName()});
+        checkDiff();
+    }
+
+    private void checkDiff() {
+        try {
             InputStream input = new BufferedInputStream(new FileInputStream(decompressedFile));
             StringBuilder builder = new StringBuilder();
             int readBuffer;
@@ -67,9 +110,6 @@ public class MainTest {
         } catch (IOException ioe) {
             fail("IOException thrown but not expected");
         }
-        assertTrue(inputFile.delete());
-        assertTrue(compressedFile.delete());
-        assertTrue(decompressedFile.delete());
     }
 
 }

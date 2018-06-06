@@ -65,4 +65,26 @@ public class EncodingChecker {
         }
     }
 
+    /**
+     * Reads and returns codeword length for LZW compression from the header.
+     * @param inputPath Path to file to be examined.
+     * @return encoding length of examined file.
+     * @throws IOException if an I/O exception occurs.
+     */
+    public static int readLzwCodewordLength(String inputPath) throws IOException {
+        File inputFile = new File(inputPath);
+        InputStream input = new BufferedInputStream(new FileInputStream(new File(inputPath)));
+        input.skip(4);
+        int[] readBytes = new int[2];
+        for (int i = 0; i < readBytes.length; i++) {
+            readBytes[i] = input.read();
+        }
+        input.close();
+        StringBuilder builder = new StringBuilder();
+        for (int i : readBytes) {
+            builder.append((char) (i));
+        }
+        return Integer.parseInt(builder.toString());
+    }
+
 }

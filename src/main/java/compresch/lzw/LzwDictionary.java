@@ -31,14 +31,29 @@ public class LzwDictionary {
 
     private LzwHashTable dictionary;
     private String[] index;
-    private int numOfCodes;
+    private int currentSize;
+    private int maxSize;
+    private int codewordLength;
 
     /**
      * Constructs and initiates new dictionary.
      */
     public LzwDictionary() {
+        this.maxSize = 4096;
+        this.codewordLength = 12;
         this.dictionary = new LzwHashTable();
-        this.index = new String[4096];
+        this.index = new String[this.maxSize];
+        initDictionary();
+    }
+
+    /**
+     * Constructs and initiates new dictionary.
+     */
+    public LzwDictionary(int codewordLength) {
+        this.codewordLength = codewordLength;
+        this.maxSize = (int) (Math.pow(2, codewordLength));
+        this.dictionary = new LzwHashTable();
+        this.index = new String[this.maxSize];
         initDictionary();
     }
 
@@ -57,10 +72,10 @@ public class LzwDictionary {
      * @return true if adding was successful, false if dictionary is full.
      */
     public boolean addEntry(String symbol) {
-        if (this.numOfCodes < 4095) {
-            this.dictionary.insert(new LzwEntry(symbol, this.numOfCodes));
-            this.index[this.numOfCodes] = symbol;
-            numOfCodes++;
+        if (this.currentSize < this.maxSize - 1) {
+            this.dictionary.insert(new LzwEntry(symbol, this.currentSize));
+            this.index[this.currentSize] = symbol;
+            currentSize++;
             return true;
         }
         return false;
@@ -72,10 +87,10 @@ public class LzwDictionary {
      * @return String symbol for given codeword from dictionary.
      */
     public String getSymbol(int codeword) throws IllegalArgumentException {
-        if (codeword < 0 || codeword > 4095) {
+        if (codeword < 0 || codeword > this.maxSize - 1) {
             throw new IllegalArgumentException();
         }
-        if (codeword >= this.numOfCodes) {
+        if (codeword >= this.currentSize) {
             return null;
         }
         return this.index[codeword];
@@ -88,6 +103,14 @@ public class LzwDictionary {
      */
     public int getCodeword(String symbol) {
         return this.dictionary.search(symbol);
+    }
+
+    public int getPseudoEof() {
+        return this.maxSize - 1;
+    }
+
+    public int getCodewordLength() {
+        return this.codewordLength;
     }
 
 }

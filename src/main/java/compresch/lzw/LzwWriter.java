@@ -33,6 +33,9 @@ import java.util.Objects;
 public class LzwWriter implements AutoCloseable {
 
     private BitOutputStream output;
+    private int codewordLength;
+    private int maxCodeword;
+
 
     /**
      * Constructs new LzwWriter.
@@ -40,9 +43,11 @@ public class LzwWriter implements AutoCloseable {
      * @throws NullPointerException  if parameter is null.
      * @throws FileNotFoundException if output file cannot be opened.
      */
-    public LzwWriter(String outputFilePath) throws FileNotFoundException {
+    public LzwWriter(String outputFilePath, int codewordLength) throws FileNotFoundException {
         Objects.requireNonNull(outputFilePath);
         this.output = new BitOutputStream(outputFilePath);
+        this.codewordLength = codewordLength;
+        this.maxCodeword = ((int) (Math.pow(2, codewordLength))) - 1;
     }
 
     /**
@@ -52,20 +57,12 @@ public class LzwWriter implements AutoCloseable {
      * @throws IllegalArgumentException if parameter is not in range [0, 4095].
      */
     public void write(int codeWord) throws IOException, IllegalArgumentException {
-        if (codeWord < 0 || codeWord > 4095) {
+        if (codeWord < 0 || codeWord > this.maxCodeword) {
             throw new IllegalArgumentException();
         }
-        for (int i = 11; i >= 0; i--) {
+        for (int i = this.codewordLength - 1; i >= 0; i--) {
             this.output.write((codeWord >> i) & 1);
         }
-    }
-
-    /**
-     * Writes PseudoEOF symbol to mark end of encoded data.
-     * @throws IOException if an I/O exception occurs
-     */
-    public void writePseudoEof() throws IOException {
-        write(4095);
     }
 
     @Override

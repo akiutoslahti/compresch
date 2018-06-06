@@ -84,7 +84,7 @@ public class PerformanceTester {
     private void testHuffman(File[] testFiles) {
         writeTableHeader("Huffman coding");
         for (File testFile : testFiles) {
-            long[] testResults = testSingle("-H", testFile.getPath());
+            long[] testResults = testSingle("-" + Main.HUFFMAN, testFile.getPath());
             this.writer.println(testFile.getName() + " | "
                 + this.df.format(testFile.length()) + " | " + this.df.format(testResults[0]) + " | "
                 + (int) (1.0 * testResults[0] / testFile.length() * 100) + "% | "
@@ -96,7 +96,7 @@ public class PerformanceTester {
     private void testLzw(File[] testFiles) {
         writeTableHeader("Lempel-Ziv-Welch");
         for (File testFile : testFiles) {
-            long[] testResults = testSingle("-L", testFile.getPath());
+            long[] testResults = testSingle("-" + Main.LZW, testFile.getPath());
             this.writer.println(testFile.getName() + " | "
                 + this.df.format(testFile.length()) + " | " + this.df.format(testResults[0]) + " | "
                 + (int) (1.0 * testResults[0] / testFile.length() * 100) + "% | "
@@ -125,7 +125,8 @@ public class PerformanceTester {
         File compressed = new File(this.testFileFolder.getPath() + "/compressed");
 
         long alku = System.currentTimeMillis();
-        Main.main(new String[]{encoding, testFilePath, compressed.getPath()});
+        Main.main(new String[]{
+            encoding, "-" + Main.INPUT, testFilePath, "-" + Main.OUTPUT, compressed.getPath()});
         long loppu = System.currentTimeMillis();
 
         testResults[0] = compressed.length();
@@ -133,8 +134,8 @@ public class PerformanceTester {
         File decompressed = new File(this.testFileFolder.getPath() + "/decompressed");
 
         alku = System.currentTimeMillis();
-        Main.main(new String[]{
-            "-D", compressed.getPath(), decompressed.getPath()});
+        Main.main(new String[]{"-" + Main.DECOMPRESS, "-" + Main.INPUT,
+            compressed.getPath(), "-" + Main.OUTPUT, decompressed.getPath()});
         loppu = System.currentTimeMillis();
 
         testResults[2] = loppu - alku;

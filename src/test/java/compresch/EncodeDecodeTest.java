@@ -89,8 +89,8 @@ public class EncodeDecodeTest {
     public void lzwRandomBytesTest() {
         createRandomInput();
         try {
-            LzwEncoder.encode(this.inputFilePath, this.compressedFilePath);
-            LzwDecoder.decode(this.compressedFilePath, this.decompressedFilePath);
+            LzwEncoder.encode(this.inputFilePath, this.compressedFilePath, 12);
+            LzwDecoder.decode(this.compressedFilePath, this.decompressedFilePath, 12);
         } catch (IOException ioe) {
             fail("IOEXception thrown but not expected");
         }
@@ -126,8 +126,8 @@ public class EncodeDecodeTest {
     public void lzwTextTest() {
         createTextInput();
         try {
-            LzwEncoder.encode(this.inputFilePath, this.compressedFilePath);
-            LzwDecoder.decode(this.compressedFilePath, this.decompressedFilePath);
+            LzwEncoder.encode(this.inputFilePath, this.compressedFilePath, 12);
+            LzwDecoder.decode(this.compressedFilePath, this.decompressedFilePath, 12);
         } catch (IOException ioe) {
             fail("IOEXception thrown but not expected");
         }
@@ -160,8 +160,8 @@ public class EncodeDecodeTest {
     @Test
     public void lzwBibleTest() {
         try {
-            LzwEncoder.encode(this.biblePath, this.compressedFilePath);
-            LzwDecoder.decode(this.compressedFilePath, this.decompressedFilePath);
+            LzwEncoder.encode(this.biblePath, this.compressedFilePath, 12);
+            LzwDecoder.decode(this.compressedFilePath, this.decompressedFilePath, 12);
         } catch (IOException ioe) {
             fail("IOEXception thrown but not expected");
         }

@@ -33,6 +33,7 @@ import java.util.Objects;
 public class LzwReader {
 
     private BitInputStream input;
+    private int codewordLength;
 
     /**
      * Constructs new LzwReader.
@@ -40,9 +41,10 @@ public class LzwReader {
      * @throws NullPointerException  if parameter is null.
      * @throws FileNotFoundException if input file does not exist.
      */
-    public LzwReader(String inputFilePath) throws FileNotFoundException {
+    public LzwReader(String inputFilePath, int codewordLength) throws FileNotFoundException {
         Objects.requireNonNull(inputFilePath);
         this.input = new BitInputStream(inputFilePath);
+        this.codewordLength = codewordLength;
     }
 
     /**
@@ -52,7 +54,7 @@ public class LzwReader {
      */
     public int read() throws IOException {
         int codeWord = 0;
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < this.codewordLength; i++) {
             int buffer = this.input.read();
             if (buffer == -1) {
                 throw new IOException();

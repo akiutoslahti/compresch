@@ -39,14 +39,15 @@ public class LzwDecoder {
      * @throws NullPointerException if either one of parameters is null.
      * @throws IOException if an I/O exception occurs.
      */
-    public static void decode(String inputPath, String outputPath) throws IOException {
+    public static void decode(
+        String inputPath, String outputPath, int codewordLength) throws IOException {
         Objects.requireNonNull(inputPath);
         Objects.requireNonNull(outputPath);
 
-        LzwReader input = new LzwReader(inputPath);
+        LzwReader input = new LzwReader(inputPath, codewordLength);
         OutputStream output = new BufferedOutputStream(new FileOutputStream(outputPath));
-        input.skip(3);
-        makeDecode(input, output);
+        input.skip(6);
+        makeDecode(input, output, codewordLength);
         input.close();
         output.close();
     }
@@ -57,15 +58,16 @@ public class LzwDecoder {
      * @param output OutputStream to write decoded data to.
      * @throws IOException if an I/O exception occurs.
      */
-    private static void makeDecode(LzwReader input, OutputStream output) throws IOException {
-        LzwDictionary dict = new LzwDictionary();
+    private static void makeDecode(
+        LzwReader input, OutputStream output, int codewordLength) throws IOException {
+        LzwDictionary dict = new LzwDictionary(codewordLength);
         int prevCode = input.read();
         String outputBuffer = dict.getSymbol(prevCode);
         writeDecoded(outputBuffer, output);
         char leftOverChar = (char) 0;
         while (true) {
             int newCode = input.read();
-            if (newCode == 4095) {
+            if (newCode == dict.getPseudoEof()) {
                 break;
             }
             if (dict.getSymbol(newCode) == null) {

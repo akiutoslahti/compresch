@@ -75,7 +75,7 @@ public class LzwReaderTest {
     @Test
     public void constructLzwReaderTest() {
         try {
-            new LzwReader(null);
+            new LzwReader(null, 0);
             fail("expected NullPointerException");
         } catch (NullPointerException npe) {
             assert true;
@@ -83,13 +83,13 @@ public class LzwReaderTest {
             fail("FileNotFoundException thrown but not expected");
         }
         try {
-            new LzwReader("notExist");
+            new LzwReader("notExist", 0);
             fail("expected IOException");
         } catch (IOException ioe) {
             assert true;
         }
         try {
-            LzwReader reader = new LzwReader(this.testFilePath);
+            LzwReader reader = new LzwReader(this.testFilePath, 0);
             assertNotNull(reader);
         } catch (IOException ioe) {
             fail("IOException thrown but not expected");
@@ -99,7 +99,7 @@ public class LzwReaderTest {
     @Test
     public void readTest() {
         try {
-            LzwReader reader = new LzwReader(this.testFilePath);
+            LzwReader reader = new LzwReader(this.testFilePath, 12);
             int[] numbersRead = new int[this.numbersExpected.length];
             for (int i = 0; i < this.numbersExpected.length; i++) {
                 numbersRead[i] = reader.read();
@@ -114,7 +114,7 @@ public class LzwReaderTest {
     @Test
     public void readPastEofTest() {
         try {
-            LzwReader reader = new LzwReader(this.testFilePath);
+            LzwReader reader = new LzwReader(this.testFilePath, 12);
             for (int i = 0; i < this.numbersExpected.length + 1; i++) {
                 reader.read();
             }
