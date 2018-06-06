@@ -53,7 +53,12 @@ public class LzwEncoder {
     }
 
     private static void writeEncoding(LzwWriter output, int codewordLength) throws IOException {
-        String encoding = "LZW-" + String.valueOf(codewordLength);
+        String encoding;
+        if (codewordLength == 9) {
+            encoding = "LZW-0" + String.valueOf(codewordLength);
+        } else {
+            encoding = "LZW-" + String.valueOf(codewordLength);
+        }
         for (int i = 0; i < encoding.length(); i++) {
             output.writeByte((byte) (encoding.charAt(i)));
         }

@@ -71,7 +71,12 @@ public class Main {
 
                 if (cmdLine.hasOption(LZW)) {
                     String optionalArgument = cmdLine.getOptionValue(LZW, "12");
-                    LzwEncoder.encode(inputPath, outputPath, Integer.parseInt(optionalArgument));
+                    int codewordlength = Integer.parseInt(optionalArgument);
+                    if (codewordlength < 9 || codewordlength > 16) {
+                        throw new IllegalArgumentException(
+                            "LZW codeword length not in valid range: [9, 16]");
+                    }
+                    LzwEncoder.encode(inputPath, outputPath, codewordlength);
                 }
 
                 if (cmdLine.hasOption(DECOMPRESS)) {
@@ -136,7 +141,8 @@ public class Main {
 
         options.addOption(Option.builder(LZW)
             .longOpt("lempel-ziv-welch")
-            .desc("compress file using Lempel-Ziw-Welch")
+            .desc("compress file using Lempel-Ziw-Welch\n"
+                + "- optional argument: codeword length in range [9, 16] ")
             .optionalArg(true)
             .numberOfArgs(1)
             .type(Integer.class)
@@ -152,7 +158,7 @@ public class Main {
 
         options.addOption(Option.builder(TEST)
             .longOpt("test")
-            .desc("run performance tests\n - INPUT: folder\n - OUTPUT: markdown")
+            .desc("run performance tests\n - input: folder\n - output: markdown")
             .build());
 
         return options;
