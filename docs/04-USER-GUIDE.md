@@ -37,7 +37,6 @@ usage: java -jar compresch [OPTION] [-i inputfile] [-o outputfile]
  -t,--test                                 run performance tests
                                            - INPUT: folder
                                            - OUTPUT: markdown
-
 ```
 ## Examples of use
 Compress file *text.txt* to file *test.txt.H* using Huffman coding.
@@ -51,9 +50,7 @@ java -jar compresch.jar -l test.txt test.txt.L
 Compress file *test.txt* to file *text.txt.L* using Lempel-Ziv-Welch compression with user defined codeword lenght. Maximum dictionary size is limited by codeword length. (eg. 16bit codewords, 65 536 word dictionary)
 ```
 java -jar compresch.jar -l 16 test.txt test.txt.L
-
 ```
-
 Decompress Huffman or Lempel-Ziv-Welch encoded file *test.txt.compressed* to file *test.txt.decompressed*.
 ```
 java -jar compresch.jar -d test.txt.compressed test.txt.decompressed
