@@ -41,19 +41,19 @@ usage: java -jar compresch [OPTION] [-i inputfile] [-o outputfile]
 ## Examples of use
 Compress file *text.txt* to file *test.txt.H* using Huffman coding.
 ```
-java -jar compresch.jar -h test.txt test.txt.H
+java -jar compresch.jar -h -i test.txt -o test.txt.H
 ```
 Compress file *test.txt* to file *test.txt.L* using Lempel-Ziv-Welch compression with default dictionary size. (12bit codewords, 4096 word dictionary)
 ```
-java -jar compresch.jar -l test.txt test.txt.L
+java -jar compresch.jar -l -i test.txt -o test.txt.L
 ```
 Compress file *test.txt* to file *text.txt.L* using Lempel-Ziv-Welch compression with user defined codeword lenght. Maximum dictionary size is limited by codeword length. (eg. 16bit codewords, 65 536 word dictionary)
 ```
-java -jar compresch.jar -l 16 test.txt test.txt.L
+java -jar compresch.jar -l 16 -i test.txt -o test.txt.L
 ```
 Decompress Huffman or Lempel-Ziv-Welch encoded file *test.txt.compressed* to file *test.txt.decompressed*.
 ```
-java -jar compresch.jar -d test.txt.compressed test.txt.decompressed
+java -jar compresch.jar -d -i test.txt.compressed -o test.txt.decompressed
 ```
 Print usage/help message
 ```
@@ -61,5 +61,5 @@ java -jar compresch.jar --help
 ```
 Run compression performance tests on *folder of files* and create a Markdown formatted *test report*.
 ```
-java -jar compresch.jar -t /path/to/folder/ /path/to/testreport.md
+java -jar compresch.jar -t -i /path/to/folder/ -o /path/to/testreport.md
 ```
