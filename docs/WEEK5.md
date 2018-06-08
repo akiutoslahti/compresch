@@ -19,8 +19,9 @@ Refactoring already written code and tests is very tedious.
 Nothing major or even minor.
 
 ## Plans for next week?
-* Lots of refactoring, polishing and documentation.
+* Lots of refactoring and polishing.
 * No additional features will be implemented anymore. Functionality is considered ready now.
+* Documentation: testing document shall be written and implementation document shall be enhanced.
 
 ## Hours
 * Programming and refactoring 8h
