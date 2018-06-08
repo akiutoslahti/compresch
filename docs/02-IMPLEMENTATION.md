@@ -37,6 +37,8 @@ Lempel-Ziv-Welch read variable length symbols from input producing fixed length 
 
 **BitInputStream** uses *java.io.ByteInputStream* to read variable length bit sequences from input by using caching of bits to be read.
 
+**EncodingChecker** is tool for checking encoding of supplied file and in case of Lempel-Ziv-Welch compression also dictionary size.
+
 ## Data structures
 **DynamicArray** is implemented using Java generics. It is an ordinary dynamically resized array for every kind of object type. It also implements Iterable<T> interface so it can be used via for-each statement.
 
