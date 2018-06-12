@@ -80,7 +80,7 @@ public class DynamicArray<T> implements Iterable<T> {
 
     /**
      * Returns String with String representation of all objects stored in array.
-     * Used for debuggin and testing purposes.
+     * Used for debugging and testing purposes.
      * @return String containing all objects stored in array
      */
     public String contents() {
