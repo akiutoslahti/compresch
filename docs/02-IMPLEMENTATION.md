@@ -1,8 +1,13 @@
 # Implementation
-
 ## Overview and Big-O analysis
 ### Huffman coding
-#### Overview of encoding
+Huffman coding takes a single bytes from input stream, translates them to variable length bit sequences and writes them to output stream. Intent is that encoded bit sequence is shorter in length than original input stream. Huffman coding tries to achieve this by using an optimal prefix coding for given input stream.
+
+Huffman coding has been implemented in a canonical fashion to minimize the length of code table in output stream. In canonical Huffman coding lengths of encoded bytes are stored in code table in stead of actual codes corresponding to original byte values. The size of code table in encoded file is always 256 bytes.
+
+Dynamic array(w/ Generics) and specialized minimum heap for prefix tree nodes are utilized in this implementation.
+
+#### Algorithm for encoding
 1. Collect occurrences of distinct bytes in input stream by traversing it
 2. Build a prefix code tree from byte frequencies collected in step 1.
 3. Traverse prefix tree to get code lengths for distinct bytes
@@ -24,7 +29,7 @@ In all steps *n* denotes length of input stream in bytes and *k* denotes count o
 **Total time complexity: O(n + k log k)**  
 **Total space complexity: O(k)**
 
-#### Overview of decoding
+#### Algorithm for decoding
 1. Read code lengths from input stream.
 2. Build canonical prefix tree to get dictionary of codes from code lengths collected in step 1.
 3. Continue reading input stream one bit at a time while traversing canonical prefix tree. When leaf node is reached, byte corresponding to it is written to output and traversing of prefix tree will resume from the root of the tree. This step will be continued until end of input stream is reached.
@@ -39,7 +44,13 @@ In all steps *n* denotes length of input stream in bytes and *k* denotes count o
 **Total space complexity: O(k)**
 
 ### Lempel-Ziv-Welch
-#### Overview of encoding
+Lempel-Ziv-Welch coding reads variable length byte sequences from input stream, translates them to fixed length bit sequences and writes them to output stream. Intent is that encoded bit sequence is shorter than original byte sequence by utilizing dynamically built two-way dictionary for byte sequences already encountered.
+
+Lempel-Ziv-Welch coding has been implemented with a possibility to choose one of the predefined dictionary sizes ranging from 512 to 65 536 words. Unless dictionary size is specified algorithm will default for 4096 word dictionary.
+
+Dynamically sized, specialized hash table for predefined dictionary entries is utilized in this implementation.
+
+#### Algorithm for encoding
 1. Initialize dictionary with all possible one byte strings(single character strings).
 2. Read input stream one character at a time, while concatenating them to a string until one which does not exist in dictionary is found. Add newly found string to dictionary. Write codeword corresponding to current string without the last character to output stream. Continue scanning of substrings with last character as a starting point. Continue in this manner until end of input stream is reached.
 
@@ -47,7 +58,7 @@ In all steps *n* denotes length of input stream in bytes and *k* denotes count o
 1. *Time: O(1), space: O(1).* There is only 256 distinct single byte strings and dictionary implementation uses a hashmap at its base.
 2. *Time: O(n), space: O(k)*. For input stream of length *n* bytes, each byte is read once and only operations of constant complexity will be performed. Dictionary size *k* is specified before encoding.
 
-#### Overview of decoding
+#### Algorithm for decoding
 1. Initialize dictionary with all possible one byte strings(single character strings).
 2. ???
 
@@ -73,8 +84,6 @@ Main program can be used to encode and decode single files with Huffman coding o
 ### Huffman Coding
 ![wut](pics/huffmanclasses.png)
 
-Huffman encoding takes a byte sequence of symbols as input and produces a bit sequence as output. Intent is that encoded bit sequence is shorter than original byte sequence by using an optimal prefix coding for given input file.
-
 **HuffmanEncoder** and **HuffmanDecoder** are the pair of classes that handle the logic behind compression and decompression of data and utilize all the secondary classes designed to help them.
 
 **HuffmanTree** consists of **HuffmanNodes**. HuffmanTree is basically a prefix trie for given input file to be compressed. The path from root to a leaf, representing an encoded symbol, represents the bit sequence which is used as a codeword for a given symbol. For encoding the HuffmanTree is first built upon the frequency of given symbols. It is then converted to a canonical Huffman coding, which is built from lengths of codewords of ascending symbols.
@@ -85,8 +94,6 @@ Huffman encoding takes a byte sequence of symbols as input and produces a bit se
 
 ### Lempel-Ziv-Welch
 ![wut](pics/lzwclasses.png)
-
-Lempel-Ziv-Welch reads variable byte sequences from input producing fixed length symbols as output while producing a dictionary of codewords during encoding/decoding. Intent is that encoded bit sequence is shorter than original byte sequence by utilizing codewords for byte sequences seen before.
 
 **LzwEncoder** and **LzwDecoder** are the pair of classes that handle the logic behind compression and decompression of data and utilize the secondary classes designed to help them.
 
