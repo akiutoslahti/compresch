@@ -11,7 +11,7 @@
 6. Write code lengths collected in step 3 to output (in ascending order of byte value).
 7. Read input stream one byte at a time. Translate each byte to variable length bit sequence with dictionary built in step 5 and write it to output.
 
-#### Big-O Analysis of encoding
+#### Analysis of encoding
 In all steps *n* denotes length of input stream in bytes and *k* denotes count of distinct bytes found in input stream.
 1. *Time: O(n), space: O(1).* The whole input stream is traversed and size of array containing occurrences is constant.
 2. *Time: O(k log k), space: O(k).* Prefix tree is built by first inserting each node into minimum heap, then extracting two minimum nodes, combining them to a single node and pushing it back to heap. Size of heap and built tree are O(k).
@@ -27,36 +27,42 @@ In all steps *n* denotes length of input stream in bytes and *k* denotes count o
 #### Overview of decoding
 1. Read code lengths from input stream.
 2. Build canonical prefix tree to get dictionary of codes from code lengths collected in step 1.
-3. Continue reading input stream one bit at a time while traversing canonical prefix tree. When leaf node is reached, byte corresponding it is written to output and traversing of prefix tree will resume from the root of the tree. This step will be continued until end of input stream is reached.
+3. Continue reading input stream one bit at a time while traversing canonical prefix tree. When leaf node is reached, byte corresponding to it is written to output and traversing of prefix tree will resume from the root of the tree. This step will be continued until end of input stream is reached.
 
-#### Overview of decoding
+#### Analysis of decoding
+In all steps *n* denotes length of input stream in bytes and *k* denotes count of distinct bytes found in input stream.
 1. *Time: O(1), space: O(1).* Canonical code table is always 256B in size.
 2. *Time: O(k), space: O(k).* Array of code lengths is of constant size, but in absolutely worst scenario it might be traversed *k/2* times. Size of built canonical tree is O(k).
 3. *Time: O(n), space: O(log k).* The whole input stream is traversed and at given time, a bit sequence of length O(log k) is kept in input buffer. Length of output stream is left out of equation.
-
 
 **Total time complexity: O(n)**  
 **Total space complexity: O(k)**
 
 ### Lempel-Ziv-Welch
-#### High level overview
-**Compression:**
+#### Overview of encoding
+1. Initialize dictionary with all possible one byte strings(single character strings).
+2. Read input stream one character at a time, while concatenating them to a string until one which does not exist in dictionary is found. Add newly found string to dictionary. Write codeword corresponding to current string without the last character to output stream. Continue scanning of substrings with last character as a starting point. Continue in this manner until end of input stream is reached.
 
-**Decompression:**
+#### Analysis of encoding
+1. *Time: O(1), space: O(1).* There is only 256 distinct single byte strings and dictionary implementation uses a hashmap at its base.
+2. *Time: O(n), space: O(k)*. For input stream of length *n* bytes, each byte is read once and only operations of constant complexity will be performed. Dictionary size *k* is specified before encoding.
 
-#### Analysis
-**Compression:**
+#### Overview of decoding
+1. Initialize dictionary with all possible one byte strings(single character strings).
+2. ???
 
-**Decompression:**
+#### Analysis of decoding
+1. *Time: O(1), space: O(1).* There is only 256 distinct single byte strings and dictionary implementation uses a hashmap at its base.
+2. ???
 
 ## How to improve?
 ### Huffman coding
-*// Adaptive huffman coding*
+*// Changing codebook during encoding???*
 
 ### Lempel-Ziv-Welch
-*// Variable width encoding*
+*// Variable width encoding???*
 
-*// Rebuild dictionary instead of reuse*
+*// Rebuild dictionary instead of reuse???*
 
 ## Overview of packaging and classes
 ![wut](pics/packagediagram.png)
@@ -80,7 +86,7 @@ Huffman encoding takes a byte sequence of symbols as input and produces a bit se
 ### Lempel-Ziv-Welch
 ![wut](pics/lzwclasses.png)
 
-Lempel-Ziv-Welch read variable length symbols from input producing fixed length symbols as output producing a dictionary of codewords during encoding/decoding. Intent is that encoded bit sequence is shorter than original bit sequence by utilizing codewords for bitsequences seen before.
+Lempel-Ziv-Welch reads variable byte sequences from input producing fixed length symbols as output while producing a dictionary of codewords during encoding/decoding. Intent is that encoded bit sequence is shorter than original byte sequence by utilizing codewords for byte sequences seen before.
 
 **LzwEncoder** and **LzwDecoder** are the pair of classes that handle the logic behind compression and decompression of data and utilize the secondary classes designed to help them.
 
