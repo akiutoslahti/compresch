@@ -1,9 +1,8 @@
 # Implementation
 
-## Space and time complexity analysis
+## Overview and Big-O analysis
 ### Huffman coding
-#### High level overview
-**Compression:**
+#### Overview of encoding
 1. Collect occurrences of distinct bytes in input stream by traversing it
 2. Build a prefix code tree from byte frequencies collected in step 1.
 3. Traverse prefix tree to get code lengths for distinct bytes
@@ -12,13 +11,7 @@
 6. Write code lengths collected in step 3 to output (in ascending order of byte value).
 7. Read input stream one byte at a time. Translate each byte to variable length bit sequence with dictionary built in step 5 and write it to output.
 
-**Decompression:**
-1. Read code lengths from input stream.
-2. Build canonical prefix tree to get dictionary of codes from code lengths collected in step 1.
-3. Continue reading input stream one bit at a time while traversing canonical prefix tree. When leaf node is reached, byte corresponding it is written to output and traversing of prefix tree will resume from the root of the tree. This step will be continued until end of input stream is reached.
-
-#### Step by step O-analysis
-**Compression:**
+#### Big-O Analysis of encoding
 In all steps *n* denotes length of input stream in bytes and *k* denotes count of distinct bytes found in input stream.
 1. *Time: O(n), space: O(1).* The whole input stream is traversed and size of array containing occurrences is constant.
 2. *Time: O(k log k), space: O(k).* Prefix tree is built by first inserting each node into minimum heap, then extracting two minimum nodes, combining them to a single node and pushing it back to heap. Size of heap and built tree are O(k).
@@ -31,10 +24,16 @@ In all steps *n* denotes length of input stream in bytes and *k* denotes count o
 **Total time complexity: O(n + k log k)**  
 **Total space complexity: O(k)**
 
-**Decompression:**
+#### Overview of decoding
+1. Read code lengths from input stream.
+2. Build canonical prefix tree to get dictionary of codes from code lengths collected in step 1.
+3. Continue reading input stream one bit at a time while traversing canonical prefix tree. When leaf node is reached, byte corresponding it is written to output and traversing of prefix tree will resume from the root of the tree. This step will be continued until end of input stream is reached.
+
+#### Overview of decoding
 1. *Time: O(1), space: O(1).* Canonical code table is always 256B in size.
 2. *Time: O(k), space: O(k).* Array of code lengths is of constant size, but in absolutely worst scenario it might be traversed *k/2* times. Size of built canonical tree is O(k).
 3. *Time: O(n), space: O(log k).* The whole input stream is traversed and at given time, a bit sequence of length O(log k) is kept in input buffer. Length of output stream is left out of equation.
+
 
 **Total time complexity: O(n)**  
 **Total space complexity: O(k)**
