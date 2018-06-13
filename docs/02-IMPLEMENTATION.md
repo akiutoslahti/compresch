@@ -60,20 +60,22 @@ Dynamically sized, specialized hash table for predefined dictionary entries is u
 
 #### Algorithm for decoding
 1. Initialize dictionary with all possible one byte strings(single character strings).
-2. ???
+2. Read first code from input stream, translate it with dictionary and write to output.
+3. Read input stream one code word at a time and check whether it exists in dictionary. If translation exists, write it to output. If not, write translation of previous code concatenated with first char of previously written translation to output. Add new dictionary entry for translation written in case that code word was not found in dictionary. Continue in this manner until end of input stream is reached.
 
 #### Analysis of decoding
 1. *Time: O(1), space: O(1).* There is only 256 distinct single byte strings and dictionary implementation uses a hashmap at its base.
-2. ???
+2. *Time: O(1), space: O(1).* Reading one codeword, translating it and writing it to output is always constant.
+3. *Time: O(n), space: O(k).* For input stream of length *n* code words(code word length <= 2B) every code word will be read once and only operations of constant complexity will be performed. Dictionary size *k* is specified in encoding header of file to be decompressed.
 
 ## How to improve?
 ### Huffman coding
-*// Changing codebook during encoding???*
+Huffman coding always produces optimal prefix coding for given input. However, if we would dissect input stream to multiple parts, those parts could have different optimal prefix coding. Therefore using multiple prefix codings within same input might lead to enhanced compression ratio. In practice implementing this efficiently seems quite hard and inefficient time-wise.
 
 ### Lempel-Ziv-Welch
-*// Variable width encoding???*
+Code words could be read and written as variable length binary integers, starting with 9-bit codes and increasing as dictionary size grows. This would result in maximum compression ratio using single dictionary.
 
-*// Rebuild dictionary instead of reuse???*
+Typically LZW compression continues to use dictionary when it is full. Alternatively we could start rebuilding new dictionary when current one fills up, or monitor our compression ratio and make a decision wo start building new dictionary based on it. With some inputs this could lead to increased overall compression ratio.
 
 ## Overview of packaging and classes
 ![wut](pics/packagediagram.png)
