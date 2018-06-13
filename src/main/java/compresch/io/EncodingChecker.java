@@ -40,7 +40,7 @@ public class EncodingChecker {
      * @param inputPath Path to file to be examined.
      * @return String "HUF" for Huffman coding, "LZW" for Lempel-Ziv-Welch compression.
      * @throws NullPointerException on null input.
-     * @throws IOException if input file is not found or cannot be read.
+     * @throws IOException          if input file is not found or cannot be read.
      */
     public static String readEncoding(String inputPath) throws IOException {
         Objects.requireNonNull(inputPath);
@@ -83,8 +83,18 @@ public class EncodingChecker {
         StringBuilder builder = new StringBuilder();
         for (int i : readBytes) {
             builder.append((char) (i));
+
         }
-        return Integer.parseInt(builder.toString());
+        int codeWordLength = 0;
+        try {
+            codeWordLength = Integer.parseInt(builder.toString());
+        } catch (NumberFormatException nfe) {
+            throw new UnsupportedEncodingException("Input file doesn't contain valid header.");
+        }
+        if (codeWordLength < 9 || codeWordLength > 16) {
+            throw new UnsupportedEncodingException("Input file doesn't contain valid header.");
+        }
+        return codeWordLength;
     }
 
 }

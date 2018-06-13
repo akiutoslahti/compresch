@@ -159,13 +159,15 @@ public class EncodeDecodeTest {
 
     @Test
     public void lzwBibleTest() {
-        try {
-            LzwEncoder.encode(this.biblePath, this.compressedFilePath, 12);
-            LzwDecoder.decode(this.compressedFilePath, this.decompressedFilePath, 12);
-        } catch (IOException ioe) {
-            fail("IOEXception thrown but not expected");
+        for (int i = 9; i < 17; i++) {
+            try {
+                LzwEncoder.encode(this.biblePath, this.compressedFilePath, i);
+                LzwDecoder.decode(this.compressedFilePath, this.decompressedFilePath, i);
+            } catch (IOException ioe) {
+                fail("IOEXception thrown but not expected");
+            }
+            assertTrue(checkDiff(this.biblePath));
         }
-        assertTrue(checkDiff(this.biblePath));
     }
 
     private boolean checkDiff(String alternateInputPath) {

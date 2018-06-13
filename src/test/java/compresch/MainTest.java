@@ -87,7 +87,7 @@ public class MainTest {
     }
 
     @Test
-    public void lzw16bitTest() {
+    public void lzwWithArgumentTest() {
         Main.main(
             new String[]{"-" + Main.LZW, "16", "-" + Main.INPUT, inputFile.getName(),
                 "-" + Main.OUTPUT, compressedFile.getName()});

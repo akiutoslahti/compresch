@@ -87,4 +87,10 @@ public class LzwDictionaryTest {
         assertEquals(-1, dictionary.getCodeword("STILL-AYBABTU"));
     }
 
+    @Test
+    public void getCodeWordLengthTest() {
+        LzwDictionary dictionary = new LzwDictionary(13);
+        assertEquals(13, dictionary.getCodewordLength());
+    }
+
 }

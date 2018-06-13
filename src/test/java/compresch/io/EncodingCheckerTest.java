@@ -63,14 +63,47 @@ public class EncodingCheckerTest {
     @Test
     public void noValidHeaderTest() {
         String testFilePath = "test.txt";
+        String notValid = "AYBABTU";
         try {
             OutputStream output = new BufferedOutputStream(new FileOutputStream(testFilePath));
-            String notvalid = "AYBABTU";
-            for (int i = 0; i < notvalid.length(); i++) {
-                output.write((byte) (notvalid.charAt(i)));
+            for (int i = 0; i < notValid.length(); i++) {
+                output.write((byte) (notValid.charAt(i)));
             }
             output.close();
             EncodingChecker.readEncoding(testFilePath);
+            fail("UnsupportedEncodingException expected");
+        } catch (UnsupportedEncodingException uee) {
+            assert true;
+        } catch (IOException ioe) {
+            fail("IOException thrown but not expected");
+        }
+        assertTrue(new File(testFilePath).delete());
+    }
+
+    @Test
+    public void notValidLzwHeaderTest1() {
+        lzwHeaderTest("LZW-08");
+    }
+
+    @Test
+    public void notValidLzwHeaderTest2() {
+        lzwHeaderTest("LZW-17");
+    }
+
+    @Test
+    public void notValidLzwHeaderTest3() {
+        lzwHeaderTest("LZW-AB");
+    }
+
+    private void lzwHeaderTest(String notValid) {
+        String testFilePath = "test.txt";
+        try {
+            OutputStream output = new BufferedOutputStream(new FileOutputStream(testFilePath));
+            for (int i = 0; i < notValid.length(); i++) {
+                output.write((byte) (notValid.charAt(i)));
+            }
+            output.close();
+            EncodingChecker.readLzwCodewordLength(testFilePath);
             fail("UnsupportedEncodingException expected");
         } catch (UnsupportedEncodingException uee) {
             assert true;

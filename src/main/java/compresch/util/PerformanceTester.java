@@ -164,8 +164,8 @@ public class PerformanceTester {
         File compressed = new File(this.testFileFolder.getPath() + "/compressed");
 
         long alku = System.currentTimeMillis();
-        Main.main(new String[]{
-            encoding[0], encoding[1], "-" + Main.INPUT, testFilePath, "-" + Main.OUTPUT, compressed.getPath()});
+        Main.main(new String[]{encoding[0], encoding[1],
+            "-" + Main.INPUT, testFilePath, "-" + Main.OUTPUT, compressed.getPath()});
         long loppu = System.currentTimeMillis();
 
         testResults[0] = compressed.length();
