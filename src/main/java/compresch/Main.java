@@ -28,7 +28,9 @@ import compresch.huff.HuffmanDecoder;
 import compresch.huff.HuffmanEncoder;
 import compresch.io.EncodingChecker;
 import compresch.lzw.LzwDecoder;
+import compresch.lzw.LzwDictionary;
 import compresch.lzw.LzwEncoder;
+import compresch.util.LzwDictionarySizeTester;
 import compresch.util.PerformanceTester;
 import java.io.IOException;
 import org.apache.commons.cli.CommandLine;
@@ -43,11 +45,12 @@ public class Main {
 
     public static final String DECOMPRESS = "d";
     public static final String HUFFMAN = "h";
-    public static final String TEST = "t";
     public static final String INPUT = "i";
     public static final String LZW = "l";
     public static final String HELP = "help";
     public static final String OUTPUT = "o";
+    public static final String TEST = "t";
+    public static final String DICTIONARYTEST = "td";
 
     /**
      * Compresses/decompresses input file to output file depending on given arguments.
@@ -93,6 +96,12 @@ public class Main {
                 if (cmdLine.hasOption(TEST)) {
                     PerformanceTester tester = new PerformanceTester(inputPath, outputPath);
                     tester.testAll();
+                }
+
+                if (cmdLine.hasOption(DICTIONARYTEST)) {
+                    LzwDictionarySizeTester tester = new LzwDictionarySizeTester(
+                        inputPath, outputPath);
+                    tester.test();
                 }
 
             } else if (args.length == 1 && cmdLine.hasOption(HELP)) {
@@ -159,6 +168,11 @@ public class Main {
         options.addOption(Option.builder(TEST)
             .longOpt("test")
             .desc("run performance tests\n - input: folder\n - output: markdown")
+            .build());
+
+        options.addOption(Option.builder(DICTIONARYTEST)
+            .longOpt("dictionary-test")
+            .desc("run LZW dictionary size tests")
             .build());
 
         return options;

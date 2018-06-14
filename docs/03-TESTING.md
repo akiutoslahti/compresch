@@ -19,7 +19,7 @@ Silesia corpus
 ### Lempel-Ziv-Welch dictionary size
 Lempel-Ziv-Welch compression has been evaluated also for effects of dictionary size to compression ratio. Testing has been performed on King James Bible from Project Gutenberg. Test file is UTF-8 formatted plain text and 4 452 069 bytes long.
 
-/* report here */
+[Test Report](performancetests/bible.md)
 
 ### Comparison to common compression tools
 My implementations have been also benchmarked against couple common compression tools: *Unix compress(LZ77), gzip(DEFLATE) and bzip2(Burrows-Wheeler-Transform)*.
