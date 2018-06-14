@@ -33,10 +33,14 @@ usage: java -jar compresch [OPTION] [-i inputfile] [-o outputfile]
  -i,--input-file <input file>              input file/folder
  -l,--lempel-ziv-welch <codeword length>   compress file using
                                            Lempel-Ziw-Welch
+                                           - optional argument: codeword
+                                           length in range [9, 16]
  -o,--ouput-file <output file>             ouput file
+ -r,--dictionary-test                      run LZW dictionary size tests
  -t,--test                                 run performance tests
-                                           - INPUT: folder
-                                           - OUTPUT: markdown
+                                           - input: folder
+                                           - output: markdown
+
 ```
 ## Examples of use
 Compress file *text.txt* to file *test.txt.H* using Huffman coding.
@@ -62,4 +66,8 @@ java -jar compresch.jar --help
 Run compression performance tests on *folder of files* and create a Markdown formatted *test report*.
 ```
 java -jar compresch.jar -t -i /path/to/folder/ -o /path/to/testreport.md
+```
+Run compression efficiency tests with all different Lempel-Ziv-Welch dictionary sizes to *test.txt* and create a Markdown formatted *test_report.md*
+```
+java -jar compresch.jar -r -i test.txt -o test_report.md
 ```

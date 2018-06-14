@@ -50,7 +50,7 @@ public class Main {
     public static final String HELP = "help";
     public static final String OUTPUT = "o";
     public static final String TEST = "t";
-    public static final String DICTIONARYTEST = "td";
+    public static final String DICTIONARYTEST = "r";
 
     /**
      * Compresses/decompresses input file to output file depending on given arguments.
