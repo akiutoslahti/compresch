@@ -3,6 +3,8 @@
 ## Unit testing
 Data structures, I/O utilities and compression related classes have been thoroughly tested with unit tests. Encoding and Decoding classes have been tested by actually encoding, decoding and checking the diff between original input and final output file. Main class has been tested for some functions, but as it acts as a class providing command line user interface, some of it has to be tested 'by hand'. I have tried to test its functionality as thoroughly as possible, but some bugs may still remain.
 
+[Coverage report](https://codecov.io/gh/akiutoslahti/compresch)
+
 ## Benchmarking and comparison
 ### Efficiency of compression
 Efficiency of compression has been evaluated with three common compression corpuses along with benchmarks for encoding and decoding times.
