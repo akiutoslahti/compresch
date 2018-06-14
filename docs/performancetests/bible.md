@@ -1,4 +1,4 @@
-## Dictionary size testing results
+## Dictionary size effects
 Testfile: King James Bible (UTF-8 plain text), size: 4 047 392
 
 Dictionary size | compressed size (bytes) | compress ratio | compression time (ms) | decompression time (ms)
