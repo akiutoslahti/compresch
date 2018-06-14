@@ -1,3 +1,4 @@
+## Comparison to common compression tools
 ### Canterbury corpus
 Testfile | original size| Huffman coding | LZW (4K) | LZW (64K) | unix compress | gzip | bzip2
 --- | ---: | ---: | ---: | ---: | ---: | ---: | ---:
