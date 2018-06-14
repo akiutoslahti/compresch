@@ -19,6 +19,12 @@ Silesia corpus
 ### Lempel-Ziv-Welch dictionary size
 Lempel-Ziv-Welch compression has been evaluated also for effects of dictionary size to compression ratio. Testing has been performed on King James Bible from Project Gutenberg. Test file is UTF-8 formatted plain text and 4 452 069 bytes long.
 
+Running tests on same file with all different dictionary sizes shows how great effect dictionary size has on compression ratio, even though doubling dictionary size also adds one bit to every encoded code word. 
+
+Of course the test file used here is quite optimal to showing effects of dictionary size. Firstly it is sufficiently long and secondly it has limited variance in it as it is utilizing solely english vocabulary. 
+ 
+Even though here we only saw beneficial effects to compression ration with every increase in dictionary size, we should also remember that it can have adversary effects. For couple of files in Canterbury corpus (report in previous subsection) we saw that smaller dictionary size actually had better compression ratio in case that original file was sufficiently short. Therefore there actually is not dictionary size which is optimal in every possible scenario. However there seems to be a trend, that smaller files seem to benefit from smaller dictionary size while larger files seem to benefit from larger dictionary size.
+ 
 [Test Report](performancetests/bible.md)
 
 ### Comparison to common compression tools
