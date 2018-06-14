@@ -40,7 +40,6 @@ usage: java -jar compresch [OPTION] [-i inputfile] [-o outputfile]
  -t,--test                                 run performance tests
                                            - input: folder
                                            - output: markdown
-
 ```
 ## Examples of use
 Compress file *text.txt* to file *test.txt.H* using Huffman coding.
@@ -67,7 +66,7 @@ Run compression performance tests on *folder of files* and create a Markdown for
 ```
 java -jar compresch.jar -t -i /path/to/folder/ -o /path/to/testreport.md
 ```
-Run compression efficiency tests with all different Lempel-Ziv-Welch dictionary sizes to *test.txt* and create a Markdown formatted *test_report.md*
+Run compression efficiency tests with all different Lempel-Ziv-Welch dictionary sizes on *test.txt* and create a Markdown formatted *test_report.md*
 ```
 java -jar compresch.jar -r -i test.txt -o test_report.md
 ```
