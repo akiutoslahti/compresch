@@ -23,3 +23,4 @@ No problems.
 ## Hours
 * 6h of documenting
 * 2h programming
+* 2h repo reflection
