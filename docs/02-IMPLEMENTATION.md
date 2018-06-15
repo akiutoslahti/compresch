@@ -58,6 +58,9 @@ Dynamically sized, specialized hash table for predefined dictionary entries is u
 1. *Time: O(1), space: O(1).* There is only 256 distinct single byte strings and dictionary implementation uses a hashmap at its base.
 2. *Time: O(n), space: O(k)*. For input stream of length *n* bytes, each byte is read once and only operations of constant complexity will be performed. Dictionary size *k* is specified before encoding.
 
+**Total time complexity: O(n)**  
+**Total space complexity: O(k)**
+
 #### Algorithm for decoding
 1. Initialize dictionary with all possible one byte strings(single character strings).
 2. Read first code from input stream, translate it with dictionary and write to output.
@@ -67,6 +70,9 @@ Dynamically sized, specialized hash table for predefined dictionary entries is u
 1. *Time: O(1), space: O(1).* There is only 256 distinct single byte strings and dictionary implementation uses a hashmap at its base.
 2. *Time: O(1), space: O(1).* Reading one codeword, translating it and writing it to output is always constant.
 3. *Time: O(n), space: O(k).* For input stream of length *n* code words(code word length <= 2B) every code word will be read once and only operations of constant complexity will be performed. Dictionary size *k* is specified in encoding header of file to be decompressed.
+
+**Total time complexity: O(n)**  
+**Total space complexity: O(k)**
 
 ## How to improve?
 ### Huffman coding
