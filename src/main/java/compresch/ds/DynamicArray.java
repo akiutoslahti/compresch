@@ -26,6 +26,10 @@ package compresch.ds;
 
 import java.util.Iterator;
 
+/**
+ * Implementation of dynamic array for generic data types.
+ * @param <T> generic data type
+ */
 public class DynamicArray<T> implements Iterable<T> {
 
     private Object[] array;
@@ -53,17 +57,17 @@ public class DynamicArray<T> implements Iterable<T> {
     }
 
     /**
-     * Returns generic object from given index of the array.
-     * @param i Index to get from array.
+     * Returns type specific object from given index of the array.
+     * @param index Index to get from array.
      * @return Generic object of type T.
      * @throws NullPointerException if given parameter is not in valid range.
      */
     @SuppressWarnings("unchecked")
-    public T at(int i) {
-        if (i < 0 || i >= this.size) {
+    public T at(int index) {
+        if (index < 0 || index >= this.size) {
             throw new NullPointerException();
         } else {
-            return (T) this.array[i];
+            return (T) this.array[index];
         }
     }
 
@@ -80,7 +84,7 @@ public class DynamicArray<T> implements Iterable<T> {
 
     /**
      * Returns String with String representation of all objects stored in array.
-     * Used for debugging and testing purposes.
+     * Used only for debugging and testing purposes.
      * @return String containing all objects stored in array
      */
     public String contents() {
@@ -93,8 +97,8 @@ public class DynamicArray<T> implements Iterable<T> {
     }
 
     /**
-     * Constructs iterator for DynamicArray to allow use of for each statement.
-     * @return Iterator to contents
+     * Constructs iterator for DynamicArray to allow use of 'for each' statement.
+     * @return Iterator to contents.
      */
     public Iterator<T> iterator() {
         Iterator<T> it = new Iterator<T>() {

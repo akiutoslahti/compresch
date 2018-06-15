@@ -26,6 +26,9 @@ package compresch.ds;
 
 import compresch.huff.HuffmanNode;
 
+/**
+ * Minimum heap implementation for HuffmanNode data type.
+ */
 public class HuffmanHeap {
 
     private HuffmanNode[] heap;
@@ -50,12 +53,12 @@ public class HuffmanHeap {
         if (this.size == this.maxSize) {
             resize();
         }
-        int pos = this.size;
-        while (pos > 1 && this.heap[parent(pos)].compareTo(node) > 0) {
-            this.heap[pos] = this.heap[parent(pos)];
-            pos = parent(pos);
+        int position = this.size;
+        while (position > 1 && this.heap[parent(position)].compareTo(node) > 0) {
+            this.heap[position] = this.heap[parent(position)];
+            position = parent(position);
         }
-        this.heap[pos] = node;
+        this.heap[position] = node;
     }
 
     public HuffmanNode peek() {

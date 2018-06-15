@@ -26,6 +26,9 @@ package compresch.ds;
 
 import java.util.Objects;
 
+/**
+ * Class used as node in LzwHashTable.
+ */
 public class LzwEntry {
 
     private String key;
@@ -35,8 +38,8 @@ public class LzwEntry {
 
     /**
      * Constructs a new LzwEntry to be used in LzwHashTable.
-     * @param key   String to be used as key in hashtable.
-     * @param value codeword for @param key
+     * @param key   String to be used as key in hash table.
+     * @param value codeword corresponding to @param key
      * @throws NullPointerException if @param key is null.
      */
     public LzwEntry(String key, int value) {
@@ -47,7 +50,7 @@ public class LzwEntry {
         this.hash = -1;
     }
 
-    public String getKey() {
+    String getKey() {
         return this.key;
     }
 
@@ -55,11 +58,11 @@ public class LzwEntry {
         return this.value;
     }
 
-    public void setNextEntry(LzwEntry entry) {
+    void setNextEntry(LzwEntry entry) {
         this.nextEntry = entry;
     }
 
-    public LzwEntry getNextEntry() {
+    LzwEntry getNextEntry() {
         return this.nextEntry;
     }
 
@@ -67,7 +70,7 @@ public class LzwEntry {
      * Returns the hash of object.
      * @return object hash as integer
      */
-    public int getHash() {
+    int getHash() {
         if (this.hash == -1) {
             this.hash = this.key.hashCode() + this.key.length();
         }

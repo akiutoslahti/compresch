@@ -24,12 +24,14 @@
 
 package compresch.ds;
 
+/**
+ * Hash table implementation to act as a base for LzwDictionary.
+ */
 public class LzwHashTable {
 
     private LzwEntry[] contents;
     private int size;
     private int capacity;
-    private final float loadFactor = 0.75f;
 
     /**
      * Constructs a new LzwHashTable with default values.
@@ -41,11 +43,12 @@ public class LzwHashTable {
     }
 
     /**
-     * Inserts new object to hashtable.
-     * @param entry LzwEntry to be inserted to hashtable.
+     * Inserts new object to hash table.
+     * @param entry LzwEntry to be inserted to hash table.
      */
     public void insert(LzwEntry entry) {
-        if (1.0f * this.size / this.capacity > this.loadFactor) {
+        float loadFactor = 0.75f;
+        if (1.0f * this.size / this.capacity > loadFactor) {
             resize();
         }
         insert(this.contents, entry);
@@ -59,9 +62,9 @@ public class LzwHashTable {
     }
 
     /**
-     * Searches for given key from hashtable.
-     * @param key String to be searched from hashtable.
-     * @return Value attached to right key or -1 if given key is not found.
+     * Searches for given key from hash table.
+     * @param key String to be searched from hash table.
+     * @return Value attached to parameter key or -1 if given key is not found.
      */
     public int search(String key) {
         int hash = key.hashCode() + key.length();

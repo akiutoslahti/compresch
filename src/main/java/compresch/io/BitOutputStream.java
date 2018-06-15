@@ -32,7 +32,7 @@ import java.io.OutputStream;
 import java.util.Objects;
 
 /**
- * Utility class for writing data bit by bit using java.io.OutpuStream as a basis.
+ * Utility class for writing data bit by bit using java.io.OutputStream as a basis.
  */
 public class BitOutputStream {
 
@@ -43,7 +43,7 @@ public class BitOutputStream {
     /**
      * Construct bit output stream based on underlying byte output stream.
      * @param outputFilePath file to be written to.
-     * @throws NullPointerException  when null is provided as param.
+     * @throws NullPointerException  when null is provided as parameter.
      * @throws FileNotFoundException if outputFile cannot be opened.
      */
     public BitOutputStream(String outputFilePath) throws FileNotFoundException {

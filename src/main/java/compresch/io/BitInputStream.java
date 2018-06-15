@@ -42,9 +42,9 @@ public class BitInputStream {
 
     /**
      * Construct bit input stream based on underlying byte input stream.
-     * @param inputFilePath file to be read
-     * @throws NullPointerException  when null is provided as param
-     * @throws FileNotFoundException if parameter inputFile is not found
+     * @param inputFilePath file to be read.
+     * @throws NullPointerException  when null is provided as parameter.
+     * @throws FileNotFoundException if parameter inputFile is not found.
      */
     public BitInputStream(String inputFilePath) throws FileNotFoundException {
         Objects.requireNonNull(inputFilePath);
@@ -74,7 +74,7 @@ public class BitInputStream {
     }
 
     /**
-     * Read a byte from stream.
+     * Read next byte from stream.
      * @return byte as integer value in range [0,255]. -1 if end of stream is reached.
      * @throws IOException if an I/O exception occurs.
      */

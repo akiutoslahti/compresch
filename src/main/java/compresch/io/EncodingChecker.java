@@ -33,6 +33,9 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Objects;
 
+/**
+ * Utility class to check used encoding from encoded file.
+ */
 public class EncodingChecker {
 
     /**
