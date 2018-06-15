@@ -1,0 +1,15 @@
+# Peer project reflection
+
+I was given a task to make myself familiar with another students laboratory work [repository](https://github.com/yussiv/Compress) and to reflect on it.
+
+Sadly I could not get my peers program to work on my computer, so I had to rely solely on documentation and source code.
+
+First thing I noticed is that my peer was able to pull of same tasks as I with noticeable difference in lines of code. My own implementation on Huffman coding and LZW uses ~2500 lines of code for main program and algorithms and it uses a command line interface. My peers implementation uses ~1500 lines of code for main proghram and alghorithms and there is also a graphical user interface embedded. However there is a drawback to this. My peers code is quite hard to understand as it is quite sparse in comments and it utilizes bit operations in many places. In many places I thought my peers code was also quite complex. My own code however is quite verbose, clear and easy to maintain (well at least in my own opinion).
+
+Because I cannot run my peers program on my computer I cannot judge how our implementations compare to each other in pure running speed. My peer utilized a trie data structure for both Huffman coding and LZW. I also utilized trie for Huffman coding but went for hash table for LZW. I believe my implementation to be faster in case of LZW because of hash implementation which has specialized hash function for arbitrary length null strings(the fatal case has been taken care). Also I benefit from Javas hash caching for strings, so hashcode for same string does not need to be calculated many times.
+
+I made a little compression performance comparison based on testing documentation of my peer. My algorithms seem to perform a little bit better on both Huffman coding and LZW. Of course the reasons are obvious. My Huffman coding implementation is canonical, therefore using only 256B of space in compressed file header, while my peers implementation saves prefix tree as byte form (well, for a really small dictionary the whole prefix tree will be under 256B in length).
+
+My LZW implementation determines used bit length for code words by chosen dictionary size, so my implementation is actually a lot more efficient with smaller dictionary values, while my peers implementation uses 16-bit code words in every dictionary size from 512 up to 53 365.
+
+The 'aha moment' was when I realized that the biggest difference in our implementations is how we handle I/O. My own implementation was made on a very low level. Writing single bits to byte cache and writing filled byte cache to output stream. However my peer used Apache Commons IO to read and write whole byte arrays and handled updating the distinct information by bit operations on byte array. In a way I think that here I went on the easier road by writing much more code to actually implement variable length bit I/O while my peer was clever to handle I/O with ready made tools and only manipulations to the actual data. However I think that from my approach I benefited from the oversight I got to basic Java I/O as I wrote my own functions for bitwise I/O.

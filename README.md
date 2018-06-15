@@ -19,3 +19,6 @@ This repository is for course **Laboratory work: Data structures and algorithms*
 * [Week 4](docs/WEEK4.md)
 * [Week 5](docs/WEEK5.md)
 * [Week 6](docs/WEEK6.md)
+
+## Misc
+* [Peer project reflection](docs/repo-reflection.md)
