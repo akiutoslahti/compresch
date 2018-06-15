@@ -22,5 +22,5 @@ No problems.
 
 ## Hours
 * 6h of documenting
-* 2h programming
+* 3h programming and refactoring
 * 2h repo reflection
