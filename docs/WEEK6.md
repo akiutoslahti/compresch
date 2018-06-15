@@ -5,6 +5,7 @@
 * Some additional unit testing has been written for better code coverage.
 * Testing documentation has been written a little and test results have been refined.
 * Additional testing functionality to Lempel-Ziv-Welch dictionary sizing.
+* Reflecting on another students project.
 
 ## How I have progressed?
 * Little bit of polishing here and there.
