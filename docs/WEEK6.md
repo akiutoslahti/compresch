@@ -19,6 +19,7 @@ Nothin new.
 No problems.
 
 ## Plans for next week?
+* Finish testing documentation.
 * I will go through the code and documentation to give both final polishing.
 
 ## Hours
