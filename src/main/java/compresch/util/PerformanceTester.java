@@ -88,7 +88,7 @@ public class PerformanceTester {
             long[] testResults = testSingle("-" + Main.HUFFMAN, testFile.getPath());
             this.writer.println(testFile.getName() + " | "
                 + this.df.format(testFile.length()) + " | " + this.df.format(testResults[0]) + " | "
-                + (int) (1.0 * testResults[0] / testFile.length() * 100) + "% | "
+                + (int) Math.round((1.0 * testResults[0] / testFile.length() * 100)) + "% | "
                 + this.df.format(testResults[1]) + " | " + this.df.format(testResults[2]));
         }
         this.writer.println();
@@ -100,7 +100,7 @@ public class PerformanceTester {
             long[] testResults = testSingle("-" + Main.LZW, testFile.getPath());
             this.writer.println(testFile.getName() + " | "
                 + this.df.format(testFile.length()) + " | " + this.df.format(testResults[0]) + " | "
-                + (int) (1.0 * testResults[0] / testFile.length() * 100) + "% | "
+                + (int) Math.round((1.0 * testResults[0] / testFile.length() * 100)) + "% | "
                 + this.df.format(testResults[1]) + " | " + this.df.format(testResults[2]));
         }
         this.writer.println();
@@ -113,7 +113,7 @@ public class PerformanceTester {
                 new String[]{"-" + Main.LZW, "16"}, testFile.getPath());
             this.writer.println(testFile.getName() + " | "
                 + this.df.format(testFile.length()) + " | " + this.df.format(testResults[0]) + " | "
-                + (int) (1.0 * testResults[0] / testFile.length() * 100) + "% | "
+                + (int) Math.round((1.0 * testResults[0] / testFile.length() * 100)) + "% | "
                 + this.df.format(testResults[1]) + " | " + this.df.format(testResults[2]));
         }
         this.writer.println();

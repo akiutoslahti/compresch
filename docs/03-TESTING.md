@@ -7,7 +7,7 @@ Data structures, I/O utilities and compression related classes have been thoroug
 
 ## Benchmarking and comparison
 ### Efficiency of compression
-Efficiency of compression has been evaluated with three common compression corpuses along with benchmarks for encoding and decoding times.
+Efficiency of compression has been evaluated with three common compression corpuses and chunk of random data. Encoding and decoding times have also been recorder.
 
 Canterbury corpus  
 [Test report](performancetests/canterbury.md)  
@@ -17,6 +17,9 @@ Large Canterbury corpus
 
 Silesia corpus  
 [Test report](performancetests/silesia.md)
+
+With random data there is no compression. Instead encoding actually increases file size. With Huffman coding the increase in length is modest +2%, but for LZW we can observe increases in length in range from +12% to +46%. Therefore we can conclude that there is no point in trying to encode data with high randomness with Huffman coding or LZW.  
+[Test report](performancetests/random.md)
 
 ### Lempel-Ziv-Welch dictionary size
 Lempel-Ziv-Welch compression has been evaluated also for effects of dictionary size to compression ratio. Testing has been performed on King James Bible from Project Gutenberg. Test file is UTF-8 formatted plain text and 4 452 069 bytes long.

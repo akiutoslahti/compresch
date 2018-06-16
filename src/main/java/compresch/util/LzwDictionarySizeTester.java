@@ -82,7 +82,7 @@ public class LzwDictionarySizeTester {
             long[] testResults = testSingleDictionarySize(String.valueOf(i));
             this.writer.println(this.df.format((int) Math.pow(2, i)) + " | "
                 + this.df.format(testResults[0]) + " | "
-                + (int) (1.0 * testResults[0] / testFile.length() * 100) + "% | "
+                + (int) Math.round((1.0 * testResults[0] / testFile.length() * 100)) + "% | "
                 + this.df.format(testResults[1]) + " | " + this.df.format(testResults[2]));
         }
     }
