@@ -11,7 +11,7 @@ This repository is for course **Laboratory work: Data structures and algorithms*
 * [Implementation](docs/02-IMPLEMENTATION.md)
 * [Testing](docs/03-TESTING.md)
 * [User guide](docs/04-USER-GUIDE.md)
-* [Javadoc](docs/javadoc/index.html)
+* [Javadoc](http://htmlpreview.github.io/?https://github.com/akiutoslahti/compresch/blob/master/docs/javadoc/index.html)
 
 ## Weekly reports
 * [Week 1](docs/WEEK1.md)
