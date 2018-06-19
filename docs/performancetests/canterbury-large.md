@@ -1,4 +1,12 @@
 ## Performance testing results
+
+### Test files
+File name | Description
+--- | ---
+E.coli | Complete genome of the E. Coli bacterium
+bible.txt | The King James version of the bible
+world192.txt | The CIA world fact book
+
 ### Huffman coding
 Testfile | input size (bytes) | compressed size (bytes) | compress ratio | compression time (ms) | decompression time (ms)
 --- | ---: | ---: | ---: | ---: | ---:

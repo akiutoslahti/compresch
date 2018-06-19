@@ -1,4 +1,20 @@
 ## Performance testing results
+
+### Test files
+File name | Description
+--- | ---
+alice29.txt | English text
+asyoulik.txt | Shakespeare
+cp.html | HTML source
+fields.c | C source
+grammar.lsp | LISP source
+kennedy.xls | Excel spreadsheet
+lcet10.txt | Technical writing
+pl‌rabn12.txt | Poetry
+ptt5 | CCITT test set
+sum | SPARC executable
+xargs.1 | GNU manual page
+
 ### Huffman coding
 Testfile | input size (bytes) | compressed size (bytes) | compress ratio | compression time (ms) | decompression time (ms)
 --- | ---: | ---: | ---: | ---: | ---:

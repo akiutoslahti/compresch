@@ -1,4 +1,21 @@
 ## Performance testing results
+
+### Test files
+File name | Description
+--- | ---
+dickens | Collected works of Charles Dickens
+mozilla | Tarred executables of Mozilla 1.0 (Tru64 UNIX edition)
+mr | Medical magnetic resonanse image
+nci | Chemical database of structures
+ooffice | A dll from Open Office.org 1.01
+osdb | Sample database in MySQL format from Open Source Database Benchmark
+reymont | Text of the book Chłopi by Władysław Reymont
+samba | Tarred source code of Samba 2-2.3
+sao | The SAO star catalog
+webster | The 1913 Webster Unabridged Dictionary
+xml | Collected XML files
+x-ray | X-ray medical picture
+
 ### Huffman coding
 Testfile | input size (bytes) | compressed size (bytes) | compress ratio | compression time (ms) | decompression time (ms)
 --- | ---: | ---: | ---: | ---: | ---:
