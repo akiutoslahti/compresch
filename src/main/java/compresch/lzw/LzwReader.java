@@ -30,6 +30,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Utility class for reading LZW encoded file.
+ */
 public class LzwReader {
 
     private BitInputStream input;
@@ -37,18 +40,19 @@ public class LzwReader {
 
     /**
      * Constructs new LzwReader.
-     * @param inputFilePath input file to read data from.
+     * @param inputFilePath  input file to read data from.
+     * @param codeWordLength bit sequence length to use in reading encoded data.
      * @throws NullPointerException  if parameter is null.
      * @throws FileNotFoundException if input file does not exist.
      */
-    public LzwReader(String inputFilePath, int codewordLength) throws FileNotFoundException {
+    LzwReader(String inputFilePath, int codeWordLength) throws FileNotFoundException {
         Objects.requireNonNull(inputFilePath);
         this.input = new BitInputStream(inputFilePath);
-        this.codewordLength = codewordLength;
+        this.codewordLength = codeWordLength;
     }
 
     /**
-     * Reads next 12bits from the BitInputStream.
+     * Reads next bit sequence from the BitInputStream.
      * @return read codeword as integer.
      * @throws IOException if an I/O exception occurs.
      */
@@ -69,7 +73,12 @@ public class LzwReader {
         this.input.close();
     }
 
-    public void skip(int n) throws IOException {
-        this.input.skip(n);
+    /**
+     * Skip bytes counting from the current position of stream.
+     * @param bytes amount of bytes to skip.
+     * @throws IOException if an I/O exception occurs.
+     */
+    void skip(int bytes) throws IOException {
+        this.input.skip(bytes);
     }
 }

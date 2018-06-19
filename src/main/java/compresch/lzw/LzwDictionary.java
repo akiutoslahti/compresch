@@ -27,6 +27,9 @@ package compresch.lzw;
 import compresch.ds.LzwEntry;
 import compresch.ds.LzwHashTable;
 
+/**
+ * Dictionary used for encoding and decoding with LZW.
+ */
 public class LzwDictionary {
 
     private LzwHashTable dictionary;
@@ -38,7 +41,7 @@ public class LzwDictionary {
     /**
      * Constructs and initiates new dictionary.
      */
-    public LzwDictionary() {
+    LzwDictionary() {
         this.maxSize = 4096;
         this.codewordLength = 12;
         this.dictionary = new LzwHashTable();
@@ -49,7 +52,7 @@ public class LzwDictionary {
     /**
      * Constructs and initiates new dictionary.
      */
-    public LzwDictionary(int codewordLength) {
+    LzwDictionary(int codewordLength) {
         this.codewordLength = codewordLength;
         this.maxSize = (int) (Math.pow(2, codewordLength));
         this.dictionary = new LzwHashTable();
@@ -71,7 +74,7 @@ public class LzwDictionary {
      * @param symbol String entry to be added to dictionary.
      * @return true if adding was successful, false if dictionary is full.
      */
-    public boolean addEntry(String symbol) {
+    boolean addEntry(String symbol) {
         if (this.currentSize < this.maxSize - 1) {
             this.dictionary.insert(new LzwEntry(symbol, this.currentSize));
             this.index[this.currentSize] = symbol;
@@ -96,20 +99,15 @@ public class LzwDictionary {
         return this.index[codeword];
     }
 
-    /**
-     * Returns codeword corresponding to parameter symbol.
-     * @param symbol String symbol to be searched from dictionary.
-     * @return codeword for given symbol in range [0, 4095] if found. -1 if not found.
-     */
-    public int getCodeword(String symbol) {
+    int getCodeword(String symbol) {
         return this.dictionary.search(symbol);
     }
 
-    public int getPseudoEof() {
+    int getPseudoEof() {
         return this.maxSize - 1;
     }
 
-    public int getCodewordLength() {
+    int getCodewordLength() {
         return this.codewordLength;
     }
 

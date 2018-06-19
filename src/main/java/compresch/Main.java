@@ -32,7 +32,9 @@ import compresch.lzw.LzwDictionary;
 import compresch.lzw.LzwEncoder;
 import compresch.util.LzwDictionarySizeTester;
 import compresch.util.PerformanceTester;
+
 import java.io.IOException;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -41,16 +43,19 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+/**
+ * Main class acting as a CLI user interface.
+ */
 public class Main {
 
     public static final String DECOMPRESS = "d";
     public static final String HUFFMAN = "h";
     public static final String INPUT = "i";
     public static final String LZW = "l";
-    public static final String HELP = "help";
     public static final String OUTPUT = "o";
-    public static final String TEST = "t";
-    public static final String DICTIONARYTEST = "r";
+    private static final String HELP = "help";
+    private static final String TEST = "t";
+    private static final String DICTIONARYTEST = "r";
 
     /**
      * Compresses/decompresses input file to output file depending on given arguments.

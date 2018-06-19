@@ -30,29 +30,32 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
 
-public class LzwWriter implements AutoCloseable {
+/**
+ * Utility class for writing LZW encoded file.
+ */
+public class LzwWriter {
 
     private BitOutputStream output;
     private int codewordLength;
     private int maxCodeword;
 
-
     /**
      * Constructs new LzwWriter.
      * @param outputFilePath BitOutputStream to write data to.
+     * @param codeWordLength bit sequence length to use in writing encoded data.
      * @throws NullPointerException  if parameter is null.
      * @throws FileNotFoundException if output file cannot be opened.
      */
-    public LzwWriter(String outputFilePath, int codewordLength) throws FileNotFoundException {
+    LzwWriter(String outputFilePath, int codeWordLength) throws FileNotFoundException {
         Objects.requireNonNull(outputFilePath);
         this.output = new BitOutputStream(outputFilePath);
-        this.codewordLength = codewordLength;
-        this.maxCodeword = ((int) (Math.pow(2, codewordLength))) - 1;
+        this.codewordLength = codeWordLength;
+        this.maxCodeword = ((int) (Math.pow(2, codeWordLength))) - 1;
     }
 
     /**
-     * Writes a 12bit codeword to BitOutputStream.
-     * @param codeWord 12bit integer value.
+     * Writes a codeword to BitOutputStream.
+     * @param codeWord integer value codeword.
      * @throws IOException              if an I/O exception occurs.
      * @throws IllegalArgumentException if parameter is not in range [0, 4095].
      */
@@ -65,12 +68,11 @@ public class LzwWriter implements AutoCloseable {
         }
     }
 
-    @Override
     public void close() throws IOException {
         this.output.close();
     }
 
-    public void writeByte(byte b) throws IOException {
+    void writeByte(byte b) throws IOException {
         this.output.writeByte(b);
     }
 }

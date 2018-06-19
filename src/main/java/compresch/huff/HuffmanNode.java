@@ -26,6 +26,9 @@ package compresch.huff;
 
 import java.util.Objects;
 
+/**
+ * Node class for HuffmanTree.
+ */
 public class HuffmanNode implements Comparable<HuffmanNode> {
 
     private HuffmanNode left;
@@ -42,7 +45,7 @@ public class HuffmanNode implements Comparable<HuffmanNode> {
     public HuffmanNode(int symbol, int frequency) {
         this.left = null;
         this.right = null;
-        if (!checkSymbolValue(symbol)) {
+        if (symbol < 0 || symbol > 256) {
             throw new IllegalArgumentException();
         }
         this.symbol = symbol;
@@ -58,7 +61,7 @@ public class HuffmanNode implements Comparable<HuffmanNode> {
     public HuffmanNode(int symbol) {
         this.left = null;
         this.right = null;
-        if (!checkSymbolValue(symbol)) {
+        if (symbol < 0 || symbol > 256) {
             throw new IllegalArgumentException();
         }
         this.symbol = symbol;
@@ -80,45 +83,22 @@ public class HuffmanNode implements Comparable<HuffmanNode> {
         this.frequency = left.getFrequency() + right.getFrequency();
     }
 
-    /**
-     * Check if node is a leaf node.
-     * @return true if node is a leaf and false if node is internal node.
-     */
-    public boolean isLeaf() {
-        if (this.left == null && this.right == null) {
-            return true;
-        }
-        return false;
+    boolean isLeaf() {
+        return this.left == null && this.right == null;
     }
 
-    /**
-     * Get left child node.
-     * @return left child node.
-     */
-    public HuffmanNode getLeft() {
+    HuffmanNode getLeft() {
         return this.left;
     }
 
-    /**
-     * Get right child node.
-     * @return right child node.
-     */
-    public HuffmanNode getRight() {
+    HuffmanNode getRight() {
         return this.right;
     }
 
-    /**
-     * Get frequency of node.
-     * @return frequency of node.
-     */
-    public int getFrequency() {
+    int getFrequency() {
         return this.frequency;
     }
 
-    /**
-     * Get symbol of node.
-     * @return symbol byte of node as unsigned integer value.
-     */
     public int getSymbol() {
         return this.symbol;
     }
@@ -136,15 +116,4 @@ public class HuffmanNode implements Comparable<HuffmanNode> {
         return this.frequency - other.getFrequency();
     }
 
-    /**
-     * Check whether symbol value is in range [0,255] or 256(pseudo-EOF).
-     * @param symbol byte as unsigned integer value, range 0-255. 256 reserved for pseudo-EOF.
-     * @return true if symbol is in valid range, false otherwise.
-     */
-    private boolean checkSymbolValue(int symbol) {
-        if (symbol >= 0 && symbol <= 256) {
-            return true;
-        }
-        return false;
-    }
 }

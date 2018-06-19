@@ -33,6 +33,10 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Objects;
 
+/**
+ * Test 'script' to test single file with all possible dictionary sizes.
+ * Produces a markdown formatted report.
+ */
 public class LzwDictionarySizeTester {
 
     private File testFile;
@@ -43,8 +47,8 @@ public class LzwDictionarySizeTester {
 
     /**
      * Constructs LzwDictionarySizeTester.
-     * @param testFilePath File path, where file to be tested is in.
-     * @param testReportPath     File path, where markdown report is saved.
+     * @param testFilePath   File path, where file to be tested is in.
+     * @param testReportPath File path, where markdown report is saved.
      * @throws NullPointerException     if either one of parameters is null.
      * @throws IllegalArgumentException if first parameter is not a folder.
      */
@@ -63,7 +67,7 @@ public class LzwDictionarySizeTester {
 
     /**
      * Runs compression testing to testFile with all possible LZW dictionary sizes.
-     * @throws FileNotFoundException    if File testReport cannot be opened for writing.
+     * @throws FileNotFoundException if File testReport cannot be opened for writing.
      */
     public void test() throws FileNotFoundException {
         this.writer = new PrintWriter(this.testReport);

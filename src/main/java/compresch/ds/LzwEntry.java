@@ -58,12 +58,12 @@ public class LzwEntry {
         return this.value;
     }
 
-    void setNextEntry(LzwEntry entry) {
-        this.nextEntry = entry;
-    }
-
     LzwEntry getNextEntry() {
         return this.nextEntry;
+    }
+
+    void setNextEntry(LzwEntry entry) {
+        this.nextEntry = entry;
     }
 
     /**

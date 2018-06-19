@@ -87,7 +87,7 @@ public class DynamicArray<T> implements Iterable<T> {
      * Used only for debugging and testing purposes.
      * @return String containing all objects stored in array
      */
-    public String contents() {
+    String contents() {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < this.size; i++) {
             builder.append(this.array[i]);

@@ -30,14 +30,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
+/**
+ * Encodes file using LZW.
+ */
 public class LzwEncoder {
 
     /**
      * Construct encoder to encode with LZW.
-     * @param inputPath  Path to input file to be compressed.
-     * @param outputPath Path to output file to compress to.
+     * @param inputPath      Path to input file to be compressed.
+     * @param outputPath     Path to output file to compress to.
+     * @param codewordLength bit sequence length to use in writing encoded data.
      * @throws NullPointerException if either one of parameters is null.
-     * @throws IOException if an I/O exception occurs.
+     * @throws IOException          if an I/O exception occurs.
      */
     public static void encode(
         String inputPath, String outputPath, int codewordLength) throws IOException {
@@ -46,13 +50,19 @@ public class LzwEncoder {
 
         InputStream input = new BufferedInputStream(new FileInputStream(inputPath));
         LzwWriter output = new LzwWriter(outputPath, codewordLength);
-        writeEncoding(output, codewordLength);
+        writeHeader(output, codewordLength);
         makeEncode(input, output, codewordLength);
         input.close();
         output.close();
     }
 
-    private static void writeEncoding(LzwWriter output, int codewordLength) throws IOException {
+    /**
+     * Writes a header containing information on used encoding to encoded file.
+     * @param output         LzwWriter to utilize for writing header.
+     * @param codewordLength bit sequence length used in encoding.
+     * @throws IOException if an I/O exception occurs.
+     */
+    private static void writeHeader(LzwWriter output, int codewordLength) throws IOException {
         String encoding;
         if (codewordLength == 9) {
             encoding = "LZW-0" + String.valueOf(codewordLength);
@@ -66,8 +76,9 @@ public class LzwEncoder {
 
     /**
      * Helper method to make encoding happen.
-     * @param input  InputStream to read from.
-     * @param output LzwWriter to write to.
+     * @param input          InputStream to read from.
+     * @param output         LzwWriter to write to.
+     * @param codewordLength bit sequence length used in encoding.
      * @throws IOException if an I/O exception occurs.
      */
     private static void makeEncode(

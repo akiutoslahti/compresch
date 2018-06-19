@@ -29,6 +29,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Utility class to hold count of distinct symbols in file to be encoded.
+ */
 public class HuffmanFrequencyTable {
 
     private int[] frequency;
@@ -36,7 +39,7 @@ public class HuffmanFrequencyTable {
     /**
      * Construct a frequency table for symbols [0, 255]. Symbol 256 acts as a pseudo EOF.
      */
-    public HuffmanFrequencyTable() {
+    HuffmanFrequencyTable() {
         this.frequency = new int[257];
         this.frequency[256]++;
     }
@@ -47,7 +50,7 @@ public class HuffmanFrequencyTable {
      * @param inputFilePath File to base frequency table on.
      * @throws IOException if an I/O exception occurs.
      */
-    public void buildFreqTable(String inputFilePath) throws IOException {
+    void buildFreqTable(String inputFilePath) throws IOException {
         InputStream input = new BufferedInputStream(new FileInputStream(inputFilePath));
         while (true) {
             int readBuffer = input.read();
@@ -64,22 +67,11 @@ public class HuffmanFrequencyTable {
      * @param symbol byte as unsigned integer value.
      * @return frequency of symbol. -1 if parameter is not valid.
      */
-    public int getFrequency(int symbol) {
-        if (checkSymbol(symbol)) {
+    int getFrequency(int symbol) {
+        if (symbol >= 0 && symbol <= 256) {
             return this.frequency[symbol];
         }
         return -1;
     }
 
-    /**
-     * Checks whether the symbol provided is in range [0,256].
-     * @param symbol byte as unsigned int value.
-     * @return true if symbol is in range and false if not.
-     */
-    private boolean checkSymbol(int symbol) {
-        if (symbol >= 0 && symbol <= 256) {
-            return true;
-        }
-        return false;
-    }
 }

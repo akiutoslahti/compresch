@@ -32,6 +32,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Objects;
 
+/**
+ * Decodes file encoded with Huffman coding.
+ */
 public class HuffmanDecoder {
 
     /**
@@ -92,7 +95,7 @@ public class HuffmanDecoder {
      * @throws IOException if an I/O exception occurs.
      */
     private static HuffmanNode restoreHuffmanTree(BitInputStream input) throws IOException {
-        int[] codeLengths = readCodelengths(input);
+        int[] codeLengths = readCodeLengths(input);
         HuffmanTree huffTree = new HuffmanTree();
         huffTree.buildHuffmanTree(codeLengths);
         return huffTree.getRoot();
@@ -104,7 +107,7 @@ public class HuffmanDecoder {
      * @return Array of codeword lengths.
      * @throws IOException if an I/O exception occurs.
      */
-    private static int[] readCodelengths(BitInputStream input) throws IOException {
+    private static int[] readCodeLengths(BitInputStream input) throws IOException {
         int[] codeLengths = new int[257];
         for (int i = 0; i < 257; i++) {
             codeLengths[i] = input.readByte();

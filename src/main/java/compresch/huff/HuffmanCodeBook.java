@@ -26,7 +26,10 @@ package compresch.huff;
 
 import compresch.ds.DynamicArray;
 
-public class HuffmanCodeBook {
+/**
+ * Utility class to hold codes for encoding with Huffman coding.
+ */
+class HuffmanCodeBook {
 
     @SuppressWarnings("unchecked")
     private DynamicArray<Integer>[] codes = new DynamicArray[257];
@@ -35,7 +38,7 @@ public class HuffmanCodeBook {
      * Populate code table with codes from Huffman tree.
      * @param root root node of fully constructed Huffman tree.
      */
-    public void buildCodeBook(HuffmanNode root) {
+    void buildCodeBook(HuffmanNode root) {
         dfsTraverse(root, "");
     }
 
@@ -62,22 +65,11 @@ public class HuffmanCodeBook {
      * @param symbol byte value as unsigned integer.
      * @return List containing bits of codeword.
      */
-    public DynamicArray<Integer> getCode(int symbol) {
-        if (checkSymbol(symbol)) {
+    DynamicArray<Integer> getCode(int symbol) {
+        if (symbol >= 0 && symbol <= 256) {
             return codes[symbol];
         }
         return null;
     }
 
-    /**
-     * Check whether given symbol is in correct range.
-     * @param symbol byte value as unsigned integer.
-     * @return true if symbol is in correct range, false if not.
-     */
-    private boolean checkSymbol(int symbol) {
-        if (symbol >= 0 && symbol <= 256) {
-            return true;
-        }
-        return false;
-    }
 }

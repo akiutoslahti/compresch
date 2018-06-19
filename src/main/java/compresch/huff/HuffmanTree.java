@@ -27,6 +27,9 @@ package compresch.huff;
 import compresch.ds.DynamicArray;
 import compresch.ds.HuffmanHeap;
 
+/**
+ * Utility class used both for encoding and decoding with Huffman coding.
+ */
 public class HuffmanTree {
 
     private HuffmanHeap auxHeap;
@@ -36,7 +39,7 @@ public class HuffmanTree {
     /**
      * Construct new empty Huffman tree.
      */
-    public HuffmanTree() {
+    HuffmanTree() {
         this.auxHeap = new HuffmanHeap();
         this.root = null;
         this.codeLengths = new int[257];
@@ -46,7 +49,7 @@ public class HuffmanTree {
      * Construct a Huffman tree from frequency table.
      * @param freqTbl Input file byte frequencies.
      */
-    public void buildHuffmanTree(HuffmanFrequencyTable freqTbl) {
+    void buildHuffmanTree(HuffmanFrequencyTable freqTbl) {
         initAuxHeap(freqTbl);
         assembleHuffmanTree();
         populateCodeLengths();
@@ -57,16 +60,12 @@ public class HuffmanTree {
      * Construct a Huffman tree from codeword lengths.
      * @param codeLengths array of Huffman codeword lengths.
      */
-    public void buildHuffmanTree(int[] codeLengths) {
+    void buildHuffmanTree(int[] codeLengths) {
         this.codeLengths = codeLengths;
         buildCanonicalTree();
     }
 
-    /**
-     * Get root node of Huffman tree.
-     * @return root node of Huffman tree.
-     */
-    public HuffmanNode getRoot() {
+    HuffmanNode getRoot() {
         return this.root;
     }
 

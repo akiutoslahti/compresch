@@ -61,6 +61,10 @@ public class HuffmanHeap {
         this.heap[position] = node;
     }
 
+    /**
+     * Returns top(minimum) element from the heap.
+     * @return HuffmanNode at the top of heap.
+     */
     public HuffmanNode peek() {
         return this.heap[1];
     }
@@ -74,10 +78,17 @@ public class HuffmanHeap {
         heapify(1);
     }
 
+    /**
+     * Returns the number of elements in heap.
+     * @return number of elements in heap.
+     */
     public int size() {
         return this.size;
     }
 
+    /**
+     * Grows capacity of the heap by current capacity.
+     */
     private void resize() {
         this.maxSize *= 2;
         HuffmanNode[] newHeap = new HuffmanNode[this.maxSize];

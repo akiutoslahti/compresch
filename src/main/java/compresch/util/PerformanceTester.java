@@ -33,6 +33,10 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Objects;
 
+/**
+ * Test 'script' to test folder of files with Huffman, LZW-4K and LZW-64K encodings.
+ * Produces a markdown formatted report.
+ */
 public class PerformanceTester {
 
     private File testFileFolder;

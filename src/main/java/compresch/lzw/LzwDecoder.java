@@ -30,14 +30,18 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Objects;
 
+/**
+ * Decodes LZW encoded file.
+ */
 public class LzwDecoder {
 
     /**
      * Public method to decode a file.
-     * @param inputPath  path to input file to be decompressed.
-     * @param outputPath path to output file to decompress to.
+     * @param inputPath      path to input file to be decompressed.
+     * @param outputPath     path to output file to decompress to.
+     * @param codewordLength bit sequence length to use in reading encoded data.
      * @throws NullPointerException if either one of parameters is null.
-     * @throws IOException if an I/O exception occurs.
+     * @throws IOException          if an I/O exception occurs.
      */
     public static void decode(
         String inputPath, String outputPath, int codewordLength) throws IOException {
@@ -53,9 +57,10 @@ public class LzwDecoder {
     }
 
     /**
-     * Private helper method to actually read compressed input and decode it to output.
-     * @param input  LzwReader to read encoded input from.
-     * @param output OutputStream to write decoded data to.
+     * Private helper method to read compressed input and decode it to output.
+     * @param input          LzwReader to read encoded input from.
+     * @param output         OutputStream to write decoded data to.
+     * @param codewordLength bit sequence length to use in reading encoded data.
      * @throws IOException if an I/O exception occurs.
      */
     private static void makeDecode(
@@ -84,7 +89,7 @@ public class LzwDecoder {
     }
 
     /**
-     * Private helper method to actually write decoded string to output.
+     * Private helper method to write decoded string to output.
      * @param outputBuffer String to write to output.
      * @param output       OutputStream to write data to.
      * @throws IOException if an I/O exception occurs.

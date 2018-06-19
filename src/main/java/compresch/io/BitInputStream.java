@@ -92,8 +92,13 @@ public class BitInputStream {
         input.close();
     }
 
-    public void skip(int n) throws IOException {
-        this.input.skip(n);
+    /**
+     * Skip bytes counting from the current position of stream.
+     * @param bytes amount of bytes to skip.
+     * @throws IOException if an I/O exception occurs.
+     */
+    public void skip(int bytes) throws IOException {
+        this.input.skip(bytes);
     }
 
 }

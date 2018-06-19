@@ -33,6 +33,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
+/**
+ * Encodes file with Huffman coding.
+ */
 public class HuffmanEncoder {
 
     /**
@@ -40,25 +43,25 @@ public class HuffmanEncoder {
      * @param inputPath  path to input file to be compressed.
      * @param outputPath path to output file to compress to.
      * @throws NullPointerException if either of arguments is null.
-     * @throws IOException if an I/O exception occurs.
+     * @throws IOException          if an I/O exception occurs.
      */
     public static void encode(String inputPath, String outputPath) throws IOException {
         Objects.requireNonNull(inputPath);
         Objects.requireNonNull(outputPath);
 
-        HuffmanCodeBook codebook = getCodeBook(inputPath);
+        HuffmanCodeBook codeBook = getCodeBook(inputPath);
         InputStream input = new BufferedInputStream(new FileInputStream(inputPath));
         BitOutputStream output = new BitOutputStream(outputPath);
 
-        writeEncoding(output);
-        writeCodeLengths(output, codebook);
-        makeEncode(input, output, codebook);
+        writeHeader(output);
+        writeCodeLengths(output, codeBook);
+        makeEncode(input, output, codeBook);
 
         input.close();
         output.close();
     }
 
-    private static void writeEncoding(BitOutputStream output) throws IOException {
+    private static void writeHeader(BitOutputStream output) throws IOException {
         output.writeByte((byte) ('H'));
         output.writeByte((byte) ('U'));
         output.writeByte((byte) ('F'));
@@ -114,8 +117,8 @@ public class HuffmanEncoder {
     }
 
     /**
-     * Private helper method to actually write encoded symbol to output.
-     * @param bits array of bits representing symbol to be written.
+     * Private helper method to write encoded symbol to output.
+     * @param bits   array of bits representing symbol to be written.
      * @param output BitOutputStream where to write coded symbol.
      * @throws IOException if an I/O exception occurs.
      */
