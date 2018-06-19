@@ -42,6 +42,7 @@ public class HuffmanDecoder {
      * @param inputPath  path to input file to be decompressed.
      * @param outputPath path to output file to decompress to.
      * @throws NullPointerException if either one of parameters is null.
+     * @throws IOException if an I/O exception occurs.
      */
     public static void decode(String inputPath, String outputPath) throws IOException {
         Objects.requireNonNull(inputPath);
