@@ -13,8 +13,8 @@ reymont | Text of the book Chłopi by Władysław Reymont
 samba | Tarred source code of Samba 2-2.3
 sao | The SAO star catalog
 webster | The 1913 Webster Unabridged Dictionary
-xml | Collected XML files
 x-ray | X-ray medical picture
+xml | Collected XML files
 
 ### Huffman coding
 Testfile | input size (bytes) | compressed size (bytes) | compress ratio | compression time (ms) | decompression time (ms)
