@@ -6,6 +6,9 @@
 
 This repository is for course **Laboratory work: Data structures and algorithms** in **University of Helsinki**.
 
+## Download
+* [Final release](https://github.com/akiutoslahti/compresch/releases/tag/v1.0)
+
 ## Documentation
 * [Project specification](docs/01-SPECIFICATION.md)
 * [Implementation](docs/02-IMPLEMENTATION.md)
