@@ -56,4 +56,4 @@ Therefore Huffman coding and LZW do not withstand comparison to compression algo
 [Test report: Comparison to common compression tools](performancetests/comparison-to-other-tools.md)
 
 ## Conclusions
-*// what can be efficiently compressed?*
+My implementations of Huffman coding and LZW work as intended and they also satisfy the aspect of lossless compression. They both seem to be good in compressing single-language text and other files which contain lots of repetitive data and/or have little variance. However they both seem to struggle with data having lots of variety and/or other aspects highlighted in Silesia corpus testing. Luckily there are far more superior modern compression algorithms as was highlighted in comparison section of this document.
