@@ -26,7 +26,7 @@ In all steps *n* denotes length of input stream in bytes and *k* denotes count o
 6. *Time: O(1), space: O(1).* Canonical code table is always 256B in size.
 7. *Time: O(n).* The whole input stream is traversed. No additional space is needed for this step when length of the output stream is left out of equation.
 
-**Total time complexity: O(n + k log k)**  
+**Total time complexity: O(n + k log k)** *(effectively O(n) because k is limited to  k <= 257)*  
 **Total space complexity: O(k)**
 
 #### Algorithm for decoding
